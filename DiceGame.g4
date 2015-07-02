@@ -1,89 +1,89 @@
 grammar DiceGame;
-r	: 'Hello';
+
 INT : '-'?[0-9]+;
 WS  : [ \r\t\n]+ -> skip; // skip spaces, tabs, newlines
-ID  : [a-z0-9]+; // ids are lowercase, to easily differentiate from CODE
+ID  : [a-z0-9]+; // ids are lowercase, to easily differentiate from code
 
-DICE: 'würfel ' name=ID ' hat diese seiten: ' faces=FACES;
-FACES   : INT ' ' FACES
+dice: 'würfel ' NAME=ID ' hat diese seiten: ' FACES=faces;
+faces   : INT ' ' faces
         | INT;
 
-VALUE	: INT
+value	: INT
 		| ID;
 		
-DICESACTION	: 'würfelt mit ' DICEOBJECTS
-			| 'sortiert ' DICEOBJECTS '.'
-			| 'sortiert ' DICEOBJECTS ' aufsteigend.'
-			| 'sortiert ' DICEOBJECTS ' absteigend.';
+dicesaction	: 'würfelt mit ' diceobjects
+			| 'sortiert ' diceobjects '.'
+			| 'sortiert ' diceobjects ' aufsteigend.'
+			| 'sortiert ' diceobjects ' absteigend.';
 
 		
-VARIABLES	: ID ', ' VARIABLES
+variables	: ID ', ' variables
 			| ID;
 
-PLAYEROBJECT	: 'der spieler'
-				| 'spieler ' name=ID
-				| 'spieler #' pos=INT;
+playerobject	: 'der spieler'
+				| 'spieler ' NAME=ID
+				| 'spieler #' POS=INT;
 
 		
-PLAYEROBJECTS	: 'alle spieler'
+playerobjects	: 'alle spieler'
 				| 'allen spielern'
 				| 'aller spieler'
-				| PLAYEROBJECT ', ' PLAYEROBJECT
-				| PLAYEROBJECT;
+				| playerobject ', ' playerobject
+				| playerobject;
 			
-DICEOBJECT	: 'würfel ' name=ID
-			| 'würfel #' pos=INT;
+diceobject	: 'würfel ' NAME=ID
+			| 'würfel #' POS=INT;
 			
 			
-DICEOBJECTS	: 'alle würfel'
+diceobjects	: 'alle würfel'
 			| 'allen würfeln'
 			| 'aller würfel'
-			| DICEOBJECT ', ' DICEOBJECTS
-			| DICEOBJECT;
+			| diceobject ', ' diceobjects
+			| diceobject;
 
 
-RESULT	: ' ist die summe von ' DICEOBJECTS;
+result	: ' ist die summe von ' diceobjects;
 		
-VARIABLE	: id=ID 
-			| dice=DICEOBJECT
-			| id=ID ' von ' player=PLAYEROBJECT;
+variable	: VAR=ID 
+			| DICE=diceobject
+			| VAR=ID ' von ' PLAYER=playerobject;
 		
-EXPR	:	a=EXPR op=('*'|'/') b=EXPR
-    	|   a=EXPR op=('+'|'-') b=EXPR        
-    	|   v=INT
-    	|   '(' e=EXPR ')'
-    	|	v=VARIABLE;
+expr 	:	A=expr OP=('*'|'/') B=expr
+    	|   A=expr OP=('+'|'-') B=expr
+    	|   INT
+    	|   '(' E=expr ')'
+    	|	variable;
     	
-ASSIGNMENT	: v=VARIABLE op=' ist ' e=EXPR
-			| v=VARIABLE op=' ist die summe ' dices=DICEOBJECTS;
+assignment	: V=variable OP=' ist ' E=expr
+			| V=variable OP=' ist die summe ' DICES=diceobjects;
     	
-ACTION	:	ASSIGNMENT
-		|	DICESACTION
-		|	ACTION ' und ' ACTION;
+action	:	assignment
+		|	dicesaction
+		|	action ' und ' action;
 
 
-RULE	: 'wenn ' CONDITION ', dann ' ACTION
-		| 'wenn ' CONDITION ', dann ' ACTION ' sonst ' ACTION;
+regel	: 'wenn ' condition ', dann ' action
+		| 'wenn ' condition ', dann ' action ' sonst ' action;
 
-CONDITION	: EXPR ' gleich ' EXPR
-			| EXPR ' kleiner ' EXPR
-			| EXPR ' größer ' EXPR
-			| EXPR ' kleinergleich ' EXPR
-			| EXPR ' größergleich' EXPR
-			| CONDITION ' und ' CONDITION
-			| CONDITION ' oder ' CONDITION
-			| ' nicht 'CONDITION
+condition	: expr ' gleich ' expr
+			| expr ' kleiner ' expr
+			| expr ' größer ' expr
+			| expr ' kleinergleich ' expr
+			| expr ' größergleich' expr
+			| condition ' und ' condition
+			| condition ' oder ' condition
+			| ' nicht 'condition
 			| 'wahr'
 			| 'falsch';
 			
 			
 
 			
-PLAYER	: 'spieler haben die Variablen ' VARIABLES '.'
-		| 'spieler sind aktiv, solange ' CONDITION ' gilt.';
+player	: 'spieler haben die variablen ' variables '.'
+		| 'spieler sind aktiv, solange ' condition ' gilt.';
 
-//MUL	: '*' ; // assigns token name to '*' used above in grammar
-//DIV : '/' ;
-//ADD : '+' ;
-//SUB : '-' ;
-//ASSIGN	:	'=' ;
+//mul	: '*' ; // assigns token name to '*' used above in grammar
+//div : '/' ;
+//add : '+' ;
+//sub : '-' ;
+//assign	:	'=' ;
