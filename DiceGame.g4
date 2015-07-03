@@ -3,8 +3,8 @@ grammar DiceGame;
 INT 			: '-'?[0-9]+;
 //WS  			: [ \r\t\n]+ -> skip; // skip spaces, tabs, newlines
 ID  			: [a-z0-9]+; // ids are lowercase, to easily differentiate from code
-COMMENT			: '//' ~[\r\n]* -> skip
-;
+COMMENT			: '//' ~[\r\n]* -> skip;
+
 game			: ID' wird so gespielt:\n''\n' gameinit+ '\n' playerinit+ '\nist ein spieler am zug macht er folgendes:' loop;
 
 gameinit		: 'das spiel hat die werte' (' 'ID)+'.\n'
