@@ -1,10 +1,11 @@
 grammar DiceGame;
 
 INT 			: '-'?[0-9]+;
-WS  			: [ \r\t\n]+ -> skip; // skip spaces, tabs, newlines
+//WS  			: [ \r\t\n]+ -> skip; // skip spaces, tabs, newlines
 ID  			: [a-z0-9]+; // ids are lowercase, to easily differentiate from code
-
-game			: ID' wird so gespielt:\n''\n' gameinit* '\n' playerinit* '\nist ein spieler am zug macht er folgendes:' loop;
+COMMENT			: '//' ~[\r\n]* -> skip
+;
+game			: ID' wird so gespielt:\n''\n' gameinit+ '\n' playerinit+ '\nist ein spieler am zug macht er folgendes:' loop;
 
 gameinit		: 'das spiel hat die werte' (' 'ID)+'.\n'
 				| 'das spiel ist für 'INT' bis 'INT' spieler geeignet.\n'
@@ -20,7 +21,7 @@ loopaction		: action
 				| law;
 				
 loop			: '\n' loopaction loop
-				| '\n' loopaction '\n';
+				| '\n' loopaction;
 
 value			: INT
 				| ID;
@@ -69,6 +70,7 @@ expr 			:	A=expr OP=('*'|'/') B=expr
     			|	variable;
     	
 assignment		: V=variable OP=' ist ' E=expr
+				//| V=variable OP=' ist ' P=playerobject
 				| V=variable OP=' ist die summe ' DICES=diceobjects
 				| 'setze 'V=variable OP=' auf ' E=expr;
     	
@@ -85,11 +87,9 @@ condition		: expr ' gleich ' expr
 				| expr ' kleiner als ' expr
 				| expr ' größer als ' expr
 				| expr ' kleinergleich ' expr
-				| expr ' größergleich' expr
+				| expr ' größergleich ' expr
 				| condition ' und ' condition
 				| condition ' oder ' condition
 				| ' nicht 'condition
 				| 'wahr'
 				| 'falsch';
-			
-
