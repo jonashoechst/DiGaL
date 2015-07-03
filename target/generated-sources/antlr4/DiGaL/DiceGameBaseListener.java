@@ -1,5 +1,5 @@
 // Generated from DiceGame.g4 by ANTLR 4.4
-package DiGaL;
+package digal;
 
 import org.antlr.v4.runtime.ParserRuleContext;
 import org.antlr.v4.runtime.misc.NotNull;
@@ -77,18 +77,6 @@ public class DiceGameBaseListener implements DiceGameListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterLoopaction(@NotNull DiceGameParser.LoopactionContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void exitLoopaction(@NotNull DiceGameParser.LoopactionContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
 	@Override public void enterDiceobject(@NotNull DiceGameParser.DiceobjectContext ctx) { }
 	/**
 	 * {@inheritDoc}
@@ -108,18 +96,6 @@ public class DiceGameBaseListener implements DiceGameListener {
 	 * <p>The default implementation does nothing.</p>
 	 */
 	@Override public void exitPlayerobjects(@NotNull DiceGameParser.PlayerobjectsContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void enterResult(@NotNull DiceGameParser.ResultContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void exitResult(@NotNull DiceGameParser.ResultContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
@@ -216,18 +192,6 @@ public class DiceGameBaseListener implements DiceGameListener {
 	 * <p>The default implementation does nothing.</p>
 	 */
 	@Override public void exitDicesaction(@NotNull DiceGameParser.DicesactionContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void enterValue(@NotNull DiceGameParser.ValueContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void exitValue(@NotNull DiceGameParser.ValueContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *

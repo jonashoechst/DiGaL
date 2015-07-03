@@ -1,16 +1,24 @@
-max wird so gespielt:
+kniffel wird so gespielt:
 
-das spiel hat die werte letztes.
 das spiel ist für 2 bis 10 spieler geeignet.
+das spiel hat die werte gewürfelt übrig
 das spiel hat folgende würfel:
-würfel a hat diese seiten: 1 2 3 4 5 6
-würfel b hat diese seiten: 1 2 3 4 5 6
-würfel b hat diese seiten: 1 2 3 4 5 6
+würfel w1 hat diese seiten: 1 2 3 4 5 6
+würfel w2 hat diese seiten: 1 2 3 4 5 6
+würfel w3 hat diese seiten: 1 2 3 4 5 6
+würfel w4 hat diese seiten: 1 2 3 4 5 6
+würfel w5 hat diese seiten: 1 2 3 4 5 6
 
-spieler haben die werte punkte kaffee toast.
-spieler sind aktiv, solange punkte größergleich 0 gilt.
+spieler haben die werte 1er 2er 3er 4er 5er 6er.
 
 ist ein spieler am zug macht er folgendes:
+übrig ist alle würfel.
+macht 3 mal würfelt mit übrig und legt würfel aus übrig in gewürfelt.
+
+gewürfelt ist // DAS WAS ENTSCHIEDEN WURDE
+übrig ist // DIE ANDEREN
+
+
 next ist rechter spieler.
 würfelt mit allen würfeln.
 sortiert alle würfel absteigend.

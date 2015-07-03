@@ -3,42 +3,44 @@ grammar DiceGame;
 INT 			: '-'?[0-9]+;
 //WS  			: [ \r\t\n]+ -> skip; // skip spaces, tabs, newlines
 ID  			: [a-z0-9]+; // ids are lowercase, to easily differentiate from code
-COMMENT			: '//' ~[\r\n]* -> skip;
+COMMENT			: '//' ~[\r\n]* '\n' -> skip;
+ 
+game			: NAME=ID' wird so gespielt:\n''\n' (GAMEINIT=gameinit'\n')+ '\n' (PLAYERINIT=playerinit'\n')+ '\n' 'ist ein spieler am zug macht er folgendes:\n' (ACTION=action'\n')* '\n';
 
-game			: ID' wird so gespielt:\n''\n' gameinit+ '\n' playerinit+ '\nist ein spieler am zug macht er folgendes:' loop;
-
-gameinit		: 'das spiel hat die werte' (' 'ID)+'.\n'
-				| 'das spiel ist für 'INT' bis 'INT' spieler geeignet.\n'
-				| 'das spiel hat folgende würfel:\n' diceinit*;
+gameinit		: 'das spiel hat die werte' (' 'ID)+'.'
+				| 'das spiel ist für 'INT' bis 'INT' spieler geeignet.'
+				| 'das spiel hat folgende würfel:' ('\n'diceinit)*;
 			
-diceinit		: 'würfel ' NAME=ID ' hat diese seiten:' (' 'INT)+ '\n';
+diceinit		: 'würfel ' NAME=ID ' hat diese seiten:' (' 'FACE=INT)+;
 
-playerinit		: 'spieler haben die werte' (' 'ID)+ '.\n'
-				| 'spieler sind aktiv, solange ' condition ' gilt.\n';
-
-loopaction		: action
-				| assignment
-				| law;
+playerinit		: 'spieler haben die werte' (' 'VAR=ID)+ '.'
+				| 'spieler sind aktiv, solange ' CONDITION=condition ' gilt.'; 
 				
-loop			: '\n' loopaction loop
-				| '\n' loopaction;
-
-value			: INT
-				| ID;
+loop			: 'für ' PLAYEROBJETS=playerobjects ' ' VAR=ID ' ' ACTION=action ';'
+				| 'für ' DICEOBJECTS=diceobjects ' ' VAR=ID ' ' ACTION=action ';'
+				| 'macht ' VALUE=INT ' mal ' ACTION=action ';';
+    	
+action			: ASSIGNMENT=assignment
+				| DICEACTION=dicesaction
+				| ACTION1=action ' und ' ACTION2=action
+				| LOOP=loop
+				| LAW=law
+				| NEXT='nächster spieler ist dran';
 		
-dicesaction		: 'würfelt mit ' diceobjects '.'
-				| 'sortiert ' diceobjects '.'
-				| 'sortiert ' diceobjects ' aufsteigend.'
-				| 'sortiert ' diceobjects ' absteigend.';
+dicesaction		: 'würfelt mit ' diceobjects
+				| 'sortiert ' diceobjects
+				| 'sortiert ' diceobjects ' aufsteigend'
+				| 'sortiert ' diceobjects ' absteigend'
+				| 'legt würfel aus 'diceobjects' in 'diceobjects;
 
 playerobject	: 'der spieler'
+				| 'aktueller spieler'
 				| 'spieler ' NAME=ID
 				| 'spieler #' POS=INT
 				| 'rechter spieler'
-				| 'linker spieler';
-
+				| 'linker spieler'; 
 		
-playerobjects	: 'alle spieler'
+playerobjects	: 'alle spieler' 
 				| 'allen spielern'
 				| 'aller spieler'
 				| playerobject ', ' playerobject
@@ -47,41 +49,33 @@ playerobjects	: 'alle spieler'
 diceobject		: 'würfel ' NAME=ID
 				| 'würfel #' POS=INT;
 			
-			
 diceobjects		: 'alle würfel'
 				| 'allen würfeln'
 				| 'aller würfel'
 				| diceobject ', ' diceobjects
 				| diceobject;
 
-
-result			: ' ist die summe von ' diceobjects;
-		
 variable		: VAR=ID 
-				| DICE=diceobject
-				| VAR=ID ' von ' PLAYER=playerobject
-				| 'position von ' playerobject;
+				| diceobjects
+				| playerobjects
+//				| VAR=ID ' von ' PLAYER=playerobject
+				| 'position von ' playerobject
+				| variable':'variable;
 			
 		
-expr 			:	A=expr OP=('*'|'/') B=expr
-    			|   A=expr OP=('+'|'-') B=expr
-    			|   INT
-    			|   '(' E=expr ')'
-    			|	variable;
-    	
+expr 			: A=expr OP=' * ' B=expr
+    			| A=expr OP=(' + '|' - ') B=expr
+    			| INT
+    			| '(' E=expr ')'
+    			| variable;
+ 
 assignment		: V=variable OP=' ist ' E=expr
-				//| V=variable OP=' ist ' P=playerobject
+				| V=variable OP=' ist ' P=playerobject
 				| V=variable OP=' ist die summe ' DICES=diceobjects
 				| 'setze 'V=variable OP=' auf ' E=expr;
-    	
-action			:	assignment
-				|	dicesaction
-				|	action ' und ' action
-				|	'für ' playerobjects ' ' ID ' ' action ','
-				|	'nächster spieler ist dran';
 
-law				: 'wenn ' condition ', \ndann ' action
-				| 'wenn ' condition ', \ndann ' action ', \nsonst ' action;
+law				: 'wenn ' condition ', dann ' action
+				| 'wenn ' condition ', dann ' action ', sonst ' action;
 
 condition		: expr ' gleich ' expr 
 				| expr ' kleiner als ' expr
@@ -92,4 +86,6 @@ condition		: expr ' gleich ' expr
 				| condition ' oder ' condition
 				| ' nicht 'condition
 				| 'wahr'
-				| 'falsch';
+				| 'falsch'
+				| playerobject ' inaktiv ist';
+				

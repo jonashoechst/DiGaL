@@ -1,6 +1,3 @@
-/DiceGame.tokens
-/DiceGameBaseListener.java
-/DiceGameLexer.java
-/DiceGameLexer.tokens
-/DiceGameListener.java
-/DiceGameParser.java
+/LabD.class
+/Main.class
+/ast/
