@@ -101,6 +101,18 @@ public class DiceGameBaseListener implements DiceGameListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
+	@Override public void enterFace(@NotNull DiceGameParser.FaceContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitFace(@NotNull DiceGameParser.FaceContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
 	@Override public void enterCondition(@NotNull DiceGameParser.ConditionContext ctx) { }
 	/**
 	 * {@inheritDoc}

@@ -79,6 +79,16 @@ public interface DiceGameListener extends ParseTreeListener {
 	 */
 	void exitPlayerobjects(@NotNull DiceGameParser.PlayerobjectsContext ctx);
 	/**
+	 * Enter a parse tree produced by {@link DiceGameParser#face}.
+	 * @param ctx the parse tree
+	 */
+	void enterFace(@NotNull DiceGameParser.FaceContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link DiceGameParser#face}.
+	 * @param ctx the parse tree
+	 */
+	void exitFace(@NotNull DiceGameParser.FaceContext ctx);
+	/**
 	 * Enter a parse tree produced by {@link DiceGameParser#condition}.
 	 * @param ctx the parse tree
 	 */

@@ -5,13 +5,15 @@ INT 			: '-'?[0-9]+;
 ID  			: [a-z0-9]+; // ids are lowercase, to easily differentiate from code
 COMMENT			: '//' ~[\r\n]* '\n' -> skip;
  
-game			: NAME=ID' wird so gespielt:\n' '\n' (gameinit '.\n')+ '\n' (PLAYERINIT=playerinit'.\n')+ '\n' 'ist ein spieler am zug macht er folgendes:\n' (ACTION=action'.\n')*;
+game			: NAME=ID' wird so gespielt:\n' '\n' (GAMEINIT=gameinit '.\n')+ '\n' (PLAYERINIT=playerinit'.\n')+ '\n' 'ist ein spieler am zug macht er folgendes:\n' (ACTION=action'.\n')*;
 
-gameinit		: 'das spiel hat die werte' (' 'ID)+
-				| 'das spiel ist für 'INT' bis 'INT' spieler geeignet'
-				| 'das spiel hat folgende würfel:' ('\n'diceinit)*;
-			
-diceinit		: 'würfel ' NAME=ID ' hat diese seiten:' (' 'FACE=INT)+;
+gameinit		: 'das spiel hat die werte' (' 'VAR=ID)+
+				| 'das spiel ist für 'FROM=INT' bis 'TO=INT' spieler geeignet'
+				| 'das spiel hat folgende würfel:' ('\n'DICEINIT=diceinit)*;
+			 
+diceinit		: 'würfel ' NAME=ID ' hat diese seiten:' (' 'FACE=face)+;
+
+face			: INT;
 
 playerinit		: 'spieler haben die werte' (' 'VAR=ID)+
 				| 'spieler sind aktiv, solange ' CONDITION=condition ' gilt'; 
