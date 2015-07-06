@@ -65,6 +65,18 @@ public class DiceGameBaseListener implements DiceGameListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
+	@Override public void enterVar(@NotNull DiceGameParser.VarContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitVar(@NotNull DiceGameParser.VarContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
 	@Override public void enterAssignment(@NotNull DiceGameParser.AssignmentContext ctx) { }
 	/**
 	 * {@inheritDoc}
