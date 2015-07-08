@@ -1,13 +1,13 @@
 max wird so gespielt:
 
-das spiel hat die werte letztes.
+das spiel hat den wert letztes ist 0.
 das spiel ist für 2 bis 10 spieler geeignet.
 das spiel hat folgende würfel:
 würfel a hat diese seiten: 1 2 3 4 5 6
 würfel b hat diese seiten: 1 2 3 4 5 6.
 
-spieler haben die werte punkte.
-spieler sind aktiv, solange aktueller spieler:punkte größergleich 0 gilt.
+spieler sind aktiv, solange punkte größergleich 0 gilt.
+spieler haben die werte punkte ist 3.
 
 ist ein spieler am zug macht er folgendes:
 next ist rechter spieler.

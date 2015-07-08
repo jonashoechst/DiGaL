@@ -5,9 +5,9 @@ INT 			: '-'?[0-9]+;
 ID  			: [a-z0-9]+; // ids are lowercase, to easily differentiate from code
 COMMENT			: '//' ~[\r\n]* '\n' -> skip;
  
-game			: NAME=ID' wird so gespielt:\n' '\n' (GAMEINIT=gameinit '.\n')+ '\n' (PLAYERINIT=playerinit'.\n')+ '\n' PLAY='ist ein spieler am zug macht er folgendes:\n' (ACTION=action'.\n')*;
+game			: NAME=ID' wird so gespielt:\n' '\n' (GAMEINIT=gameinit '.\n')+ '\n' (PLAYERINIT=playerinit'.\n')+  '\n' PLAY='ist ein spieler am zug macht er folgendes:\n' (ACTION=action'.\n')*;
 
-gameinit		: 'das spiel hat die werte' (' 'VAR=ID)+
+gameinit		: 'das spiel hat den wert 'ASSN=assignment
 				| 'das spiel ist für 'FROM=INT' bis 'TO=INT' spieler geeignet'
 				| 'das spiel hat folgende würfel:' ('\n'DICEINIT=diceinit)*;
 			 
@@ -15,8 +15,8 @@ diceinit		: 'würfel ' NAME=ID ' hat diese seiten:' (' 'FACE=face)+;
 
 face			: INT;
 
-playerinit		: 'spieler haben die werte' (' 'VAR=var)+
-				| 'spieler sind aktiv, solange ' PLAYERCOND=condition ' gilt'; 
+playerinit  	: 'spieler haben die werte 'ASSN=assignment
+				| 'spieler sind aktiv, solange ' PLAYERACTIVECOND=condition ' gilt'; 
 				
 var				: ID;
 				
@@ -37,18 +37,17 @@ dicesaction		: 'würfelt mit ' diceobjects
 				| 'sortiert ' diceobjects ' absteigend'
 				| 'legt würfel aus 'diceobjects' in 'diceobjects;
 
-playerobject	: 'der spieler'
-				| 'aktueller spieler'
+playerobject	: CUR='der spieler'
+				| CUR='aktueller spieler'
 				| 'spieler ' NAME=ID
 				| 'spieler #' POS=INT
-				| 'rechter spieler'
-				| 'linker spieler'; 
+				| RIGHT='rechter spieler'
+				| LEFT='linker spieler'; 
 		
-playerobjects	: 'alle spieler' 
-				| 'allen spielern'
-				| 'aller spieler'
-				| playerobject ', ' playerobject
-				| playerobject;
+playerobjects	: ALL='alle spieler' 
+				| ALL='allen spielern'
+				| ALL='aller spieler'
+				| (PO=playerobject', ')* LAST=playerobject;
 			
 diceobject		: 'würfel ' NAME=ID
 				| 'würfel #' POS=INT;
@@ -78,8 +77,8 @@ assignment		: V=variable OP=' ist ' E=expr
 				| V=variable OP=' ist ' P=playerobject
 				| V=variable OPSUM=' ist die summe ' DICES=diceobjects;
 
-law				: 'wenn ' condition ', dann ' action
-				| 'wenn ' condition ', dann ' action ', sonst ' action;
+law				: 'wenn ' COND=condition ', dann ' THEN=action
+				| 'wenn ' COND=condition ', dann ' THEN=action ', sonst ' ELSE=action;
 
 condition		: A=expr EQ=' gleich ' B=expr
 				| A=expr LT=' kleiner als ' B=expr
