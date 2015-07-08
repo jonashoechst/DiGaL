@@ -4,3 +4,6 @@
 /DiceGameLexer.tokens
 /DiceGameListener.java
 /DiceGameParser.java
+/*.class
+/*/*.class
+/*/*/*.class
