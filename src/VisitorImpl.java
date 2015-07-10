@@ -21,71 +21,91 @@ public class VisitorImpl extends DiceGameBaseVisitor<String> {
 
 		String imports = "import random\n\n";
 		
-		StringBuilder game = new StringBuilder();
+		StringBuilder playerClass = new StringBuilder();
+		playerClass.append("class Player:\n");
+		playerClass.append(indent("def __str__(self): return str(self.__dict__)\n"));
 		
-		StringBuilder dice = new StringBuilder();
-		dice.append("class Dice:\n");
+		StringBuilder playerInit = new StringBuilder();
+		playerInit.append("def __init__(self, name): ");
+		playerInit.append("self.name = name; ");
 		
-		StringBuilder diceInit = new StringBuilder();
-		diceInit.append("def __init__(self, name, faces):\n");
-		diceInit.append(indent("self.faces = faces\n"));
-		diceInit.append(indent("self.name = name\n"));
-		diceInit.append(indent("self.roll()\n"));
-		dice.append(indent(diceInit.toString()));
+		StringBuilder playerActive = new StringBuilder();
+		playerActive.append("def isActive(self): ");
 		
-		StringBuilder diceRoll = new StringBuilder();
-		diceRoll.append("def roll(self):\n");
-		diceRoll.append(indent("self.value = random.choice(self.faces)\n"));
-		dice.append(indent(diceRoll.toString()));
-		dice.append("\n");
-
-		String gameInit = "def __init__(self):\n";
-		gameInit += indent("self.name = '"+ctx.NAME.getText()+"'\n");
-		gameInit += indent("self.players = []");
-		for(ParseTree init : ctx.children) {
-			if (init.getClass() == DiceGameParser.GameinitContext.class) {
-				gameInit += (indent(init.accept(this)));
-			}
-		}
-		
-		String gameInfo = "def __str__(self):\n";
-		gameInfo += indent("return self.name+' with players '+', '.join(map(str, self.players))");
-		
-		game.append("class Game:\n");
-		game.append(indent(gameInit)+"\n");
-		game.append(indent(gameInfo)+"\n");
-
-		StringBuilder player = new StringBuilder();
-		player.append("class Player:\n");
-		String playerInit = "def __init__(self, name):\n";
-		String playerString = "def __str__(self):\n";
-		playerString += indent("return self.name+str(self.__dict__)");
-		playerInit += indent("self.name = name");
-		String playerActive = "def isActive(self):\n";
 		for(ParseTree init : ctx.children) {
 			if (init.getClass() == DiceGameParser.PlayerinitContext.class) {
 				if (((DiceGameParser.PlayerinitContext) init).ASSN != null ){
-					playerInit += (indent(init.accept(this)));
+					playerInit.append(init.accept(this)+"; ");
 				} else if (((DiceGameParser.PlayerinitContext) init).PLAYERACTIVECOND != null ){
-					playerActive += (indent(init.accept(this)));
+					playerActive.append(init.accept(this)+"; ");
 				}
 			}
 		}
-		player.append(indent(playerInit)+"\n");
-		player.append(indent(playerActive)+"\n");
-		player.append(indent(playerString)+"\n");
 		
-		String setup = "";
-		setup += "if __name__ == '__main__':\n";
-		setup += indent("game = Game()\n");
-		setup += indent("playerCount = int(raw_input('Enter number of players: '))")+"\n";
-		setup += indent("if playerCount < game.min: print(game.name+' is made for more than '+str(game.min)+' players. Bring some friends ;-)'); exit()");
-		setup += indent("if playerCount > game.max: print(str(playerCount)+' players? Thats too much for '+game.name+'... Maximum: '+str(game.max)); exit()")+"\n";
-		setup += indent("for p in range(playerCount): name = raw_input('Enter name of player #'+str(p)+': '); game.players.append(Player(name))")+"\n";
-		setup += indent("print(str(game))");
+		playerClass.append(indent(playerInit.toString())+"\n");
+		playerClass.append(indent(playerActive.toString())+"\n");
+		playerClass.append(indent("\n"));
+		
+		StringBuilder diceClass = new StringBuilder();
+		diceClass.append("class Dice:\n");
+		diceClass.append(indent("def __init__(self, name, faces): self.name = name; self.faces = faces; self.roll()"));
+		diceClass.append(indent("def roll(self): self.value = random.choice(self.faces)"));
+		diceClass.append(indent("def __str__(self): return self.name+': '+str(self.value)"));
+		diceClass.append(indent("\n"));
+
+		
+		StringBuilder gameClass = new StringBuilder();
+		gameClass.append("class Game:\n");
+		gameClass.append(indent("# Static methods"));
+		gameClass.append(indent("def status(self): return 'Status: '+ self.name + ' '.join(map(str, self.players))"));
+		gameClass.append(indent("def rightPlayer(self): return self.players[ (self.players.index(self.activePlayer) - 1) % self.playerCount]"));
+		gameClass.append(indent("def leftPlayer(self):  return self.players[ (self.players.index(self.activePlayer) + 1) % self.playerCount]"));
+		gameClass.append(indent("def playerNum (self, num): return self.players[num]"));
+		gameClass.append(indent("def rollDices(self): map(Dice.roll, self.dices)"));
+		gameClass.append(indent("def sortDices(self, desc=False): self.dices = sorted(self.dices, key=lambda dice: dice.value, reverse=desc)"));
+		
+		StringBuilder gameSetupMethod = new StringBuilder();
+		gameSetupMethod.append("def setup(self):\n");
+		gameSetupMethod.append(indent("self.playerCount = int(raw_input('Enter number of players: '))"));
+		gameSetupMethod.append(indent("if self.playerCount < self.min: print(self.name+' is made for more than '+str(self.min)+' players. Bring some friends ;-)'); exit()"));
+		gameSetupMethod.append(indent("if self.playerCount > self.max: print(str(self.playerCount)+' players? Thats too much for '+self.name+'... Maximum: '+str(self.max)); exit()"));
+		gameSetupMethod.append(indent(""));
+		gameSetupMethod.append(indent("for p in range(self.playerCount): name = raw_input('Enter name of player #'+str(p)+'': ''); self.players.append(Player(name))"));
+		gameSetupMethod.append(indent("self.activePlayer = self.players[0]"));
+		gameSetupMethod.append(indent("print('Game initialized '+self.status())"));
+		gameSetupMethod.append(indent(""));
+		
+		gameClass.append(indent(gameSetupMethod.toString()));
+		
+		StringBuilder gameInitMethod = new StringBuilder();
+		gameInitMethod.append("def __init__(self):\n");
+		gameInitMethod.append(indent("self.players = []"));
+		gameInitMethod.append(indent("self.name = '"+ctx.NAME.getText()+"'\n"));
+		gameInitMethod.append(indent(""));
+		
+		for(ParseTree init : ctx.children) {
+			if (init.getClass() == DiceGameParser.GameinitContext.class) {
+				gameInitMethod.append(indent(init.accept(this)));
+			}
+		}
+		
+		gameClass.append(indent(gameInitMethod.toString()));
+
+		
+		String main = "";
+		main += "if __name__ == '__main__':\n";
+		main += indent("game = Game()\n");
+		main += indent("playerCount = int(raw_input('Enter number of players: '))")+"\n";
+		main += indent("if playerCount < game.min: print(game.name+' is made for more than '+str(game.min)+' players. Bring some friends ;-)'); exit()");
+		main += indent("if playerCount > game.max: print(str(playerCount)+' players? Thats too much for '+game.name+'... Maximum: '+str(game.max)); exit()")+"\n";
+		main += indent("for p in range(playerCount): name = raw_input('Enter name of player #'+str(p)+': '); game.players.append(Player(name))")+"\n";
+		main += indent("print(str(game))")+"\n\n";
+		
+		String gameloop = "";
+		gameloop += "while True:";
 		
 		
-		return imports + dice.toString() + game.toString() + player.toString() + setup;
+		return imports + playerClass.toString() + diceClass.toString() + gameClass.toString() + main;
 	}
 
 	@Override
@@ -148,12 +168,12 @@ public class VisitorImpl extends DiceGameBaseVisitor<String> {
 		if (ctx.ASSN != null) {
 			for(ParseTree var : ctx.children){
 				if(var.getClass() == DiceGameParser.AssignmentContext.class){
-					return "self."+var.accept(this)+"\n";
+					return "self."+var.accept(this);
 				}
 			}
 		}
 		if (ctx.PLAYERACTIVECOND != null){
-			return "return self."+ctx.PLAYERACTIVECOND.accept(this)+"\n\n";
+			return "return self."+ctx.PLAYERACTIVECOND.accept(this);
 		}
 		return null;
 	}
