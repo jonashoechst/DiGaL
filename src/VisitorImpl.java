@@ -8,13 +8,13 @@ import digal.DiceGameParser;
 public class VisitorImpl extends DiceGameBaseVisitor<String> {
 
 	private static String indent(String in){
+		if(in == null) return "null";
 		String ret = "";
 		for(String line : in.split("\\r?\\n")){
 			ret += "    " + line + "\n";
 		}
 		return ret;
-		
-	}
+	} 
 	
 	@Override
 	public String visitGame(@NotNull DiceGameParser.GameContext ctx) {
@@ -80,32 +80,49 @@ public class VisitorImpl extends DiceGameBaseVisitor<String> {
 		StringBuilder gameInitMethod = new StringBuilder();
 		gameInitMethod.append("def __init__(self):\n");
 		gameInitMethod.append(indent("self.players = []"));
+		gameInitMethod.append(indent("# Dynamic inits"));
 		gameInitMethod.append(indent("self.name = '"+ctx.NAME.getText()+"'\n"));
 		gameInitMethod.append(indent(""));
 		
 		for(ParseTree init : ctx.children) {
 			if (init.getClass() == DiceGameParser.GameinitContext.class) {
-				gameInitMethod.append(indent(init.accept(this)));
+				DiceGameParser.GameinitContext initCtx = (DiceGameParser.GameinitContext) init;
+				if (initCtx.COND != null){
+					gameClass.append(indent(initCtx.accept(this)));
+				} else {
+					gameInitMethod.append(indent(init.accept(this)));
+				}
 			}
 		}
 		
 		gameClass.append(indent(gameInitMethod.toString()));
 
+		StringBuilder gameLoop = new StringBuilder();
+		gameLoop.append("while self.isRunning():\n");
+		gameLoop.append(indent("print(self.status())"));
+		gameLoop.append(indent(""));
 		
-		String main = "";
-		main += "if __name__ == '__main__':\n";
-		main += indent("game = Game()\n");
-		main += indent("playerCount = int(raw_input('Enter number of players: '))")+"\n";
-		main += indent("if playerCount < game.min: print(game.name+' is made for more than '+str(game.min)+' players. Bring some friends ;-)'); exit()");
-		main += indent("if playerCount > game.max: print(str(playerCount)+' players? Thats too much for '+game.name+'... Maximum: '+str(game.max)); exit()")+"\n";
-		main += indent("for p in range(playerCount): name = raw_input('Enter name of player #'+str(p)+': '); game.players.append(Player(name))")+"\n";
-		main += indent("print(str(game))")+"\n\n";
+		for(ParseTree init : ctx.children) {
+			if (init.getClass() == DiceGameParser.ActionContext.class) {
+				DiceGameParser.ActionContext loopCtx = (DiceGameParser.ActionContext) init;
+				gameLoop.append(indent(loopCtx.accept(this)));
+			}
+		}
+
+		String gameLoopMethod = "def loop(self):\n"+indent(gameLoop.toString());
+		gameClass.append(indent(gameLoopMethod));
 		
-		String gameloop = "";
-		gameloop += "while True:";
+
+		StringBuilder main = new StringBuilder();
+		main.append("\nif __name__ == '__main__':\n");
+		main.append(indent("game = Game()"));
+		main.append(indent("game.setup()"));
+		main.append(indent("game.loop()"));
+		main.append(indent("print('Spiel beendet: '+game.status())"));
 		
 		
-		return imports + playerClass.toString() + diceClass.toString() + gameClass.toString() + main;
+		
+		return imports + playerClass.toString() + diceClass.toString() + gameClass.toString() + main.toString();
 	}
 
 	@Override
@@ -131,8 +148,11 @@ public class VisitorImpl extends DiceGameBaseVisitor<String> {
 			result.append("]\n");
 			return result.toString();
 		}
+		if (ctx.COND != null) {
+			return "def isRunning(self): return ("+ctx.COND.accept(this)+")";
+		}
 		
-		return null;
+		return "visitGameinit";
 	}
 
 	@Override
@@ -160,36 +180,36 @@ public class VisitorImpl extends DiceGameBaseVisitor<String> {
 	
 	@Override
 	public String visitLaw(@NotNull DiceGameParser.LawContext ctx) {
-		return visitChildren(ctx);
+		StringBuilder ifelse = new StringBuilder();
+		
+		String condStr = visitChildren(ctx.COND);
+		String thenStr = visitChildren(ctx.THEN);
+		
+		ifelse.append("if "+condStr+":");
+		ifelse.append(indent(thenStr));
+		
+		if (ctx.ELSE != null) ifelse.append("else:\n"+indent(visitChildren(ctx.ELSE)));
+		
+		return ifelse.toString();
 	}
 
 	@Override
 	public String visitPlayerinit(@NotNull DiceGameParser.PlayerinitContext ctx) {
 		if (ctx.ASSN != null) {
-			for(ParseTree var : ctx.children){
-				if(var.getClass() == DiceGameParser.AssignmentContext.class){
-					return "self."+var.accept(this);
-				}
-			}
+			return "self."+ctx.ASSN.accept(this);
 		}
 		if (ctx.PLAYERACTIVECOND != null){
 			return "return self."+ctx.PLAYERACTIVECOND.accept(this);
 		}
-		return null;
+		return "visitPlayerinit";
 	}
 
 	@Override
 	public String visitAssignment(@NotNull DiceGameParser.AssignmentContext ctx) {
-		if (ctx.OP != null && ctx.E != null) {
+		if (ctx.V != null && ctx.E != null) {
 			return ctx.V.accept(this) + " = " + ctx.E.accept(this);
 		}
-		if (ctx.OP != null && ctx.P != null) {
-			return ctx.V.accept(this) + " = " + ctx.P.accept(this);
-		}
-		if (ctx.OPSUM != null) {
-			return "sum([x for x in self.dices.value])";
-		}
-		return null;
+		return "visitAssignment";
 	}
 
 	@Override
@@ -199,17 +219,28 @@ public class VisitorImpl extends DiceGameBaseVisitor<String> {
 		} else if (ctx.POS != null) {
 			return "self.dices[" + ctx.POS.getText() + "]";
 		}
-		return null;
+		return "visitDiceobject";
 	}
 
 	@Override
 	public String visitPlayerobjects(@NotNull DiceGameParser.PlayerobjectsContext ctx) {
-//		if (ctx.ALL != null) {
-//			return "[dice if dice.name == '"+ctx.NAME.getText()+"' for dice in self.dices][0]";
-//		} else if (ctx.PO != null) {
-//			return "self.dices[" + ctx.POS.getText() + "]";
-//		}
-		return null;
+		if (ctx.ALL != null) {
+			return "self.players";
+		}
+		if (ctx.ACTIVE != null){
+			return "[player if player.isActive() for player in self.players]";
+		}
+		if (ctx.LAST != null){
+			String ret = "[";
+			for(ParseTree val : ctx.children){
+				if(val.getClass() == DiceGameParser.PlayerobjectContext.class){
+					ret += (val.getText()+", ");
+				}
+			}
+			ret += ctx.LAST.getText()+"]";
+			return ret;
+		}
+		return "visitPlayerobjects";
 	}
 
 	@Override
@@ -248,39 +279,74 @@ public class VisitorImpl extends DiceGameBaseVisitor<String> {
 			return ctx.PLAYER.accept(this) + ".isActive()";
 		}
 		
-		return null;
+		return "visitCondition";
 	}
 
 
 	@Override
 	public String visitLoop(@NotNull DiceGameParser.LoopContext ctx) {
 		
-		if (ctx.PLAYEROBJETS != null){
-			String ret = "for player in "+ctx.PLAYEROBJETS.accept(this)+":\n";
+		if (ctx.FORLOOP != null){
+			StringBuilder forLoop = new StringBuilder();
+			if (ctx.POs != null) {
+				forLoop.append("for "+ctx.VAR.getText()+" in "+ctx.POs.accept(this)+":\n");
+			}
+			if (ctx.DOs != null) {
+				forLoop.append("for "+ctx.VAR.getText()+" in "+ctx.DOs.accept(this)+":\n");
+			}
+			forLoop.append(indent(ctx.ACTION.accept(this)));
+			return forLoop.toString();
 		}
-		return null;
+		if (ctx.NLOOP != null){
+			StringBuilder loop = new StringBuilder();
+			loop.append("for i in range("+ctx.VALUE.getText()+"):\n");
+			loop.append(indent(ctx.ACTION.accept(this)));
+			return loop.toString();
+		}
+		return "visitLoop";
 	}
 
 	@Override
 	public String visitVariable(@NotNull DiceGameParser.VariableContext ctx) {
-		if (ctx.IDENT != null){
-			return ctx.IDENT.getText();
+		if (ctx.VAR != null){
+			return ctx.VAR.getText();
 		}
-		if (ctx.DO != null) {
+		if (ctx.DO != null){
 			return ctx.DO.accept(this);
 		}
-		if (ctx.PO != null) {
+		if (ctx.PO != null){
 			return ctx.PO.accept(this);
 		}
-		if (ctx.INST != null) {
-			return ctx.INST.accept(this) + "." + ctx.VAR.accept(this);
+		if (ctx.INST != null){
+			return ctx.INST.accept(this) + "." + ctx.IVAR.getText();
 		}
-		return null;
+		
+		return "visitVariable";
 	}
 
 	@Override
 	public String visitAction(@NotNull DiceGameParser.ActionContext ctx) {
-		return visitChildren(ctx);
+
+		if (ctx.ACTION1 != null && ctx.ACTION2 != null){
+			return ctx.ACTION1.accept(this)+"\n"+ctx.ACTION2.accept(this);
+		}
+		if (ctx.NEXT != null){
+			return "self.activePlayer = "+ctx.PLAYER.accept(this)+"; "+"continue";
+		}
+		if (ctx.AS != null){
+			return ctx.AS.accept(this);
+		}
+		if (ctx.DA != null){
+			return ctx.DA.accept(this);
+		}
+		if (ctx.LOOP != null){
+			return ctx.LOOP.accept(this);
+		}
+		if (ctx.LAW != null){
+			return ctx.LAW.accept(this);
+		}
+		
+		return "visitAction"; 
 	}
 
 	@Override
@@ -291,28 +357,80 @@ public class VisitorImpl extends DiceGameBaseVisitor<String> {
 		if (ctx.INTEGER != null){
 			return ctx.INTEGER.getText();
 		}
-		if (ctx.E != null) {
-			return '(' + ctx.E.accept(this) + ')';
-		}
 		if (ctx.VAR != null){
 			return ctx.VAR.accept(this);
 		}
-		return null;
+		if (ctx.E != null) {
+			return '(' + ctx.E.accept(this) + ')';
+		}
+		if (ctx.SUM != null) {
+			return "sum([dice.value for dice in "+ctx.DOs.accept(this)+"])";
+		}
+		if (ctx.COUNT != null) {
+			if (ctx.DOs != null) {
+				return "len("+ctx.DOs.accept(this)+")";
+			}
+			if (ctx.POs != null) {
+				return "len("+ctx.POs.accept(this)+")";
+			}
+		}
+		return "visitExpr";
 	}
 
 	@Override
 	public String visitDiceobjects(@NotNull DiceGameParser.DiceobjectsContext ctx) {
-		return visitChildren(ctx);
+		if (ctx.ALL != null) {
+			return "self.dices";
+		}
+		if (ctx.LAST != null){
+			String ret = "[";
+			for(ParseTree val : ctx.children){
+				if(val.getClass() == DiceGameParser.DiceobjectContext.class){
+					ret += (val.getText()+", ");
+				}
+			}
+			ret += ctx.LAST.getText()+"]";
+			return ret;
+		}
+		return "visitDiceobjects";
 	}
 
 	@Override
 	public String visitDicesaction(@NotNull DiceGameParser.DicesactionContext ctx) {
-		return visitChildren(ctx);
+		if (ctx.THROW != null){
+			return "map(Dice.roll, "+ctx.DOs.accept(this)+")";
+		}
+		if (ctx.SORT != null){
+			String reverse = "";
+			if (ctx.REVERSE != null){
+				reverse = "desc=True";
+			}
+			return "self.sortDices("+reverse+")";
+		}
+		return "visitDicesaction";
 	}
 
 	@Override
 	public String visitPlayerobject(@NotNull DiceGameParser.PlayerobjectContext ctx) {
-		return visitChildren(ctx);
+		if (ctx.CUR != null){
+			return "self.activePlayer";
+		}
+		if (ctx.NAME != null){
+			return "[dice if dice.name == '"+ctx.NAME.getText()+"' for dice in self.players][0]";
+		}
+		if (ctx.POS != null){
+			return "self.players["+ctx.POS.getText()+"]";
+		}
+		if (ctx.CUR != null){
+			return "self.activePlayer";
+		}
+		if (ctx.RIGHT != null){
+			return "self.rightPlayer()";
+		}
+		if (ctx.LEFT != null){
+			return "self.leftPlayer()";
+		}
+		return "visitPlayerobject";
 	}
 
 }

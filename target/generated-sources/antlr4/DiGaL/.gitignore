@@ -1,8 +1,8 @@
-/DiceGameVisitor.java
-/DiceGameParser.java
-/DiceGameListener.java
-/DiceGameLexer.tokens
-/DiceGameLexer.java
-/DiceGameBaseVisitor.java
-/DiceGameBaseListener.java
 /DiceGame.tokens
+/DiceGameBaseListener.java
+/DiceGameBaseVisitor.java
+/DiceGameLexer.java
+/DiceGameLexer.tokens
+/DiceGameListener.java
+/DiceGameParser.java
+/DiceGameVisitor.java
