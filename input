@@ -11,7 +11,7 @@ spieler sind aktiv, solange punkte größergleich 0 gilt.
 spieler haben die werte punkte ist 3.
 
 ist ein spieler am zug macht er folgendes:
-wenn der spieler inaktiv ist, dann ist linker spieler dran.
+wenn punkte von aktueller spieler kleiner 0, dann ist linker spieler dran.
 würfelt mit allen würfeln.
 sortiert alle würfel absteigend.
 ergebnis ist würfel 0 * 10 + würfel 1.

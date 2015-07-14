@@ -70,7 +70,7 @@ public class VisitorImpl extends DiceGameBaseVisitor<String> {
 		gameSetupMethod.append(indent("if self.playerCount < self.min: print(self.name+' is made for more than '+str(self.min)+' players. Bring some friends ;-)'); exit()"));
 		gameSetupMethod.append(indent("if self.playerCount > self.max: print(str(self.playerCount)+' players? Thats too much for '+self.name+'... Maximum: '+str(self.max)); exit()"));
 		gameSetupMethod.append(indent(""));
-		gameSetupMethod.append(indent("for p in range(self.playerCount): name = raw_input('Enter name of player #'+str(p)+'': ''); self.players.append(Player(name))"));
+		gameSetupMethod.append(indent("for p in range(self.playerCount): name = raw_input('Enter name of player #'+str(p)+': '); self.players.append(Player(name))"));
 		gameSetupMethod.append(indent("self.activePlayer = self.players[0]"));
 		gameSetupMethod.append(indent("print('Game initialized '+self.status())"));
 		gameSetupMethod.append(indent(""));
@@ -182,13 +182,13 @@ public class VisitorImpl extends DiceGameBaseVisitor<String> {
 	public String visitLaw(@NotNull DiceGameParser.LawContext ctx) {
 		StringBuilder ifelse = new StringBuilder();
 		
-		String condStr = visitChildren(ctx.COND);
-		String thenStr = visitChildren(ctx.THEN);
+		String condStr = ctx.COND.accept(this); // visitChildren(ctx.COND);
+		String thenStr = ctx.THEN.accept(this); //visitChildren(ctx.THEN);
 		
-		ifelse.append("if "+condStr+":");
+		ifelse.append("if "+condStr+":\n");
 		ifelse.append(indent(thenStr));
 		
-		if (ctx.ELSE != null) ifelse.append("else:\n"+indent(visitChildren(ctx.ELSE)));
+		if (ctx.ELSE != null) ifelse.append("else:\n"+indent(ctx.ELSE.accept(this)));
 		
 		return ifelse.toString();
 	}
@@ -246,25 +246,25 @@ public class VisitorImpl extends DiceGameBaseVisitor<String> {
 	@Override
 	public String visitCondition(@NotNull DiceGameParser.ConditionContext ctx) {
 		if (ctx.EQ != null) {
-			return ctx.A.accept(this) +" == "+ctx.B.accept(this);
+			return (ctx.A.accept(this) +" == "+ctx.B.accept(this));
 		}
 		if (ctx.LT != null) {
-			return ctx.A.accept(this) +" < "+ctx.B.accept(this);
+			return (ctx.A.accept(this) +" < "+ctx.B.accept(this));
 		}
 		if (ctx.GT != null) {
-			return ctx.A.accept(this) +" > "+ctx.B.accept(this);
+			return (ctx.A.accept(this) +" > "+ctx.B.accept(this));
 		}
 		if (ctx.LE != null) {
-			return ctx.A.accept(this) +" <= "+ctx.B.accept(this);
+			return (ctx.A.accept(this) +" <= "+ctx.B.accept(this));
 		}
 		if (ctx.GE != null) {
-			return ctx.A.accept(this) +" >= "+ctx.B.accept(this);
+			return (ctx.A.accept(this) +" >= "+ctx.B.accept(this));
 		}
 		if (ctx.AND != null) {
-			return ctx.C.accept(this) +" and "+ctx.D.accept(this);
+			return (ctx.C.accept(this) +" and "+ctx.D.accept(this));
 		}
 		if (ctx.OR != null) {
-			return ctx.C.accept(this) +" or "+ctx.D.accept(this);
+			return (ctx.C.accept(this) +" or "+ctx.D.accept(this));
 		}
 		if (ctx.NOT != null) {
 			return "not "+ctx.C.accept(this);
@@ -275,13 +275,12 @@ public class VisitorImpl extends DiceGameBaseVisitor<String> {
 		if (ctx.FALSE != null) {
 			return "false";
 		}
-		if (ctx.PLAYER != null) {
-			return ctx.PLAYER.accept(this) + ".isActive()";
-		}
+//		if (ctx.PLAYER != null) {
+//			return ctx.PLAYER.accept(this) + ".isActive()";
+//		}
 		
 		return "visitCondition";
 	}
-
 
 	@Override
 	public String visitLoop(@NotNull DiceGameParser.LoopContext ctx) {

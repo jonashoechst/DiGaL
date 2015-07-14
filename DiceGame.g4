@@ -67,6 +67,21 @@ diceobjects		: ALL='allen würfeln'
 				| (DO=diceobject', ')* LAST=diceobject
 				;
 
+condition		: A=expr EQ=' gleich ' B=expr
+				| A=expr GT=' größer als ' B=expr
+				| A=expr GT=' größer ' B=expr
+				| A=expr GT=' mehr als ' B=expr
+				| A=expr LT=' kleiner als ' B=expr
+				| A=expr LT=' kleiner ' B=expr
+				| A=expr LE=' kleinergleich ' B=expr
+				| A=expr GE=' größergleich ' B=expr
+				| C=condition AND=' und ' D=condition
+				| C=condition OR=' oder ' D=condition
+				| NOT=' nicht ' C=condition
+				| TRUE='wahr' 
+				| FALSE='falsch'
+				;
+
 variable		: VAR=ID
 				| DO=diceobject
 				| PO=playerobject
@@ -96,16 +111,4 @@ assignment		: 'setze ' V=variable ' auf ' E=expr
 law				: 'wenn ' COND=condition ', dann ' THEN=action
 				| 'wenn ' COND=condition ', dann ' THEN=action ', sonst ' ELSE=action;
 
-condition		: A=expr EQ=' gleich ' B=expr
-				| A=expr LT=' kleiner als ' B=expr
-				| A=expr GT=' größer als ' B=expr
-				| A=expr GT=' mehr als ' B=expr
-				| A=expr LE=' kleinergleich ' B=expr
-				| A=expr GE=' größergleich ' B=expr
-				| C=condition AND=' und ' D=condition
-				| C=condition OR=' oder ' D=condition
-				| NOT=' nicht ' C=condition
-				| TRUE='wahr'
-				| FALSE='falsch'
-				| PLAYER=playerobject ' inaktiv ist';
 				
