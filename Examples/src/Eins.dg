@@ -1,0 +1,20 @@
+EINS wird so gespielt:
+
+das spiel ist für 2 bis 10 spieler geeignet.
+das spiel hat folgende würfel:
+würfel A hat diese seiten: 1 2 3 4 5 6
+würfel B hat diese seiten: 1 2 3 4 5 6
+würfel C hat diese seiten: 1 2 3 4 5 6
+würfel D hat diese seiten: 1 2 3 4 5 6.
+
+spieler haben die werte PUNKTE ist 0.
+spieler haben die werte GEWONNEN ist 0.
+
+ist ein spieler am zug macht er folgendes:
+würfelt mit allen würfeln.
+wenn würfel 0 gleich 1 oder würfel 1 gleich 1 oder würfel 2 gleich 1 oder würfel 3 gleich 1, dann rechter spieler ist dran.
+aktueller spieler PUNKTE ist aktueller spieler PUNKTE + die summe von allen würfeln.
+wenn aktueller spieler PUNKTE größergleich 100, dann setze aktueller spieler GEWONNEN auf 1 und spiel ist zu ende.
+rechter spieler ist dran.
+
+gewonnen hat der spieler, bei dem GEWONNEN gleich 1.

@@ -14,16 +14,17 @@ import digal.DiceGameParser.*;
 public class Main {
 
 	public static void main(String[] args) throws FileNotFoundException, IOException {
-		ANTLRInputStream in = new ANTLRInputStream(new FileReader("max"));
+		ANTLRInputStream in = new ANTLRInputStream(new FileReader("Examples/src/Eins.dg"));
 		Lexer lexer = new DiceGameLexer(in);
 		CommonTokenStream tokens = new CommonTokenStream(lexer);
 		DiceGameParser parser = new DiceGameParser(tokens);
 		GameContext parseTree = parser.game();
-//		System.out.println(parseTree.accept(new VisitorImpl()));
 		
-		PrintWriter writer = new PrintWriter("test.py", "UTF-8");
-		writer.println(parseTree.accept(new VisitorImpl()));
+		String finalGame = parseTree.accept(new VisitorImpl());
+		String gameName = in.toString().substring(0, in.toString().indexOf(" "));
+		
+		PrintWriter writer = new PrintWriter("Examples/bin/" + gameName + ".py", "UTF-8");
+		writer.println(finalGame);
 		writer.close();
-
 	}
 }
