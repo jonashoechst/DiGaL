@@ -2,7 +2,7 @@ grammar DiceGame;
 
 INT 			: '-'?[0-9]+;
 //WS  			: [ \r\t\n]+ -> skip; // skip spaces, tabs, newlines
-ID  			: [a-z]+; // ids are lowercase, to easily differentiate from code
+ID  			: [A-Z]+; // ids are lowercase, to easily differentiate from code
 COMMENT			: '//' ~[\r\n]* '\n' -> skip;
  
 game			: NAME=ID' wird so gespielt:\n' '\n' (GAMEINIT=gameinit '.\n')+ '\n' (PLAYERINIT=playerinit'.\n')+  '\n' PLAY='ist ein spieler am zug macht er folgendes:\n' (ACTION=action'.\n')*;

@@ -19,7 +19,7 @@ public class VisitorImpl extends DiceGameBaseVisitor<String> {
 	@Override
 	public String visitGame(@NotNull DiceGameParser.GameContext ctx) {
 
-		String imports = "import random\n\n";
+		String imports = "#!/usr/bin/env python\n# -*- coding: utf-8 -*-\nimport random\n\n";
 		
 		StringBuilder playerClass = new StringBuilder();
 		playerClass.append("class Player:\n");
@@ -99,7 +99,8 @@ public class VisitorImpl extends DiceGameBaseVisitor<String> {
 
 		StringBuilder gameLoop = new StringBuilder();
 		gameLoop.append("while self.isRunning():\n");
-		gameLoop.append(indent("print(self.status())"));
+		gameLoop.append(indent("\nprint(self.status())"));
+		gameLoop.append(indent("print(self.activePlayer.name+\" ist dran.\")"));
 		gameLoop.append(indent(""));
 		
 		for(ParseTree init : ctx.children) {
@@ -129,7 +130,7 @@ public class VisitorImpl extends DiceGameBaseVisitor<String> {
 	public String visitGameinit(@NotNull DiceGameParser.GameinitContext ctx) {
 		
 		if(ctx.ASSN != null) {
-			return "self."+ctx.ASSN.accept(this)+"\n";
+			return ctx.ASSN.accept(this)+"\n";
 		}
 		
 		if(ctx.FROM != null && ctx.TO != null) {
@@ -196,10 +197,10 @@ public class VisitorImpl extends DiceGameBaseVisitor<String> {
 	@Override
 	public String visitPlayerinit(@NotNull DiceGameParser.PlayerinitContext ctx) {
 		if (ctx.ASSN != null) {
-			return "self."+ctx.ASSN.accept(this);
+			return ctx.ASSN.accept(this);
 		}
 		if (ctx.PLAYERACTIVECOND != null){
-			return "return self."+ctx.PLAYERACTIVECOND.accept(this);
+			return "return "+ctx.PLAYERACTIVECOND.accept(this);
 		}
 		return "visitPlayerinit";
 	}
@@ -228,7 +229,7 @@ public class VisitorImpl extends DiceGameBaseVisitor<String> {
 			return "self.players";
 		}
 		if (ctx.ACTIVE != null){
-			return "[player if player.isActive() for player in self.players]";
+			return "[player for player in self.players if player.isActive()]";
 		}
 		if (ctx.LAST != null){
 			String ret = "[";
@@ -288,10 +289,10 @@ public class VisitorImpl extends DiceGameBaseVisitor<String> {
 		if (ctx.FORLOOP != null){
 			StringBuilder forLoop = new StringBuilder();
 			if (ctx.POs != null) {
-				forLoop.append("for "+ctx.VAR.getText()+" in "+ctx.POs.accept(this)+":\n");
+				forLoop.append("for self."+ctx.VAR.getText()+" in "+ctx.POs.accept(this)+":\n");
 			}
 			if (ctx.DOs != null) {
-				forLoop.append("for "+ctx.VAR.getText()+" in "+ctx.DOs.accept(this)+":\n");
+				forLoop.append("for self."+ctx.VAR.getText()+" in "+ctx.DOs.accept(this)+":\n");
 			}
 			forLoop.append(indent(ctx.ACTION.accept(this)));
 			return forLoop.toString();
@@ -308,10 +309,10 @@ public class VisitorImpl extends DiceGameBaseVisitor<String> {
 	@Override
 	public String visitVariable(@NotNull DiceGameParser.VariableContext ctx) {
 		if (ctx.VAR != null){
-			return ctx.VAR.getText();
+			return "self."+ctx.VAR.getText();
 		}
 		if (ctx.DO != null){
-			return ctx.DO.accept(this);
+			return ctx.DO.accept(this)+".value";
 		}
 		if (ctx.PO != null){
 			return ctx.PO.accept(this);
@@ -397,7 +398,7 @@ public class VisitorImpl extends DiceGameBaseVisitor<String> {
 	@Override
 	public String visitDicesaction(@NotNull DiceGameParser.DicesactionContext ctx) {
 		if (ctx.THROW != null){
-			return "map(Dice.roll, "+ctx.DOs.accept(this)+")";
+			return "raw_input('Enter drücken zum Würfeln...'); map(Dice.roll, "+ctx.DOs.accept(this)+")";
 		}
 		if (ctx.SORT != null){
 			String reverse = "";
@@ -415,7 +416,7 @@ public class VisitorImpl extends DiceGameBaseVisitor<String> {
 			return "self.activePlayer";
 		}
 		if (ctx.NAME != null){
-			return "[dice if dice.name == '"+ctx.NAME.getText()+"' for dice in self.players][0]";
+			return "[p if p.name == '"+ctx.NAME.getText()+"' for p in self.players][0]";
 		}
 		if (ctx.POS != null){
 			return "self.players["+ctx.POS.getText()+"]";

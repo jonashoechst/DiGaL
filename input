@@ -1,21 +1,21 @@
-max wird so gespielt:
+MAX wird so gespielt:
 
-das spiel hat den wert letztes ist 0.
+das spiel hat den wert LETZTES ist 0.
 das spiel ist für 2 bis 10 spieler geeignet.
 das spiel läuft solange anzahl aktiver spieler größer als 1.
 das spiel hat folgende würfel:
-würfel a hat diese seiten: 1 2 3 4 5 6
-würfel b hat diese seiten: 1 2 3 4 5 6.
+würfel A hat diese seiten: 1 2 3 4 5 6
+würfel B hat diese seiten: 1 2 3 4 5 6.
 
-spieler sind aktiv, solange punkte größergleich 0 gilt.
-spieler haben die werte punkte ist 3.
+spieler haben die werte PUNKTE ist 3.
+spieler sind aktiv, solange PUNKTE größergleich 0 gilt.
 
 ist ein spieler am zug macht er folgendes:
-wenn punkte von aktueller spieler kleiner 0, dann ist linker spieler dran.
+wenn PUNKTE von aktueller spieler kleiner 0, dann ist linker spieler dran.
 würfelt mit allen würfeln.
 sortiert alle würfel absteigend.
-ergebnis ist würfel 0 * 10 + würfel 1.
-wenn würfel 0 gleich würfel 1, dann setze ergebnis auf ergebnis * 10.
-wenn ergebnis gleich 21, dann für alle spieler s setze punkte von s auf (punkte von s - 1); und setze punkte von aktueller spieler auf (punkte von aktueller spieler + 1) und setze letztes auf 0 und aktueller spieler ist dran.
-wenn ergebnis kleiner als letztes, dann setze spieler punkte auf spieler punkte - 1 und setze letztes auf 0 und linker spieler ist dran.
-wenn ergebnis größergleich letztes, dann setze letztes auf ergebnis und linker spieler ist dran.
+ERGEBNIS ist würfel 0 * 10 + würfel 1.
+wenn würfel 0 gleich würfel 1, dann setze ERGEBNIS auf ERGEBNIS * 10.
+wenn ERGEBNIS gleich 21, dann für alle spieler S setze PUNKTE von S auf (PUNKTE von S - 1); und setze PUNKTE von aktueller spieler auf (PUNKTE von aktueller spieler + 1) und setze LETZTES auf 0 und aktueller spieler ist dran.
+wenn ERGEBNIS kleiner als LETZTES, dann aktueller spieler PUNKTE ist PUNKTE von aktueller spieler - 1 und setze LETZTES auf 0 und linker spieler ist dran.
+wenn ERGEBNIS größergleich LETZTES, dann setze LETZTES auf ERGEBNIS und linker spieler ist dran.
