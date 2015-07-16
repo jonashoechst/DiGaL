@@ -1,0 +1,18 @@
+BARBUDI wird so gespielt:
+
+das spiel ist für 2 spieler geeignet.
+das spiel hat folgende würfel:
+würfel A hat diese seiten: 1 2 3 4 5 6
+würfel B hat diese seiten: 1 2 3 4 5 6.
+
+spieler haben die werte GEWONNEN ist 0.
+
+ist ein spieler am zug macht er folgendes:
+würfelt mit allen würfeln.
+sortiert alle würfel absteigend.
+ERGEBNIS ist würfel 0 * 10 + würfel 1.
+wenn ERGEBNIS gleich 66 oder ERGEBNIS gleich 65 oder ERGEBNIS gleich 55 oder ERGEBNIS gleich 33, dann aktueller spieler GEWONNEN ist 1 und spiel ist zu ende.
+wenn ERGEBNIS gleich 44 oder ERGEBNIS gleich 22 oder ERGEBNIS gleich 11 oder ERGEBNIS gleich 21, dann linker spieler GEWONNEN ist 1 und spiel ist zu ende.
+linker spieler ist dran.
+
+gewonnen hat der spieler, bei dem GEWONNEN gleich 1.

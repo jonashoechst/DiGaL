@@ -228,6 +228,18 @@ public class DiceGameBaseListener implements DiceGameListener {
 	 * <p>The default implementation does nothing.</p>
 	 */
 	@Override public void exitPlayerobject(@NotNull DiceGameParser.PlayerobjectContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterGameend(@NotNull DiceGameParser.GameendContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitGameend(@NotNull DiceGameParser.GameendContext ctx) { }
 
 	/**
 	 * {@inheritDoc}

@@ -119,4 +119,10 @@ public interface DiceGameVisitor<T> extends ParseTreeVisitor<T> {
 	 * @return the visitor result
 	 */
 	T visitPlayerobject(@NotNull DiceGameParser.PlayerobjectContext ctx);
+	/**
+	 * Visit a parse tree produced by {@link DiceGameParser#gameend}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitGameend(@NotNull DiceGameParser.GameendContext ctx);
 }

@@ -5,10 +5,11 @@ INT 			: '-'?[0-9]+;
 ID  			: [A-Z]+; // ids are lowercase, to easily differentiate from code
 COMMENT			: '//' ~[\r\n]* '\n' -> skip;
  
-game			: NAME=ID' wird so gespielt:\n' '\n' (GAMEINIT=gameinit '.\n')+ '\n' (PLAYERINIT=playerinit'.\n')+  '\n' PLAY='ist ein spieler am zug macht er folgendes:\n' (ACTION=action'.\n')*;
+game			: NAME=ID' wird so gespielt:\n' '\n' (GAMEINIT=gameinit '.\n')+ '\n' (PLAYERINIT=playerinit'.\n')*  '\n' PLAY='ist ein spieler am zug macht er folgendes:\n' (ACTION=action'.\n')* '\n' (GAMEEND=gameend) ;
 
 gameinit		: 'das spiel hat den wert 'ASSN=assignment
 				| 'das spiel ist für 'FROM=INT' bis 'TO=INT' spieler geeignet'
+				| 'das spiel ist für 'FROM=INT' spieler geeignet'
 				| 'das spiel läuft solange ' COND=condition
 				| 'das spiel hat folgende würfel:' ('\n'DICEINIT=diceinit)*;
 			  
@@ -25,14 +26,20 @@ loop			: FORLOOP='für ' (DOs=diceobjects|POs=playerobjects) ' ' VAR=ID ' ' ACTI
 //				| 'für ' DICEOBJECTS=diceobjects ' ' VAR=ID ' ' ACTION=action ';'
 				| NLOOP='macht ' VALUE=INT ' mal ' ACTION=action ';'
 				; 
-    	
+    
+gameend			: MULTI='gewonnen haben alle spieler, bei denen ' COND=condition '.'
+				| SINGLE='gewonnen hat der spieler, bei dem ' COND=condition '.'
+				;
+
 action			: AS=assignment 
 				| DA=dicesaction
 				| LOOP=loop
 				| LAW=law
 				| ACTION1=action ' und ' ACTION2=action
 				| 'ist ' PLAYER=playerobject NEXT=' dran'
-				| PLAYER=playerobject NEXT=' ist dran';
+				| PLAYER=playerobject NEXT=' ist dran'
+				| ENDLOOP='spiel ist zu ende'
+				;
 		
 dicesaction		: THROW='würfelt mit ' DOs=diceobjects 
 				| SORT='sortiert alle würfel'

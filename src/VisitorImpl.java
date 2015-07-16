@@ -23,20 +23,22 @@ public class VisitorImpl extends DiceGameBaseVisitor<String> {
 		
 		StringBuilder playerClass = new StringBuilder();
 		playerClass.append("class Player:\n");
-		playerClass.append(indent("def __str__(self): return str(self.__dict__)\n"));
+		playerClass.append(indent("def __str__(self): return ', '.join(map(str, reversed(self.__dict__.values())))\n"));
 		
 		StringBuilder playerInit = new StringBuilder();
 		playerInit.append("def __init__(self, name): ");
 		playerInit.append("self.name = name; ");
 		
 		StringBuilder playerActive = new StringBuilder();
-		playerActive.append("def isActive(self): ");
 		
 		for(ParseTree init : ctx.children) {
 			if (init.getClass() == DiceGameParser.PlayerinitContext.class) {
 				if (((DiceGameParser.PlayerinitContext) init).ASSN != null ){
 					playerInit.append(init.accept(this)+"; ");
-				} else if (((DiceGameParser.PlayerinitContext) init).PLAYERACTIVECOND != null ){
+				} 
+				
+				else if (((DiceGameParser.PlayerinitContext) init).PLAYERACTIVECOND != null ){
+					playerActive.append("def isActive(self): ");
 					playerActive.append(init.accept(this)+"; ");
 				}
 			}
@@ -57,7 +59,7 @@ public class VisitorImpl extends DiceGameBaseVisitor<String> {
 		StringBuilder gameClass = new StringBuilder();
 		gameClass.append("class Game:\n");
 		gameClass.append(indent("# Static methods"));
-		gameClass.append(indent("def status(self): return 'Status: '+ self.name + ' '.join(map(str, self.players))"));
+		gameClass.append(indent("def status(self): return 'Status['+', '.join(reversed(self.players[0].__dict__.keys())).lower()+']: '+' - '.join(map(str, self.players))"));
 		gameClass.append(indent("def rightPlayer(self): return self.players[ (self.players.index(self.activePlayer) - 1) % self.playerCount]"));
 		gameClass.append(indent("def leftPlayer(self):  return self.players[ (self.players.index(self.activePlayer) + 1) % self.playerCount]"));
 		gameClass.append(indent("def playerNum (self, num): return self.players[num]"));
@@ -84,15 +86,22 @@ public class VisitorImpl extends DiceGameBaseVisitor<String> {
 		gameInitMethod.append(indent("self.name = '"+ctx.NAME.getText()+"'\n"));
 		gameInitMethod.append(indent(""));
 		
+		boolean hasRunningCond = false;
+		
 		for(ParseTree init : ctx.children) {
 			if (init.getClass() == DiceGameParser.GameinitContext.class) {
 				DiceGameParser.GameinitContext initCtx = (DiceGameParser.GameinitContext) init;
 				if (initCtx.COND != null){
 					gameClass.append(indent(initCtx.accept(this)));
+					hasRunningCond = true;
 				} else {
 					gameInitMethod.append(indent(init.accept(this)));
 				}
 			}
+		}
+		
+		if (!hasRunningCond) {
+			gameClass.append(indent("def isRunning(self): return True"));
 		}
 		
 		gameClass.append(indent(gameInitMethod.toString()));
@@ -100,7 +109,7 @@ public class VisitorImpl extends DiceGameBaseVisitor<String> {
 		StringBuilder gameLoop = new StringBuilder();
 		gameLoop.append("while self.isRunning():\n");
 		gameLoop.append(indent("\nprint(self.status())"));
-		gameLoop.append(indent("print(self.activePlayer.name+\" ist dran.\")"));
+		gameLoop.append(indent("print('\\n'+self.activePlayer.name+' ist dran.'),"));
 		gameLoop.append(indent(""));
 		
 		for(ParseTree init : ctx.children) {
@@ -119,7 +128,8 @@ public class VisitorImpl extends DiceGameBaseVisitor<String> {
 		main.append(indent("game = Game()"));
 		main.append(indent("game.setup()"));
 		main.append(indent("game.loop()"));
-		main.append(indent("print('Spiel beendet: '+game.status())"));
+		main.append(indent("print('\\nSpiel beendet: '+game.status())"));
+		main.append(indent(ctx.GAMEEND.accept(this)));
 		
 		
 		
@@ -132,9 +142,13 @@ public class VisitorImpl extends DiceGameBaseVisitor<String> {
 		if(ctx.ASSN != null) {
 			return ctx.ASSN.accept(this)+"\n";
 		}
-		
+
 		if(ctx.FROM != null && ctx.TO != null) {
 			return "self.min = "+ctx.FROM.getText() + "\nself.max = " + ctx.TO.getText();
+		}
+		
+		if(ctx.FROM != null) {
+			return "self.min = "+ctx.FROM.getText() + "\nself.max = " + ctx.FROM.getText();
 		}
 		
 		if(ctx.DICEINIT != null) {
@@ -325,6 +339,20 @@ public class VisitorImpl extends DiceGameBaseVisitor<String> {
 	}
 
 	@Override
+	public String visitGameend(@NotNull DiceGameParser.GameendContext ctx) {
+		if (ctx.MULTI != null){
+			return "print('Die Spieler '+','.join([self.name for self in game.players if "+ctx.COND.accept(this)+"])+' haben gewonnen!')";
+		}
+		
+		if (ctx.SINGLE != null){
+			return "print([self.name for self in game.players if "+ctx.COND.accept(this)+"][0]+' hat gewonnen!')";
+		}
+		
+		
+		return "visitGameend";
+	}
+
+	@Override
 	public String visitAction(@NotNull DiceGameParser.ActionContext ctx) {
 
 		if (ctx.ACTION1 != null && ctx.ACTION2 != null){
@@ -344,6 +372,9 @@ public class VisitorImpl extends DiceGameBaseVisitor<String> {
 		}
 		if (ctx.LAW != null){
 			return ctx.LAW.accept(this);
+		}
+		if (ctx.ENDLOOP != null){
+			return "break";
 		}
 		
 		return "visitAction"; 
@@ -398,7 +429,7 @@ public class VisitorImpl extends DiceGameBaseVisitor<String> {
 	@Override
 	public String visitDicesaction(@NotNull DiceGameParser.DicesactionContext ctx) {
 		if (ctx.THROW != null){
-			return "raw_input('Enter drücken zum Würfeln...'); map(Dice.roll, "+ctx.DOs.accept(this)+")";
+			return "raw_input('Enter drücken zum Würfeln...'); map(Dice.roll, "+ctx.DOs.accept(this)+"); print('Du hast '+', '.join(map(str, [dice.value for dice in self.dices]))+' gewürfelt!')";
 		}
 		if (ctx.SORT != null){
 			String reverse = "";

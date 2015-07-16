@@ -188,4 +188,14 @@ public interface DiceGameListener extends ParseTreeListener {
 	 * @param ctx the parse tree
 	 */
 	void exitPlayerobject(@NotNull DiceGameParser.PlayerobjectContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link DiceGameParser#gameend}.
+	 * @param ctx the parse tree
+	 */
+	void enterGameend(@NotNull DiceGameParser.GameendContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link DiceGameParser#gameend}.
+	 * @param ctx the parse tree
+	 */
+	void exitGameend(@NotNull DiceGameParser.GameendContext ctx);
 }

@@ -138,4 +138,11 @@ public class DiceGameBaseVisitor<T> extends AbstractParseTreeVisitor<T> implemen
 	 * {@link #visitChildren} on {@code ctx}.</p>
 	 */
 	@Override public T visitPlayerobject(@NotNull DiceGameParser.PlayerobjectContext ctx) { return visitChildren(ctx); }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation returns the result of calling
+	 * {@link #visitChildren} on {@code ctx}.</p>
+	 */
+	@Override public T visitGameend(@NotNull DiceGameParser.GameendContext ctx) { return visitChildren(ctx); }
 }

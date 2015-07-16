@@ -19,3 +19,5 @@ wenn würfel 0 gleich würfel 1, dann setze ERGEBNIS auf ERGEBNIS * 10.
 wenn ERGEBNIS gleich 21, dann für alle spieler S setze PUNKTE von S auf (PUNKTE von S - 1); und setze PUNKTE von aktueller spieler auf (PUNKTE von aktueller spieler + 1) und setze LETZTES auf 0 und aktueller spieler ist dran.
 wenn ERGEBNIS kleiner als LETZTES, dann aktueller spieler PUNKTE ist PUNKTE von aktueller spieler - 1 und setze LETZTES auf 0 und linker spieler ist dran.
 wenn ERGEBNIS größergleich LETZTES, dann setze LETZTES auf ERGEBNIS und linker spieler ist dran.
+
+gewonnen hat der spieler, bei dem PUNKTE größergleich 0.
