@@ -88,7 +88,7 @@ Um diese Dinge zu unterstützen könnte das Konzept der Objektorientiertheit ein
 
 \subsection{Dispatching} % (fold)
 \label{sub:dispatching}
-	Dispatching beschreibt den Umstand, dass bei polymorphen Methoden zur Laufzeit entschieden werden muss, welche Methode ausgeführt wird: die der eigenen Klasse oder die der Superklasse. Da \dg weder Methoden noch Vererbung unterstützt, mussten wir uns keine Gedanken zu Dispatching machen.
+	Man spricht von Dispatching, wenn ein Methodenaufruf zur Laufzeit anhand des tatsächlichen Typs eines Objektes aufgelöst wird. Da \dg weder Methoden noch Polymorphie unterstützt, mussten wir uns keine Gedanken zu Dispatching machen.
 
 % subsection dispatching (end)
 
@@ -98,7 +98,7 @@ Um diese Dinge zu unterstützen könnte das Konzept der Objektorientiertheit ein
 	
 	Außerdem sind Vergleichsoperationen wie \texttt{größer}, \texttt{kleiner}, \texttt{gleich} möglich. Auch logische Ausdrücke wie \texttt{und} und \texttt{oder} sind möglich.
 	
-	Weiterhin gibt es domänenspezifische Ausdrücke. Hier sei die Operatione \texttt{die summe von} genannt, die die summe aller gewürfelten Augenzahlen ermittelt und die Operation \texttt{anzahl}, die die Anzahl von zum Beispiel aktiven Spielern zurück gibt.
+	Weiterhin gibt es domänenspezifische Ausdrücke. Hier sei die Operatione \texttt{die summe von <würfeln>} genannt, die die summe aller gewürfelten Augenzahlen ermittelt und die Operation \texttt{anzahl <spieler/würfel>}, die die Anzahl von zum Beispiel aktiven Spielern zurück gibt.
 
 % subsection ausdrucke (end)
 
