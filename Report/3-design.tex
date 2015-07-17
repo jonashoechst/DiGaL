@@ -19,7 +19,7 @@
 	Da Spiele, die in DiGaL geschrieben sind, nur aus vier Blöcken bestehen, schien es uns nicht sinnvoll, eine Art der Auslagerung von Code in andere Dateien einzuführen. Auch hier müsste mit dem Konzept der strikten Blockbildung gebrochen werden und eine Möglichkeit geschaffen werden diese Dateien einzubinden oder zu importieren. Das könnte unerfahrene Nutzer jedoch zusätzlich verwirren, da es aus unserer Sicht nicht mit unserem Konzept vereinbar ist, DiGaL eine kontrollierte Sprache zu Grunde zu legen, da es kein sprachliches Konzept gibt, dass paradigmatisch das gleiche aussagt.
 \subsubsection{Erweiterung bestehender Spiele}
 \label{subsub:erweiterung_bestehender_spiele}
-	Eine weitere Möglichkeit der Modularisierung ist bestehende Spiele, also in unserem Fall bestehenden Code zu erweitern.
+	Eine weitere Möglichkeit der Modularisierung ist bestehende Spiele, also in unserem Fall bestehenden Code zu erweitern. Die aktuell DiGaL Version bietet dieses Konstrukt nicht an. Denkbar wäre aber eine Art Vererbung, in dem ein Spiel auf einem anderen Basiert und jeder Block um weitere Anweisungen ergänzt werden kann (hinzufügen von Würfeln, zusätzliche Aktionen bei bestimmten Ergebnissen, ...). Diese Vererbung sollte ein Spiel jedoch nur erweitern, nicht aber bestehende Regeln außer Kraft setzen können, da dies zum einen wieder zu Lasten der Verständlichkeit geschehen würde. Zum andern würde eine Änderung des zugrundeliegenden Spieles faktisch einer Neuentwicklung gleich kommen und sollte aus diesem Grund auch so behandelt werden.
 
 % subsection modularitat (end)
 
@@ -27,12 +27,16 @@
 \label{sub:robustheit}
 Alle DiGaL Programme haben einen festen Rahmen, dessen freie Flächen durch Variablendefinitionen, Arithmetische Operationen und Kontrollflussanweisungen gefüllt werden. Im Gegensatz zu klassischen Programmiersprachen ist der Programmierer dadurch in seiner Mächtigkeit sehr eingeschränkt. Durch diese Einschränkung ist es ihm wiederum auch weniger leicht möglich, Fehler zu produzieren. Treten Programmierfehler im DiGaL Programm auf, sind diese schon durch die Syntax invalidiert und können nicht in ein Programm übersetzt werden. Als Beispiel sei hier die Iteration über eine Variable genannt, die in unserer Sprache nur als Iteration über eine Gruppe von Spielern oder Würfeln vorgesehen ist. 
 
-Funktions- oder Klassendefinitionen sind in DiGaL nicht vorgesehen, der rein Iterative Ansatz reicht aus unserer Sicht aus, den Kontrollfluss von Würfelspielen zu beschreiben.
+Funktions- oder Klassendefinitionen sind in DiGaL nicht vorgesehen, der rein Iterative Ansatz reicht aus unserer Sicht aus, den Kontrollfluss und die Komplexität von Würfelspielen zu beschreiben.
+
+Würfelspiele sind in ihren möglichen Ausgängen begrenzt und dadurch gut testbar. Eine kleine Zahl an Würfeln mit einer geringen Zahl an Würfelflächen, die in einer festen Kontrollstruktur verwendet werden, macht es möglich alle Fälle des Programmes dazu generieren und die Spielausgänge zu testen.
 % subsection robustheit (end)
 
 \subsection{Datenmodellierung} % (fold)
 \label{sub:datenmodellierung}
+DiGaL bietet keine Möglichkeit um Datenobjekte oder -strukturen anzulegen. Wie unterstützen einen allerdings einen Aspekt der Objektorientiertheit, in dem wir die Möglichkeit bieten, einem Spieler Variablen zuzuordnen. Die einzigen erweiterteren Objekte sind also die Spieler. Alle vom Nutzer definierten Variablen, die nicht zu Spielern gehören lassen sich nur im global als Variable des Spiels anlegen.
 
+Als weiteres (nicht modifizierbares) Objekt sind Würfel zu nennen, deren Namen und Seiten zwar vom Programmierer definiert, nicht aber neue Felder hinzugefügt werden können.
 % subsection datenmodellierung (end)
 
 \subsection{Abstraktionsniveau} % (fold)
