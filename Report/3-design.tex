@@ -85,7 +85,7 @@ Um diese Dinge zu unterstützen könnte das Konzept der Objektorientiertheit ein
 \label{sub:werte_typen}
 Unsere Domäne erfordert keine ausgefallenen Datentypen. Würfelseiten und daraus resultierend auch die Aktionen im Spiel basieren auf Ganzzahl-Werten \texttt{(Integer)}. Variablen in unserer Sprache werden mit Strings adressiert, die aus Großbuchstaben bestehen. Der Datentyp String besteht in der Sprache selbst nicht und wird bei der Kompilation im Endprodukt hinzugefügt. Denkbar wäre es allerdings, Strings einzuführen, zum Beispiel um eigene textuelle Ausgaben zu definieren, die vom gegebenen Framework abweichen.
 
-Darüber hinaus werden die domänenspezifischen Objekte direkt adressiert. Für Spieler gibt es Ausdrücke, die den jeweils linken oder rechten Spieler des aktuellen oder einen Spieler auf einem bestimmten Platz adressieren. Ebenso ist es möglich Würfel über deren Nummer oder Bezeichnung zu adressieren. Mengen von Würfeln oder Spieler können über deren verschiedene Eigenschaften ausgewählt werden: \texttt{alle}; \texttt{aktive (spieler)}; \texttt{würfel 1, würfel 2}.
+Darüber hinaus werden die domänenspezifischen Objekte direkt adressiert. Für Spieler gibt es Ausdrücke, die den jeweils linken oder rechten Spieler des aktuellen oder einen Spieler auf einem bestimmten Platz adressieren. Ebenso ist es möglich Würfel über deren Nummer oder Bezeichnung zu adressieren. Mengen von Würfeln oder Spieler können über deren verschiedene Eigenschaften ausgewählt werden: \texttt{alle <würfel/spieler>}; \texttt{aktive <spieler>}; \texttt{würfel 1, würfel 2}.
 % subsection werte_typen (end)
 
 \subsection{Dispatching} % (fold)
@@ -116,7 +116,7 @@ Darüber hinaus werden die domänenspezifischen Objekte direkt adressiert. Für 
 \label{sub:anweisungen}
 DiGaL bietet dem Nutzer eine eingeschränkte, aber sehr domänenspezifische Sammlung an Anweisungen. Elementare Anweisungen sind Zuweisungen (von ausgewerteten Ausdrücken), Schleifen und bedingte Anweisungen, die so auch in klassischen Programmiersprachen auftreten.
 
-Darüber hinaus sind die Elementaren Ausdrücke unserer Domäne als feste Anweisungen vorgesehen: \texttt{würfeln mit }, \texttt{sortieren}, \texttt{nächster spieler ist dran}, ... Diese festen Anweisungen können als eine Art Framework für Würfelspiele aufgefasst werden.
+Darüber hinaus sind die Elementaren Ausdrücke unserer Domäne als feste Anweisungen vorgesehen: \texttt{würfeln mit <würfeln>}, \texttt{sortieren <würfel>}, \texttt{nächster <spieler> ist dran}, ... Diese festen Anweisungen können als eine Art Framework für Würfelspiele aufgefasst werden.
 
 
 % subsection anweisungen (end)
