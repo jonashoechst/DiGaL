@@ -52,7 +52,6 @@ dicesaction		: THROW='würfelt mit ' DOs=diceobjects
 
 playerobject	: CUR='der spieler'
 				| CUR='aktueller spieler'
-				| 'spieler ' NAME=ID
 				| 'spieler ' POS=INT
 				| RIGHT='rechter spieler'
 				| LEFT='linker spieler'; 

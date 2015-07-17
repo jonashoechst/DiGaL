@@ -81,9 +81,11 @@ Um diese Dinge zu unterstützen könnte das Konzept der Objektorientiertheit ein
 \section{Designspace} % (fold)
 \label{sec:designspace}
 
-\subsection{Werte & Typen} % (fold)
+\subsection{Werte \& Typen} % (fold)
 \label{sub:werte_typen}
+Unsere Domäne erfordert keine ausgefallenen Datentypen. Würfelseiten und daraus resultierend auch die Aktionen im Spiel basieren auf Ganzzahl-Werten \emph{(Integer)}. Variablen in unserer Sprache werden mit Strings adressiert, die aus Großbuchstaben bestehen. Der Datentyp String besteht in der Sprache selbst nicht und wird bei der Kompilation im Endprodukt hinzugefügt. Denkbar wäre es allerdings, Strings einzuführen, zum Beispiel um eigene textuelle Ausgaben zu definieren, die vom gegebenen Framework abweichen.
 
+Darüber hinaus werden die domänenspezifischen Objekte direkt adressiert. Für Spieler gibt es Ausdrücke, die den jeweils linken oder rechten Spieler des aktuellen oder einen Spieler auf einem bestimmten Platz adressieren. Ebenso ist es möglich Würfel über deren Nummer oder Bezeichnung zu adressieren. Mengen von Würfeln oder Spieler können über deren verschiedene Eigenschaften ausgewählt werden: \emph{alle}, \emph{aktive (spieler)}, \emph{würfel 1, würfel 2}.
 % subsection werte_typen (end)
 
 \subsection{Dispatching} % (fold)
@@ -103,6 +105,10 @@ Um diese Dinge zu unterstützen könnte das Konzept der Objektorientiertheit ein
 
 \subsection{Anweisungen} % (fold)
 \label{sub:anweisungen}
+DiGaL bietet dem Nutzer eine eingeschränkte, aber sehr domänenspezifische Sammlung an Anweisungen. Elementare Anweisungen sind Zuweisungen (von ausgewerteten Ausdrücken), Schleifen und bedingte Anweisungen, die so auch in klassischen Programmiersprachen auftreten.
+
+Darüber hinaus sind die Elementaren Ausdrücke unserer Domäne als feste Anweisungen vorgesehen: \emph{würfeln mit }, \emph{sortieren}, \emph{nächster spieler ist dran}, ... Diese festen Anweisungen können als eine Art Framework für Würfelspiele aufgefasst werden.
+
 
 % subsection anweisungen (end)
 
