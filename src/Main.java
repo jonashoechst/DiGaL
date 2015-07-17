@@ -14,7 +14,7 @@ import digal.DiceGameParser.*;
 public class Main {
 
 	public static void main(String[] args) throws FileNotFoundException, IOException {
-		ANTLRInputStream in = new ANTLRInputStream(new FileReader("Examples/src/Eins.dg"));
+		ANTLRInputStream in = new ANTLRInputStream(new FileReader("Examples/src/Test.dg"));
 		Lexer lexer = new DiceGameLexer(in);
 		CommonTokenStream tokens = new CommonTokenStream(lexer);
 		DiceGameParser parser = new DiceGameParser(tokens);

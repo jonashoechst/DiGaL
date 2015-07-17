@@ -420,6 +420,7 @@ public class VisitorImpl extends DiceGameBaseVisitor<String> {
 			String ret = "[";
 			for(ParseTree val : ctx.children){
 				if(val.getClass() == DiceGameParser.DiceobjectContext.class){
+					System.out.println(val.getText());
 					ret += (val.getText()+", ");
 				}
 			}
