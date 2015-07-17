@@ -1,0 +1,26 @@
+KILLER wird so gespielt:
+
+das spiel ist für 2 bis 10 spieler geeignet.
+das spiel läuft solange anzahl aktiver spieler größer als 1.
+das spiel hat folgende würfel:
+würfel A hat diese seiten: 1 2 3 4 5 6
+würfel B hat diese seiten: 1 2 3 4 5 6
+würfel C hat diese seiten: 1 2 3 4 5 6
+würfel D hat diese seiten: 1 2 3 4 5 6
+würfel E hat diese seiten: 1 2 3 4 5 6
+würfel F hat diese seiten: 1 2 3 4 5 6.
+
+spieler haben die werte PUNKTE ist 666.
+spieler sind aktiv, solange PUNKTE größergleich 0 gilt.
+
+ist ein spieler am zug macht er folgendes:
+wenn PUNKTE von aktueller spieler kleiner 0, dann ist linker spieler dran.
+würfelt mit allen würfeln.
+sortiert alle würfel absteigend.
+ERGEBNIS ist würfel 0 * 10 + würfel 1.
+wenn würfel 0 gleich würfel 1, dann setze ERGEBNIS auf ERGEBNIS * 10.
+wenn ERGEBNIS gleich 21, dann für alle spieler S setze PUNKTE von S auf (PUNKTE von S - 1); und setze PUNKTE von aktueller spieler auf (PUNKTE von aktueller spieler + 1) und setze LETZTES auf 0 und aktueller spieler ist dran.
+wenn ERGEBNIS kleiner als LETZTES, dann aktueller spieler PUNKTE ist PUNKTE von aktueller spieler - 1 und setze LETZTES auf 0 und linker spieler ist dran.
+wenn ERGEBNIS größergleich LETZTES, dann setze LETZTES auf ERGEBNIS und linker spieler ist dran.
+
+gewonnen hat der spieler, bei dem PUNKTE größergleich 0.
