@@ -9,6 +9,17 @@
 
 \subsection{Modularität} % (fold)
 \label{sub:modularitat}
+\subsubsection{Funktionsdefinitionen}
+\label{subsub:funktionsdefinitionen}
+	DiGaL bietet keine Konzepte, um Modular Spiele entwickeln zu können. Diese Entscheidung ist bewusst so gewählt worden. Auch hier stand wieder der Fokus im Vordergrund, die Sprache so einfach wie möglich zu gestalten. Ein Programm in Module aufzuteilen heißt zum Beispiel eine Möglichkeit zu bieten Funktionen oder Methoden zu definieren, in denen Aktionen gekapselt sind, die wiederholt ausgeführt werden können. Dies würde aber bedeuten, dass man ein Konzept benötigt, dass einem einen solchen Mechanismus erlaubt. Und dieses neue Konzept müsste von Anwendern unserer Sprache erlernt werden, wenn sie keine Programmierer sind. Daher haben wir uns dazu entschieden, keine Möglichkeit anzubieten Funktionen zu definieren. Es schien uns einfacher dem Nutzer die Möglichkeit zu geben, Aktionen wiederholt zu definieren.
+
+	Desweiteren besteht ein Würfelspiel in DiGaL aus vier Blöcken, wie sie in \todo{REF EINFÜGEN} vorgestellt werden. Die Möglichkeit Funktionen zu definieren würde daher bedeuten, dass dieses strikte Konzept gebrochen werden müsste, was wiederum ein Mehr an Komplexität bedeuten würde.
+\subsubsection{Auslagern in andere Dateien}
+\label{subsub:auslagern_in_andere_dateien}
+	Da Spiele, die in DiGaL geschrieben sind, nur aus vier Blöcken bestehen, schien es uns nicht sinnvoll, eine Art der Auslagerung von Code in andere Dateien einzuführen. Auch hier müsste mit dem Konzept der strikten Blockbildung gebrochen werden und eine Möglichkeit geschaffen werden diese Dateien einzubinden oder zu importieren. Das könnte unerfahrene Nutzer jedoch zusätzlich verwirren, da es aus unserer Sicht nicht mit unserem Konzept vereinbar ist, DiGaL eine kontrollierte Sprache zu Grunde zu legen, da es kein sprachliches Konzept gibt, dass paradigmatisch das gleiche aussagt.
+\subsubsection{Erweiterung bestehender Spiele}
+\label{subsub:erweiterung_bestehender_spiele}
+	Eine weitere Möglichkeit der Modularisierung ist bestehende Spiele, also in unserem Fall bestehenden Code zu erweitern.
 
 % subsection modularitat (end)
 \subsection{Robusheit} % (fold)
