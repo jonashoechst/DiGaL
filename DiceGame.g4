@@ -11,14 +11,20 @@ gameinit		: 'das spiel hat den wert 'ASSN=assignment
 				| 'das spiel ist für 'FROM=INT' bis 'TO=INT' spieler geeignet'
 				| 'das spiel ist für 'FROM=INT' spieler geeignet'
 				| 'das spiel läuft solange ' COND=condition
-				| 'das spiel hat folgende würfel:' ('\n'DICEINIT=diceinit)*;
+				| 'das spiel hat folgende würfel:' ('\n'DICEINIT=diceinit)*
+				;
 			  
-diceinit		: 'würfel ' NAME=ID ' hat diese seiten:' (' 'FACE=face)+;
+diceinit		: 'würfel ' NAME=ID ' hat diese seiten:' (' 'FACE=face)+
+				;
 
 face			: INT;
 
-playerinit  	: 'spieler haben die werte 'ASSN=assignment
-				| 'spieler sind aktiv, solange ' PLAYERACTIVECOND=condition ' gilt'; 
+playerinit  	: playerDekl ('haben '|'hat ') 'die werte ' ASSN=assignment
+				| playerDekl ('sind '|'ist ') 'aktiv, solange ' PLAYERACTIVECOND=condition ' gilt'?
+				| 'solange ' PLAYERACTIVECOND=condition ' gilt'? ', '('sind '|'ist ') playerDekl 'aktiv'
+				; 
+				
+playerDekl		: ('der '|'ein '|'die ')? 'spieler ';
 				
 var				: ID; 
 				
@@ -38,28 +44,39 @@ action			: AS=assignment
 				| LOOP=loop
 				| LAW=law
 				| ACTION1=action ' und ' ACTION2=action
+				| ACTION1=action ', ' ACTION2=action
+				| 'ist ' PLAYER=playerobject (NEXT=' dran'|NEXT=' am zug')
 				| 'ist ' PLAYER=playerobject NEXT=' dran'
+				| 'ist ' PLAYER=playerobject NEXT=' am zug'
 				| PLAYER=playerobject NEXT=' ist dran'
+				| PLAYER=playerobject NEXT=' ist am zug'
 				| ENDLOOP='spiel ist zu ende'
+				| ENDLOOP='ist das spiel zu ende'
+				| ENDLOOP='das spiel ist zu ende'
 				;
 		
 dicesaction		: THROW='würfelt mit ' DOs=diceobjects
 				| SORT='sortiert alle würfel'
-				| SORT='sortiert alle würfel'' aufsteigend'
+				| SORT='sortiert alle würfel aufsteigend'
 				| SORT='sortiert alle würfel'REVERSE=' absteigend'
 //				| 'legt würfel aus 'diceobjects' in 'diceobjects
 				;
 
-playerobject	: CUR='der spieler'
+playerobject	: CUR='der aktuelle spieler'
+				| CUR='der spieler'
 				| CUR='aktueller spieler'
+				| CUR='aktuellem spieler'
 				| 'spieler ' POS=INT
+				| LEFT='linker spieler'
+				| LEFT='der linke spieler'
 				| RIGHT='rechter spieler'
-				| LEFT='linker spieler'; 
+				| RIGHT='der rechte spieler'
+				; 
+			
 		
-playerobjects	: ALL='alle spieler' 
+playerobjects	: ALL='alle spieler'
 				| ALL='allen spielern'
 				| ALL='aller spieler'
-				| ALL='alle'('r'|'n')? ' spieler'('n')?
 				| ACTIVE='aktive spieler'
 				| ACTIVE='aktiver spieler'
 				| (PO=playerobject', ')* LAST=playerobject

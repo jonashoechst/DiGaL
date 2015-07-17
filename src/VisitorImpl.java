@@ -449,9 +449,6 @@ public class VisitorImpl extends DiceGameBaseVisitor<String> {
 		if (ctx.CUR != null){
 			return "self.activePlayer";
 		}
-		if (ctx.NAME != null){
-			return "[p if p.name == '"+ctx.NAME.getText()+"' for p in self.players][0]";
-		}
 		if (ctx.POS != null){
 			return "self.players["+ctx.POS.getText()+"]";
 		}
