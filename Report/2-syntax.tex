@@ -12,7 +12,7 @@
 			\item Spielziel und Bedingungen für das Spielende und,
 			\item Bewertungsgrundlagen
 		\end{itemize}
-		Unser Ziel war es nun DiGaL so zu gestalten, dass es als Regelwerk eines Spiels erkannt und auch von allen so gelesen werden kann. Damit dies deutlich wird, soll ein Beispiel gegeben werden:
+		Unser Ziel war es nun \dg so zu gestalten, dass es als Regelwerk eines Spiels erkannt und auch von allen so gelesen werden kann. Damit dies deutlich wird, soll ein Beispiel gegeben werden:
 		\subsection{Ein erstes Beispiel}
 		\label{sub:ein_erstes_beispiel}
 			% TODO: Readable (abstract) syntax or meta-model; Map the syntax elements to domain concepts; ~1000 Wörter
@@ -41,7 +41,7 @@ gewonnen hat der spieler, bei dem GEWONNEN gleich 1.
 	\section{Kontrollierte Sprache}
 	\label{sec:kontrollierte_sprache}
 		Das oben gezeigte Beispiel, gibt einen ersten Eindruck der Syntax unserer Sprache. 
-        Wir haben versucht DiGaL an die natürlichen Sprache anzulehnen. Es ist unmöglich bzw. ein langer Prozess, alle Eigenheiten der deutschen Sprache zu implementieren und abzubilden. Ein Kompromiss aus unserem Design Goal und der Umsetzbarkeit ist eine kontrollierte Sprache: eine Sprache, die auf der einen Seite zwar intuitiv verständlich ist, auf der anderen Seite jedoch die deutsche Sprache so weit einschränkt, dass sie sinnvoll zu analysieren und grammatisch beschreibbar ist. 
+        Wir haben versucht \dg an die natürlichen Sprache anzulehnen. Es ist unmöglich bzw. ein langer Prozess, alle Eigenheiten der deutschen Sprache zu implementieren und abzubilden. Ein Kompromiss aus unserem Design Goal und der Umsetzbarkeit ist eine kontrollierte Sprache: eine Sprache, die auf der einen Seite zwar intuitiv verständlich ist, auf der anderen Seite jedoch die deutsche Sprache so weit einschränkt, dass sie sinnvoll zu analysieren und grammatisch beschreibbar ist. 
         Das Deklinieren und Konjugieren von Worten ist für das intuitive Verstehen einer Sprache aus unserer Sicht von großer Bedeutung und trägt maßgeblich zum Lesefluss bei. Im obigen Beispiel sei dazu auf auf die Verwendung von \texttt{alle würfel} verwiesen, der im Beispiel schon in seiner deklinierten Variante \texttt{allen würfeln} verwendet wird.
         Auch die Satzstellung ist für das Verständnis einer natürlichen Sprache wichtig. Sätze einer kontrollierten Sprache können schnell sperrig wirken. Unsere Sprache bietet daher verschiedene Optionen um das gleiche auszudrücken. Hier sei als Beispiel das \texttt{wenn} Konstrukt von oben angegeben, dass folgenden beiden Varianten valide ist:
 \begin{lstlisting}
@@ -76,7 +76,7 @@ wenn würfel 0 gleich 1 oder würfel 1 gleich 1, dann rechter spieler ist dran.
     % subsection variablen (end)
     \section{Blöcke und Absätze}
     \label{sec:blocke_und_absatze}
-     Absätze haben in der natürlichen Sprache den Zweck Abschnitte, die einen eigenen Sinnzusammenhang oder ein eigenes kleines Thema haben von einander abzugrenzen. Dieses Paradigma haben wir auch in der Syntax von DiGaL übernommen. So haben Programm, die in DiGaL geschrieben sind vier Absätze, die nach ihrem Sinn unterteilt sind.
+     Absätze haben in der natürlichen Sprache den Zweck Abschnitte, die einen eigenen Sinnzusammenhang oder ein eigenes kleines Thema haben von einander abzugrenzen. Dieses Paradigma haben wir auch in der Syntax von \dg übernommen. So haben Programm, die in \dg geschrieben sind vier Absätze, die nach ihrem Sinn unterteilt sind.
  
      Zunächst beginnt ein Programm mit einer Überschrift. Anschließend kommt ein Abschnitt, der die Spielinitialisierung übernimmt. Es werden globale Variablen, Anzahl und Art der Würfel und die Anzahl der Spieler festgelegt. Auch eine Bedingung, wie lange das Spiel läuft, wird hier definiert.
  
@@ -88,7 +88,7 @@ wenn würfel 0 gleich 1 oder würfel 1 gleich 1, dann rechter spieler ist dran.
  
     \section{Groß- und Kleinschreibung}
     \label{sec:gross_und_kleinschreibung}
-     In diesem Punkt weichen wir bewusst von der natürlichen deutschen Sprache ab. Es wäre möglich auch hier die Regeln der deutschen Sprache einzuführen. Das hätte jedoch negative Auswirkungen auf die Lesbarkeit eines Programms. Da DiGaL eine Programmiersprache ist, bei der es wie bei anderen Programmiersprachen darum geht den Zustand eines Programms zu ändern und das im Wesentlichen über Variablen funktioniert, haben wir uns dazu entschieden Variablenbezeichner komplett groß (z.B. \texttt{EINS} oder \texttt{PUNKTE} in obigem Beispiel) und den Rest komplett klein zu schreiben. Dies erhöht die Lesbarkeit eines Programms und vereinfacht es so Programmierern ein valides und korrektes Programm zu schreiben.
+     In diesem Punkt weichen wir bewusst von der natürlichen deutschen Sprache ab. Es wäre möglich auch hier die Regeln der deutschen Sprache einzuführen. Das hätte jedoch negative Auswirkungen auf die Lesbarkeit eines Programms. Da \dg eine Programmiersprache ist, bei der es wie bei anderen Programmiersprachen darum geht den Zustand eines Programms zu ändern und das im Wesentlichen über Variablen funktioniert, haben wir uns dazu entschieden Variablenbezeichner komplett groß (z.B. \texttt{EINS} oder \texttt{PUNKTE} in obigem Beispiel) und den Rest komplett klein zu schreiben. Dies erhöht die Lesbarkeit eines Programms und vereinfacht es so Programmierern ein valides und korrektes Programm zu schreiben.
 	
     
     \todo{Syntax Tree visualisieren}
