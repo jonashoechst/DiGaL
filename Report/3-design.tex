@@ -90,16 +90,25 @@ Darüber hinaus werden die domänenspezifischen Objekte direkt adressiert. Für 
 
 \subsection{Dispatching} % (fold)
 \label{sub:dispatching}
+	Dispatching beschreibt den Umstand, dass bei polymorphen Methoden zur Laufzeit entschieden werden muss, welche Methode ausgeführt wird: die der eigenen Klasse oder die der Superklasse. Da \dg weder Methoden noch Vererbung unterstützt, mussten wir uns keine Gedanken zu Dispatching machen.
 
 % subsection dispatching (end)
 
 \subsection{Ausdrücke} % (fold)
 \label{sub:ausdrucke}
+	\dg unterstützt alle gängigen arithmetischen Ausdrücke außer die Division, da bei Würfelspielen in den meisten Fällen nur mit ganzzahlen gerechnet wird. Außerdem würde die Division einen neuen Datentypen für Fließkommazahlen voraussetzen, den wir aber der Einfachheit halber nicht unterstützen.
+	
+	Außerdem sind Vergleichsoperationen wie \texttt{größer}, \texttt{kleiner}, \texttt{gleich} möglich. Auch logische Ausdrücke wie \texttt{und} und \texttt{oder} sind möglich.
+	
+	Weiterhin gibt es domänenspezifische Ausdrücke. Hier sei die Operatione \texttt{die summe von} genannt, die die summe aller gewürfelten Augenzahlen ermittelt und die Operation \texttt{anzahl}, die die Anzahl von zum Beispiel aktiven Spielern zurück gibt.
 
 % subsection ausdrucke (end)
 
 \subsection{Scope} % (fold)
 \label{sub:scope}
+	Bei einem Würfelspiel sind zu Beginn alle Variablen global bekannt. Wenn gewürfelt wird, sehen alle Spieler die gewürfelte Augenzahl und auch alle Spieler wissen, wie viele Spieler und Würfel am Spiel beteiligt sind. Daher gibt es im Spiel lediglich einen globalen Scope. In diesem können auch alle Spieler alle Werte lesen und verändern.
+	
+	Die Spieler hingegen haben eigene lokale Variablen, da diese nicht zum globalen Spiel gehören, sondern jeder Spieler für beispielsweise seine eigenen Punkte verantwortlich ist. Es gibt jedoch die Möglichkeit Werte von anderen Spielern zu ändern. Dies ist bewusst so entschieden worden, da beispielsweise bei dem Spiel Mäxchen bei der Augenzahl 21 allen anderen Spielern ein Punkt abgezogen wird.
 
 % subsection scope (end)
 
