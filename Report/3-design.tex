@@ -62,12 +62,12 @@ Zur Problemlösung wäre auch eine Library denkbar, die Paradigmen aus Würfelsp
 \label{sub:machtigkeit}
 Um die Ausdrucksmächtigkeit von \dg zu erhöhen ist eine wesentliche Änderung Funktionen einzuführen. Der Programmierer könnte Konstrukte definieren, die im Moment von der Sprache zur Verfügung gestellt werden und damit den Code besser strukturieren. 
 
-Eine weitere Möglichkeit um die Ausdrucksmächtigkeit zu erhöhen liegt darin, frei zu definierende \emph{while} Schleifen einzuführen. Im Moment werden in der Sprache lediglich \emph{foreach} und \emph{for} Schleifen angeboten. Die bereits eingeführten Konstrukte zur Iteration könnten verallgemeinert werden, so dass auch Variablen definiert werden können, über die iteriert werden kann. Dies würde allerdings zu Lasten der Robustheit gehen, da der Programmierer dadurch leichter Fehler machen kann, die erst zur Laufzeit auftreten.
+Eine weitere Möglichkeit um die Ausdrucksmächtigkeit zu erhöhen liegt darin, frei zu definierende \texttt{while} Schleifen einzuführen. Im Moment werden in der Sprache lediglich \texttt{foreach} und \texttt{for} Schleifen angeboten. Die bereits eingeführten Konstrukte zur Iteration könnten verallgemeinert werden, so dass auch Variablen definiert werden können, über die iteriert werden kann. Dies würde allerdings zu Lasten der Robustheit gehen, da der Programmierer dadurch leichter Fehler machen kann, die erst zur Laufzeit auftreten.
 % subsection machtigkeit (end)
 
 \subsection{Objektmodellierung} % (fold)
 \label{sub:objektmodellierung}
-Einige Spiele bestehen nicht nur aus den von uns unterstützten Datenstrukturen \emph{Spieler} und \emph{Würfel}. So hat beispielsweise das Spiel Kniffel neben genannten Objekten auch noch Spielzettel mit Ergebniswerten und Becher. Diese können zwar in \dg mit Spielervariablen nachgebildet werden, eine Modellierung als Objekt wäre jedoch auch denkbar und unter Umständen wünschenswert.
+Einige Spiele bestehen nicht nur aus den von uns unterstützten Datenstrukturen \texttt{Spieler} und \texttt{Würfel}. So hat beispielsweise das Spiel Kniffel neben genannten Objekten auch noch Spielzettel mit Ergebniswerten und Becher. Diese können zwar in \dg mit Spielervariablen nachgebildet werden, eine Modellierung als Objekt wäre jedoch auch denkbar und unter Umständen wünschenswert.
 
 Außerdem gibt es in manchen Spielen Spieler, die eine Sonderrolle haben und von uns auch nicht direkt unterstützt werden. Auch hier würde eine Möglichkeit der Modellierung sinnvoll sein.
 
@@ -83,9 +83,9 @@ Um diese Dinge zu unterstützen könnte das Konzept der Objektorientiertheit ein
 
 \subsection{Werte \& Typen} % (fold)
 \label{sub:werte_typen}
-Unsere Domäne erfordert keine ausgefallenen Datentypen. Würfelseiten und daraus resultierend auch die Aktionen im Spiel basieren auf Ganzzahl-Werten \emph{(Integer)}. Variablen in unserer Sprache werden mit Strings adressiert, die aus Großbuchstaben bestehen. Der Datentyp String besteht in der Sprache selbst nicht und wird bei der Kompilation im Endprodukt hinzugefügt. Denkbar wäre es allerdings, Strings einzuführen, zum Beispiel um eigene textuelle Ausgaben zu definieren, die vom gegebenen Framework abweichen.
+Unsere Domäne erfordert keine ausgefallenen Datentypen. Würfelseiten und daraus resultierend auch die Aktionen im Spiel basieren auf Ganzzahl-Werten \texttt{(Integer)}. Variablen in unserer Sprache werden mit Strings adressiert, die aus Großbuchstaben bestehen. Der Datentyp String besteht in der Sprache selbst nicht und wird bei der Kompilation im Endprodukt hinzugefügt. Denkbar wäre es allerdings, Strings einzuführen, zum Beispiel um eigene textuelle Ausgaben zu definieren, die vom gegebenen Framework abweichen.
 
-Darüber hinaus werden die domänenspezifischen Objekte direkt adressiert. Für Spieler gibt es Ausdrücke, die den jeweils linken oder rechten Spieler des aktuellen oder einen Spieler auf einem bestimmten Platz adressieren. Ebenso ist es möglich Würfel über deren Nummer oder Bezeichnung zu adressieren. Mengen von Würfeln oder Spieler können über deren verschiedene Eigenschaften ausgewählt werden: \emph{alle}, \emph{aktive (spieler)}, \emph{würfel 1, würfel 2}.
+Darüber hinaus werden die domänenspezifischen Objekte direkt adressiert. Für Spieler gibt es Ausdrücke, die den jeweils linken oder rechten Spieler des aktuellen oder einen Spieler auf einem bestimmten Platz adressieren. Ebenso ist es möglich Würfel über deren Nummer oder Bezeichnung zu adressieren. Mengen von Würfeln oder Spieler können über deren verschiedene Eigenschaften ausgewählt werden: \texttt{alle}; \texttt{aktive (spieler)}; \texttt{würfel 1, würfel 2}.
 % subsection werte_typen (end)
 
 \subsection{Dispatching} % (fold)
@@ -116,7 +116,7 @@ Darüber hinaus werden die domänenspezifischen Objekte direkt adressiert. Für 
 \label{sub:anweisungen}
 DiGaL bietet dem Nutzer eine eingeschränkte, aber sehr domänenspezifische Sammlung an Anweisungen. Elementare Anweisungen sind Zuweisungen (von ausgewerteten Ausdrücken), Schleifen und bedingte Anweisungen, die so auch in klassischen Programmiersprachen auftreten.
 
-Darüber hinaus sind die Elementaren Ausdrücke unserer Domäne als feste Anweisungen vorgesehen: \emph{würfeln mit }, \emph{sortieren}, \emph{nächster spieler ist dran}, ... Diese festen Anweisungen können als eine Art Framework für Würfelspiele aufgefasst werden.
+Darüber hinaus sind die Elementaren Ausdrücke unserer Domäne als feste Anweisungen vorgesehen: \texttt{würfeln mit }, \texttt{sortieren}, \texttt{nächster spieler ist dran}, ... Diese festen Anweisungen können als eine Art Framework für Würfelspiele aufgefasst werden.
 
 
 % subsection anweisungen (end)
