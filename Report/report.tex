@@ -18,6 +18,9 @@
     basicstyle=\ttfamily,
 }
 
+\newcommand{\todo}[1]{
+{\color{red}\bf TODO: #1}}
+
 \usepackage[pdfpagelabels]{hyperref}
 \hypersetup{
     colorlinks,
@@ -36,94 +39,15 @@
 	\tableofcontents
 	\newpage
 
-\chapter{Würfelspiele}
-\label{cha:wurfelspiele}
-	\section{Einordnung und geschichtlicher Hintergrund}
-	\label{sec:einordnung_und_geschichtlicher_hintergrund}
-        Würfelspiele sind Glücksspiele, die im Wesentlichen mit Spielsteinen, sogenannten \emph{Würfeln} gespielt werden. Dabei besteht jedes Spiel aus einem oder mehreren Würfeln, die nacheinander oder gleichzeitig geworfen werden, um ein bestimmtes Ergebnis zu erzielen. Von den Spielern werden kombinatorische Fähigkeiten verlangt.
 
-        \section{Wichtige Konzepte}
-        \label{sec:wichtige_konzepte}
-        	Für unsere Sprache sind im Wesentlichen drei Konstrukte wichtig, die im nachfolgenden erläutert werden.
-            \subsection{Spieler}
-            \label{sub:spieler}
-                Das erste wichtige Konzept ist der \emph{Spieler}. Den Spieler zeichnet aus, dass er die ausführende Kraft bei einem Spiel ist. Er würfelt mit den Würfeln, bei Entscheidungen muss er diese treffen und auch die Punkteverwaltung hat er inne.
+\input{1-domain.tex}
+\input{2-syntax.tex}
+\input{3-design.tex}
+\input{4-diskussion.tex}
+\input{5-.tex}
 
-                Damit kommen wir auch auf den nächsten Punkt. Der Spieler benötigt Variablen, in denen aktuelle Werte gespeichert werden. Dies ist zwar sehr technisch ausgedrückt, beschreibt aber im Wesentlichen das, was ``Spieler haben Punkte'' bedeutet.
 
-                Und schließlich können Spieler aktiv oder inaktiv sein. Beispielsweise kann ein Spieler auf Grund seiner auf 0 reduzierten Punkte aus dem Spiel ausscheiden, er kann aber auch, wie bei dem Spiel ``UNO Würfel'' bei einer bestimmten Augenzahl eine Runde aussetzen.
-            \subsection{Würfel}
-            \label{sub:wurfel}
-                Ein weiterer Kernbestandteil sind die Würfel. Dabei kann ein Spiel mehrere Würfel haben, jedoch mindestens einen. Desweiteren hat ein Würfel sogenannte \emph{Augen}. Das bedeutet, dass einer bestimmten Seite ein numerischer Wert zugeordnet wird. Dabei hat ein klassischer Würfel sechs Seiten, ist also von 1 bis 6 durchnummeriert. Es gibt jedoch Würfel mit einer beliebigen Anzahl an Seiten, mindestens jedoch zwei.
 
-                Außerdem muss erwähnt werden, dass es Spiele gibt, die keine numerischen Werte besitzen, sondern mit Piktogrammen bedruckt sind. Diese finden in unserer Sprache jedoch keine Anwendung, da diese Bildern auch mit einem numerischen Wert kodieren werden können.
-			\subsection{Spielverlauf}
-			\label{sub:spielverlauf}
-				Das letzte domänenspezifische Konzept, das in unserer Sprache enthalten sein muss ist der Spielverlauf. Im wesentlichen sind damit die Regeln gemeint, die beschreiben, was ein Spieler zu tun hat, wenn er an der Reihe ist.
-				
-				Dabei werden zum einen Aktionen definiert, wie zum Beispiel Würfel werfen. Zum anderen werden aber auch Konditionen geprüft, die erfüllt sein müssen, damit eine Aktion ausgeführt wird. So muss beispielsweise bei dem Spiel \emph{Mäxchen} die Augenzahl 21 gewürfelt werden, damit allen anderen Spielern ein Punkt abgezogen werden kann.
-			
-		\section{Sprachziele}
-		\label{sec:sprachziele}
-			Das oberste Ziel unserer Sprache war es sie so einfach zu gestalten, dass auch Leute, die keine Programmiererfahrung haben, schnell Würfelspiele implementieren können. Außerdem haben wir versucht die Domäne so genau wie möglich in unserer Sprache abzubilden. Dazu mussten jedoch einige Einschnitte gemacht werden, die in den kommenden Kapiteln behandelt werden sollen.
-			
-			Wie wir diese Ziele erreichen wird in den Kapiteln~\ref{cha:die_sprache} und~\ref{cha:designentscheidungen} diskutiert.
-
-\chapter{Die Sprache} % und Designentscheidungen?
-\label{cha:die_sprache}
-	\section{Grundidee}
-	\label{sec:grundidee}
-		Kauft man ein neues Würfelspiel, enthält dieses neben den benötigten Materialien wie den Würfeln vor Allem das Regelwerk. Dieses enthält alle Informationen, die benötigt werden, um das Spiel korrekt, also im Sinne des Erfinders, zu spielen. Dabei besteht das Regelwerk aus folgenden Bestandteilen:
-		\begin{itemize}
-			\item Anzahl der Spieler,
-			\item Voraussetzungen für das Spiel,
-			\item Aktionen der Spieler,
-			\item Spielziel und Bedingungen für das Spielende und,
-			\item Bewertungsgrundlagen
-		\end{itemize}
-		Unser Ziel war es nun DiGaL so zu gestalten, dass es als Regelwerk eines Spiels erkannt und auch von allen so gelesen werden kann. Damit dies deutlich wird, soll ein Beispiel gegeben werden:
-		\subsection{Ein erstes Beispiel}
-		\label{sub:ein_erstes_beispiel}
-			% TODO: Readable (abstract) syntax or meta-model; Map the syntax elements to domain concepts; ~1000 Wörter
-			Um einen ersten Eindruck der Sprache zu erhalten, soll hier zunächst ein Beispielprogramm angegeben werden:\\
-\begin{lstlisting}
-max wird so gespielt:
-
-das spiel hat den wert letztes ist 0.
-das spiel ist für 2 bis 10 spieler geeignet.
-das spiel läuft solange anzahl aktiver spieler größer als 1.
-das spiel hat folgende würfel:
-würfel a hat diese seiten: 1 2 3 4 5 6
-würfel b hat diese seiten: 1 2 3 4 5 6.
-
-spieler sind aktiv, solange punkte größergleich 0 gilt.
-spieler haben die werte punkte ist 3.
-
-ist ein spieler am zug macht er folgendes:
-wenn punkte von aktueller spieler kleiner 0, dann ist linker spieler dran.
-würfelt mit allen würfeln.
-sortiert alle würfel absteigend.
-ergebnis ist würfel 0 * 10 + würfel 1.
-wenn würfel 0 gleich würfel 1, dann setze ergebnis auf ergebnis * 10.
-wenn ergebnis gleich 21, dann für alle spieler s setze punkte von s auf (punkte von s - 1); und setze punkte von aktueller spieler auf (punkte von aktueller spieler + 1) und setze letztes auf 0 und aktueller spieler ist dran.
-wenn ergebnis kleiner als letztes, dann setze spieler punkte auf spieler punkte - 1 und setze letztes auf 0 und linker spieler ist dran.
-wenn ergebnis größergleich letztes, dann setze letztes auf ergebnis und linker spieler ist dran.
-
-\end{lstlisting}
-
-	\section{Kontrollierte Sprache}
-	\label{sec:kontrollierte_sprache}
-		Hier sieht man schon die erste Syntax. Wie man sieht, haben wir versucht DiGaL an der natürlichen Sprache anzulehnen. Da es unmöglich ist bzw. ein langer Prozess wäre alle Eigenheiten der deutschen Sprache zu implementieren und abzubilden, haben wir versucht die Sprache auf der einen Seite zwar intuitiv zu gestalten, auf der anderen Seite jedoch die deutsche Sprache so weit einzuschränken, dass sie sinnvoll zu analysieren und grammatisch beschreibbar ist. Dazu wurden zwar in manchen Punkten einige Deklinationen anzubieten, wie beispielsweise bei \texttt{alle} und \texttt{allen}, es mussten jedoch Abstriche gemacht werden, da man theoretisch auch alle Verben konjugieren müsste. Daher haben wir uns dazu entschieden, DiGaL zwar an die natürliche deutsche Sprache \emph{anzulehnen}, sie aber nicht vollständig zu übernehmen, was einer \emph{Kontrollierten Sprache} gleich kommt.
-
-	
-\chapter{Designentscheidungen} % notwendig?
-\label{cha:designentscheidungen}
-	
-\chapter{Diskussion}
-\label{cha:diskussion}
-	
-\chapter{Erfahrungen}
-\label{cha:erfahrungen}
 	
 
 \end{document}

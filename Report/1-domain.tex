@@ -1,0 +1,33 @@
+%!TEX root = report.tex
+
+\chapter{Würfelspiele}
+\label{cha:wurfelspiele}
+	\section{Einordnung und geschichtlicher Hintergrund}
+	\label{sec:einordnung_und_geschichtlicher_hintergrund}
+        Würfelspiele sind Glücksspiele, die im Wesentlichen mit Spielsteinen, sogenannten \emph{Würfeln} gespielt werden. Dabei besteht jedes Spiel aus einem oder mehreren Würfeln, die nacheinander oder gleichzeitig geworfen werden, um ein bestimmtes Ergebnis zu erzielen. Von den Spielern werden kombinatorische Fähigkeiten verlangt.
+
+        \section{Wichtige Konzepte}
+        \label{sec:wichtige_konzepte}
+        	Für unsere Sprache sind im Wesentlichen drei Konstrukte wichtig, die im nachfolgenden erläutert werden.
+            \subsection{Spieler}
+            \label{sub:spieler}
+                Das erste wichtige Konzept ist der \emph{Spieler}. Den Spieler zeichnet aus, dass er die ausführende Kraft bei einem Spiel ist. Er würfelt mit den Würfeln, bei Entscheidungen muss er diese treffen und auch die Punkteverwaltung hat er inne.
+
+                Damit kommen wir auch auf den nächsten Punkt. Der Spieler benötigt Variablen, in denen aktuelle Werte gespeichert werden. Dies ist zwar sehr technisch ausgedrückt, beschreibt aber im Wesentlichen das, was ``Spieler haben Punkte'' bedeutet.
+
+                Und schließlich können Spieler aktiv oder inaktiv sein. Beispielsweise kann ein Spieler auf Grund seiner auf 0 reduzierten Punkte aus dem Spiel ausscheiden, er kann aber auch, wie bei dem Spiel ``UNO Würfel'' bei einer bestimmten Augenzahl eine Runde aussetzen.
+            \subsection{Würfel}
+            \label{sub:wurfel}
+                Ein weiterer Kernbestandteil sind die Würfel. Dabei kann ein Spiel mehrere Würfel haben, jedoch mindestens einen. Desweiteren hat ein Würfel sogenannte \emph{Augen}. Das bedeutet, dass einer bestimmten Seite ein numerischer Wert zugeordnet wird. Dabei hat ein klassischer Würfel sechs Seiten, ist also von 1 bis 6 durchnummeriert. Es gibt jedoch Würfel mit einer beliebigen Anzahl an Seiten, mindestens jedoch zwei.
+
+                Außerdem muss erwähnt werden, dass es Spiele gibt, die keine numerischen Werte besitzen, sondern mit Piktogrammen bedruckt sind. Diese finden in unserer Sprache jedoch keine Anwendung, da diese Bildern auch mit einem numerischen Wert kodieren werden können.
+			\subsection{Spielverlauf}
+			\label{sub:spielverlauf}
+				Das letzte domänenspezifische Konzept, das in unserer Sprache enthalten sein muss ist der Spielverlauf. Im wesentlichen sind damit die Regeln gemeint, die beschreiben, was ein Spieler zu tun hat, wenn er an der Reihe ist.
+				
+				Dabei werden zum einen Aktionen definiert, wie zum Beispiel Würfel werfen. Zum anderen werden aber auch Konditionen geprüft, die erfüllt sein müssen, damit eine Aktion ausgeführt wird. So muss beispielsweise bei dem Spiel \emph{Mäxchen} die Augenzahl 21 gewürfelt werden, damit allen anderen Spielern ein Punkt abgezogen werden kann.
+			
+		\section{Sprachziele}
+		\label{sec:sprachziele}
+            Das oberste Ziel unserer Sprache war es sie so einfach zu gestalten, so dass auch Personen, die keine Programmiererfahrung haben, den vorliegenden Quellcode verstehen können. Die Syntax ist dabei anders als bei herkömmlichen Sprachen und wird hauptsächlich durch Worte ausgedrückt.
+            Außerdem haben wir versucht die Domäne so genau wie möglich in unserer Sprache abzubilden. Wie wir diese Ziele erreicht haben und welche Kompromisse wir dabei eingehen mussten, wird in den kommenden Kapiteln ~\ref{cha:die_sprache} und~\ref{cha:designentscheidungen} diskutiert.

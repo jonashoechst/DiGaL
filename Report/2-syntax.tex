@@ -1,0 +1,94 @@
+%!TEX root = report.tex
+
+\chapter{Die Sprache} % und Designentscheidungen?
+\label{cha:die_sprache}
+	\section{Grundidee}
+	\label{sec:grundidee}
+		Bestandteile eines Würfelspiel sind neben den benötigten Materialien wie den Würfeln vor Allem das Regelwerk. Dieses enthält alle Informationen, die benötigt werden, um das Spiel korrekt, also im Sinne des Erfinders, zu spielen. Dabei besteht das Regelwerk aus folgenden Bestandteilen:
+		\begin{itemize}
+			\item Anzahl der Spieler,
+			\item Voraussetzungen für das Spiel,
+			\item Aktionen der Spieler,
+			\item Spielziel und Bedingungen für das Spielende und,
+			\item Bewertungsgrundlagen
+		\end{itemize}
+		Unser Ziel war es nun DiGaL so zu gestalten, dass es als Regelwerk eines Spiels erkannt und auch von allen so gelesen werden kann. Damit dies deutlich wird, soll ein Beispiel gegeben werden:
+		\subsection{Ein erstes Beispiel}
+		\label{sub:ein_erstes_beispiel}
+			% TODO: Readable (abstract) syntax or meta-model; Map the syntax elements to domain concepts; ~1000 Wörter
+			Um einen ersten Eindruck der Sprache zu erhalten, soll hier zunächst ein Beispielprogramm angegeben werden:\\
+\begin{lstlisting}
+EINS wird so gespielt:
+
+das spiel ist für 2 bis 10 spieler geeignet.
+das spiel hat folgende würfel:
+würfel A hat diese seiten: 1 2 3 4 5 6
+würfel B hat diese seiten: 1 2 3 4 5 6.
+
+spieler haben die werte PUNKTE ist 0.
+spieler haben die werte GEWONNEN ist 0.
+
+ist ein spieler am zug macht er folgendes:
+würfelt mit allen würfeln.
+rechter spieler ist dran, wenn würfel 0 gleich 1 oder würfel 1 gleich 1.
+aktueller spieler PUNKTE ist aktueller spieler PUNKTE + die summe von allen würfeln.
+wenn aktueller spieler PUNKTE größergleich 100, dann setze aktueller spieler GEWONNEN auf 1 und spiel ist zu ende.
+rechter spieler ist dran.
+
+gewonnen hat der spieler, bei dem GEWONNEN gleich 1.
+\end{lstlisting}
+
+	\section{Kontrollierte Sprache}
+	\label{sec:kontrollierte_sprache}
+		Das oben gezeigte Beispiel, gibt einen ersten Eindruck der Syntax unserer Sprache. 
+        Wir haben versucht DiGaL an die natürlichen Sprache anzulehnen. Es ist unmöglich bzw. ein langer Prozess, alle Eigenheiten der deutschen Sprache zu implementieren und abzubilden. Ein Kompromiss aus unserem Design Goal und der Umsetzbarkeit ist eine kontrollierte Sprache: eine Sprache, die auf der einen Seite zwar intuitiv verständlich ist, auf der anderen Seite jedoch die deutsche Sprache so weit einschränkt, dass sie sinnvoll zu analysieren und grammatisch beschreibbar ist. 
+        Das Deklinieren und Konjugieren von Worten ist für das intuitive Verstehen einer Sprache aus unserer Sicht von großer Bedeutung und trägt maßgeblich zum Lesefluss bei. Im obigen Beispiel sei dazu auf auf die Verwendung von \texttt{alle würfel} verwiesen, der im Beispiel schon in seiner deklinierten Variante \texttt{allen würfeln} verwendet wird.
+        Auch die Satzstellung ist für das Verständnis einer natürlichen Sprache wichtig. Sätze einer kontrollierten Sprache können schnell sperrig wirken. Unsere Sprache bietet daher verschiedene Optionen um das gleiche auszudrücken. Hier sei als Beispiel das \texttt{wenn} Konstrukt von oben angegeben, dass folgenden beiden Varianten valide ist:
+\begin{lstlisting}
+rechter spieler ist dran, wenn würfel 0 gleich 1 oder würfel 1 gleich 1.
+wenn würfel 0 gleich 1 oder würfel 1 gleich 1, dann rechter spieler ist dran.
+\end{lstlisting}
+        Designziel der Syntax unserer Sprache ist es zunächst, möglichst viele Varianten eines gegebenen Konstruktes anzubieten, in der Implementierung zeigen sich jedoch Schwierigkeiten, auf die in Kapitel \todo{Ref. einsetzen} näher eingegangen wird.
+        
+    \section{Satzzeichen} % (fold)
+    \label{sec:satzzeichen}
+        Wie auch in der natürlichen Sprache, verwenden wir in unserer kontrollierten Sprache Satzzeichen um Mehrdeutigkeit für den Interpretierenden zu verhindern. Die Leser unserer Sprache bestehen nicht nur aus Personen, sondern insbesondere auch vom Parser unserer Implementierung. Die Verwendung von Satzzeichen ist daher obligatorisch.
+        \subsection{Punkt (.)} % (fold)
+        \label{sub:punkt}
+            Punkte schließen Sätze der natürlichen Sprache ab. Unsere kontrollierte Sprache übernimmt dieses Paradigma, um Anweisungen in unserer Sprache abzuschließen. 
+        % subsection punkt (end)
+        \subsection{Doppelpunkt (:)} % (fold)
+        \label{sub:doppelpunkt}
+            Der Doppelpunkt leitet Aufzählungen ein. Das erste mal tritt nach dem initialen Satz auf und Leitet die Aufzählung der Definitionsblöcke ein, danach dient er zum Beispiel noch zur Aufzählung er Würfel, deren Seiten, oder der Aktionen, die ein Spieler vollzieht. Der Doppelpunkt dient eher der Übersichtlichkeit als der Eindeutigkeit.
+        % subsection doppelpunkt (end)
+        \subsection{Komma (,)} % (fold)
+        \label{sub:komma}
+            Das Komma der natürlichen Sprache trennt Teilsätze ab, die semantisch zusammengehören. In unserer Sprache dienen Kommas dazu mehrere Anweisungen aufzuzählen, und \texttt{dann} und \texttt{sonst} Anweisungen von bedingten Anweisungen abzugrenzen, und die Eindeutigkeit der Programme zu erhalten. 
+        % subsection komma (end)
+        \subsection{Semikolon (;)} % (fold)
+        \label{sub:semikolon}
+            Wir verwenden das Semikolon, um den Schleifenrumpf von weiteren folgenden Anweisungen abzutrennen. Dies ist ebenfalls nötig, um die Eindeutigkeit der Sprache zu gewährleisten.
+        % subsection semikolon (end)
+    % section satzzeichen (end)
+    \subsection{Variablen} % (fold)
+    \label{sub:variablen}
+        Unsere Sprache bietet dem Anwender die domänenspezifischen Objekte \emph{Spieler} und \emph{Würfel}, Variationen davon (\emph{linker/rechter Spieler, Würfel 1, ...}) als Konzept der Sprache an. Darüber hinaus ist es möglich globale Variablen zu definieren, sowie Variablen pro Spieler festzulegen. Spielabhängige Variablen werden in Großbuchstaben geschrieben, um die Trennung von der Syntax zu verdeutlichen (siehe \ref{sec:gross_und_kleinschreibung}).
+    % subsection variablen (end)
+    \section{Blöcke und Absätze}
+    \label{sec:blocke_und_absatze}
+     Absätze haben in der natürlichen Sprache den Zweck Abschnitte, die einen eigenen Sinnzusammenhang oder ein eigenes kleines Thema haben von einander abzugrenzen. Dieses Paradigma haben wir auch in der Syntax von DiGaL übernommen. So haben Programm, die in DiGaL geschrieben sind vier Absätze, die nach ihrem Sinn unterteilt sind.
+ 
+     Zunächst beginnt ein Programm mit einer Überschrift. Anschließend kommt ein Abschnitt, der die Spielinitialisierung übernimmt. Es werden globale Variablen, Anzahl und Art der Würfel und die Anzahl der Spieler festgelegt. Auch eine Bedingung, wie lange das Spiel läuft, wird hier definiert.
+ 
+     Anschließend folgt ein Abschnitt, in dem die Spieler initialisiert werden, zum Beispiel Spielerspezifische Variablen oder eine Bedingung, wann ein Spieler aktiv ist.
+ 
+     Danach folgt der Abschnitt, in dem die Regeln festgelegt werden, was geschehen soll, wenn ein Spieler an der Reihe ist.
+ 
+     Letztlich gibt es eine Art Schlusssatz, der eine Bedingung definiert, wann ein Spieler gewonnen hat.
+ 
+    \section{Groß- und Kleinschreibung}
+    \label{sec:gross_und_kleinschreibung}
+     In diesem Punkt weichen wir bewusst von der natürlichen deutschen Sprache ab. Es wäre möglich auch hier die Regeln der deutschen Sprache einzuführen. Das hätte jedoch negative Auswirkungen auf die Lesbarkeit eines Programms. Da DiGaL eine Programmiersprache ist, bei der es wie bei anderen Programmiersprachen darum geht den Zustand eines Programms zu ändern und das im Wesentlichen über Variablen funktioniert, haben wir uns dazu entschieden Variablenbezeichner komplett groß (z.B. \texttt{EINS} oder \texttt{PUNKTE} in obigem Beispiel) und den Rest komplett klein zu schreiben. Dies erhöht die Lesbarkeit eines Programms und vereinfacht es so Programmierern ein valides und korrektes Programm zu schreiben.
+	
+    
+    \todo{Syntax Tree visualisieren}
