@@ -87,7 +87,7 @@ diceobject		: 'würfel ' NAME=ID
 			
 diceobjects		: ALL='allen würfeln'
 				| ALL='alle würfel'
-				| ALL='aller würfel'
+				| ALL='aller würfel' 
 //				| ALL='würfel'
 				| (DO=diceobject', ')* LAST=diceobject
 				;
