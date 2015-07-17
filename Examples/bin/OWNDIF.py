@@ -33,7 +33,7 @@ class Game:
     def __init__(self):
         self.players = []
         # Dynamic inits
-        self.name = 'OWN'
+        self.name = 'OWNDIF'
         
         self.RUNDEN = 5
         self.min = 2
@@ -46,7 +46,7 @@ class Game:
             print('\n'+self.activePlayer.name+' ist dran.'),
             
             raw_input('Enter drücken zum Würfeln...'); map(Dice.roll, self.dices); print('Du hast '+', '.join(map(str, [dice.value for dice in self.dices]))+' gewürfelt!')
-            raw_input('Enter drücken zum Würfeln...'); map(Dice.roll, [[dice for dice in self.dices if dice.name == 'B'][0], ]); print('Du hast '+', '.join(map(str, [dice.value for dice in self.dices]))+' gewürfelt!')
+            raw_input('Enter drücken zum Würfeln...'); map(Dice.roll, [self.dices[1], ]); print('Du hast '+', '.join(map(str, [dice.value for dice in self.dices]))+' gewürfelt!')
             self.activePlayer.PUNKTE = self.activePlayer.PUNKTE + sum([dice.value for dice in self.dices])
             self.RUNDEN = self.RUNDEN - 1
             self.activePlayer = self.rightPlayer(); continue

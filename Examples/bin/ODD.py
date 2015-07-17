@@ -46,11 +46,11 @@ class Game:
             print('\n'+self.activePlayer.name+' ist dran.'),
             
             raw_input('Enter drücken zum Würfeln...'); map(Dice.roll, self.dices); print('Du hast '+', '.join(map(str, [dice.value for dice in self.dices]))+' gewürfelt!')
-            if [dice for dice in self.dices if dice.name == 'A'][0].value == 2 or [dice for dice in self.dices if dice.name == 'A'][0].value == 4 or [dice for dice in self.dices if dice.name == 'A'][0].value == 6:
-                self.activePlayer.PUNKTE = self.activePlayer.PUNKTE + [dice for dice in self.dices if dice.name == 'A'][0].value
+            if [dice for dice in self.dices if dice.name == 'A'].value == 2 or [dice for dice in self.dices if dice.name == 'A'].value == 4 or [dice for dice in self.dices if dice.name == 'A'].value == 6:
+                self.activePlayer.PUNKTE = self.activePlayer.PUNKTE + [dice for dice in self.dices if dice.name == 'A'].value
                 self.RUNDEN = self.RUNDEN - 1
                 self.activePlayer = self.rightPlayer(); continue
-            if [dice for dice in self.dices if dice.name == 'A'][0].value == 1 or [dice for dice in self.dices if dice.name == 'A'][0].value == 3 or [dice for dice in self.dices if dice.name == 'A'][0].value == 5:
+            if [dice for dice in self.dices if dice.name == 'A'].value == 1 or [dice for dice in self.dices if dice.name == 'A'].value == 3 or [dice for dice in self.dices if dice.name == 'A'].value == 5:
                 self.RUNDEN = self.RUNDEN - 1
                 self.activePlayer = self.rightPlayer(); continue
 
