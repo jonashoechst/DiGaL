@@ -54,19 +54,19 @@ Grundpfeiler unserer Sprache ist, maximal einfache Beschreibungen der Domänspez
 Zur Problemlösung wäre auch eine Library denkbar, die Paradigmen aus Würfelspielen aufgreift und dem Nutzer zur einfacheren Implementierung anbietet. Durch die sehr auf die Domäne ausgerichtete Sprache, folgen die meisten oben diskutierten Entscheidungen direkt. Einzelne Paradigmen lassen sich jedoch diskutieren und in Frage stellen.
 
 \subsection{Erweiterung bestehender Spiele}
-\label{subsub:erweiterung_bestehender_spiele}
+\label{sub:erweiterung_bestehender_spiele}
 	Eine weitere Möglichkeit der Modularisierung ist bestehende Spiele, also in unserem Fall bestehenden Code zu erweitern. Die aktuell \dg Version bietet dieses Konstrukt nicht an. Denkbar wäre aber eine Art Vererbung, in dem ein Spiel auf einem anderen Basiert und jeder Block um weitere Anweisungen ergänzt werden kann (hinzufügen von Würfeln, zusätzliche Aktionen bei bestimmten Ergebnissen, ...). Diese Vererbung sollte ein Spiel jedoch nur erweitern, nicht aber bestehende Regeln außer Kraft setzen können, da dies zum einen wieder zu Lasten der Verständlichkeit geschehen würde. Zum andern würde eine Änderung des zugrundeliegenden Spieles faktisch einer Neuentwicklung gleich kommen und sollte aus diesem Grund auch so behandelt werden.
-% subsection modularitat (end)
+% section modularitat (end)
 
-\subsubsection{Mächtigkeit} % (fold)
-\label{ssub:machtigkeit}
+\subsection{Mächtigkeit} % (fold)
+\label{sub:machtigkeit}
 Um die Ausdrucksmächtigkeit von \dg zu erhöhen ist eine wesentliche Änderung Funktionen einzuführen. Der Programmierer könnte Konstrukte definieren, die im Moment von der Sprache zur Verfügung gestellt werden und damit den Code besser strukturieren. 
 
-Eine weiter Möglichkeit um die Ausdrucksmächtigkeit zu erhöhen liegt darin, frei zu definierende \emph{while} Schleifen einzuführen. Im Moment werden in der Sprache lediglich \emph{foreach} und \emph{for} Schleifen angeboten. Die bereits eingeführten Konstrukte zur Iteration könnten verallgemeinert werden, so dass auch Variablen definiert werden können, über die man iterieren kann. Dies würde allerdings zu Lasten der Robustheit gehen, da der Programmierer dadurch leichter Fehler machen kann, die erst zur Laufzeit auftreten.
-% subsubsection machtigkeit (end)
+Eine weitere Möglichkeit um die Ausdrucksmächtigkeit zu erhöhen liegt darin, frei zu definierende \emph{while} Schleifen einzuführen. Im Moment werden in der Sprache lediglich \emph{foreach} und \emph{for} Schleifen angeboten. Die bereits eingeführten Konstrukte zur Iteration könnten verallgemeinert werden, so dass auch Variablen definiert werden können, über die iteriert werden kann. Dies würde allerdings zu Lasten der Robustheit gehen, da der Programmierer dadurch leichter Fehler machen kann, die erst zur Laufzeit auftreten.
+% subsection machtigkeit (end)
 
 \subsection{Objektmodellierung} % (fold)
-\label{ssub:objektmodellierung}
+\label{sub:objektmodellierung}
 Einige Spiele bestehen nicht nur aus den von uns unterstützten Datenstrukturen \emph{Spieler} und \emph{Würfel}. So hat beispielsweise das Spiel Kniffel neben genannten Objekten auch noch Spielzettel mit Ergebniswerten und Becher. Diese können zwar in \dg mit Spielervariablen nachgebildet werden, eine Modellierung als Objekt wäre jedoch auch denkbar und unter Umständen wünschenswert.
 
 Außerdem gibt es in manchen Spielen Spieler, die eine Sonderrolle haben und von uns auch nicht direkt unterstützt werden. Auch hier würde eine Möglichkeit der Modellierung sinnvoll sein.
@@ -75,12 +75,39 @@ Schließlich existieren Spiele, die Objekte aus anderen Domänen übernehmen, Zu
 
 Um diese Dinge zu unterstützen könnte das Konzept der Objektorientiertheit eingeführt werden und damit einhergehen auch Möglichkeiten um eigenen Objekte zu erstellen und zu modellieren.
 
-% subsubsection objektmodellierung (end)
-
-
+% subsection objektmodellierung (end)
 % section alternativen_im_sprachdesign (end)
 
-\section{Domänenbezug} % (fold)
-\label{sec:domanenbezug}
+\section{Designspace} % (fold)
+\label{sec:designspace}
 
-% section domanenbezug (end)
+\subsection{Werte & Typen} % (fold)
+\label{sub:werte_typen}
+
+% subsection werte_typen (end)
+
+\subsection{Dispatching} % (fold)
+\label{sub:dispatching}
+
+% subsection dispatching (end)
+
+\subsection{Ausdrücke} % (fold)
+\label{sub:ausdrucke}
+
+% subsection ausdrucke (end)
+
+\subsection{Scope} % (fold)
+\label{sub:scope}
+
+% subsection scope (end)
+
+\subsection{Anweisungen} % (fold)
+\label{sub:anweisungen}
+
+% subsection anweisungen (end)
+
+% section designspace (end)
+
+
+
+
