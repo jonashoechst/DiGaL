@@ -33,7 +33,7 @@ class Game:
     def __init__(self):
         self.players = []
         # Dynamic inits
-        self.name = 'TEST'
+        self.name = 'OWN'
         
         self.RUNDEN = 5
         self.min = 2
@@ -45,14 +45,11 @@ class Game:
             print(self.status())
             print('\n'+self.activePlayer.name+' ist dran.'),
             
-            raw_input('Enter drücken zum Würfeln...'); map(Dice.roll, [würfel 1, würfel 1]); print('Du hast '+', '.join(map(str, [dice.value for dice in self.dices]))+' gewürfelt!')
-            if [dice for dice in self.dices if dice.name == 'A'][0].value == 2 or [dice for dice in self.dices if dice.name == 'A'][0].value == 4 or [dice for dice in self.dices if dice.name == 'A'][0].value == 6:
-                self.activePlayer.PUNKTE = self.activePlayer.PUNKTE + [dice for dice in self.dices if dice.name == 'A'][0].value
-                self.RUNDEN = self.RUNDEN - 1
-                self.activePlayer = self.rightPlayer(); continue
-            if [dice for dice in self.dices if dice.name == 'A'][0].value == 1 or [dice for dice in self.dices if dice.name == 'A'][0].value == 3 or [dice for dice in self.dices if dice.name == 'A'][0].value == 5:
-                self.RUNDEN = self.RUNDEN - 1
-                self.activePlayer = self.rightPlayer(); continue
+            raw_input('Enter drücken zum Würfeln...'); map(Dice.roll, self.dices); print('Du hast '+', '.join(map(str, [dice.value for dice in self.dices]))+' gewürfelt!')
+            raw_input('Enter drücken zum Würfeln...'); map(Dice.roll, [dice for dice in self.dices if dice.name == 'B'], ); print('Du hast '+', '.join(map(str, [dice.value for dice in self.dices]))+' gewürfelt!')
+            self.activePlayer.PUNKTE = self.activePlayer.PUNKTE + sum([dice.value for dice in self.dices])
+            self.RUNDEN = self.RUNDEN - 1
+            self.activePlayer = self.rightPlayer(); continue
 
 if __name__ == '__main__':
     game = Game()

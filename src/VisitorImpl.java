@@ -225,7 +225,7 @@ public class VisitorImpl extends DiceGameBaseVisitor<String> {
 	@Override
 	public String visitDiceobject(@NotNull DiceGameParser.DiceobjectContext ctx) {
 		if (ctx.NAME != null) {
-			return "[dice for dice in self.dices if dice.name == '"+ctx.NAME.getText()+"'][0]";
+			return "[dice for dice in self.dices if dice.name == '"+ctx.NAME.getText()+"']";
 		} else if (ctx.POS != null) {
 			return "self.dices[" + ctx.POS.getText() + "]";
 		}
@@ -417,14 +417,13 @@ public class VisitorImpl extends DiceGameBaseVisitor<String> {
 			return "self.dices";
 		}
 		if (ctx.LAST != null){
-			String ret = "[";
+			String ret = "";
 			for(ParseTree val : ctx.children){
 				if(val.getClass() == DiceGameParser.DiceobjectContext.class){
-					System.out.println(val.getText());
-					ret += (val.getText()+", ");
+					ret += (val.accept(this)+", ");
 				}
 			}
-			ret += ctx.LAST.getText()+"]";
+//			ret += ctx.LAST.getText()+"]";
 			return ret;
 		}
 		return "visitDiceobjects";

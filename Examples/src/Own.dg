@@ -1,0 +1,18 @@
+OWN wird so gespielt:
+
+das spiel hat den wert RUNDEN ist 5.
+das spiel ist für 2 bis 10 spieler geeignet.
+das spiel läuft solange RUNDEN größer 0.
+das spiel hat folgende würfel:
+würfel A hat diese seiten: 1 2 3 4 5 6
+würfel B hat diese seiten: 1 2 3 4 5 6.
+
+spieler haben die werte PUNKTE ist 0.
+
+ist ein spieler am zug macht er folgendes:
+würfelt mit allen würfeln.
+würfelt mit würfel B.
+aktueller spieler PUNKTE ist aktueller spieler PUNKTE + die summe von allen würfeln.
+RUNDEN ist RUNDEN - 1 und rechter spieler ist dran.
+
+gewonnen hat der spieler mit den wenigsten PUNKTE.

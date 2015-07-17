@@ -43,7 +43,7 @@ action			: AS=assignment
 				| ENDLOOP='spiel ist zu ende'
 				;
 		
-dicesaction		: THROW='würfelt mit ' DOs=diceobjects 
+dicesaction		: THROW='würfelt mit ' DOs=diceobjects
 				| SORT='sortiert alle würfel'
 				| SORT='sortiert alle würfel'' aufsteigend'
 				| SORT='sortiert alle würfel'REVERSE=' absteigend'
@@ -72,7 +72,7 @@ diceobject		: 'würfel ' NAME=ID
 diceobjects		: ALL='allen würfeln'
 				| ALL='alle würfel'
 				| ALL='aller würfel'
-				| ALL='würfel'
+//				| ALL='würfel'
 				| (DO=diceobject', ')* LAST=diceobject
 				;
 
