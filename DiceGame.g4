@@ -2,7 +2,7 @@ grammar DiceGame;
 
 INT 			: '-'?[0-9]+;
 //WS  			: [ \r\t\n]+ -> skip; // skip spaces, tabs, newlines
-ID  			: [A-Z]+; // ids are lowercase, to easily differentiate from code
+ID  			: [A-ZÄÖÜ]+; // ids are uppercase, to easily differentiate from code
 COMMENT			: '//' ~[\r\n]* '\n' -> skip;
  
 game			: NAME=ID' wird so gespielt:\n' '\n' (GAMEINIT=gameinit '.\n')+ '\n' (PLAYERINIT=playerinit'.\n')*  '\n' PLAY='ist ein spieler am zug macht er folgendes:\n' (ACTION=action'.\n')* '\n' (GAMEEND=gameend) ;
@@ -29,6 +29,8 @@ loop			: FORLOOP='für ' (DOs=diceobjects|POs=playerobjects) ' ' VAR=ID ' ' ACTI
     
 gameend			: MULTI='gewonnen haben alle spieler, bei denen ' COND=condition '.'
 				| SINGLE='gewonnen hat der spieler, bei dem ' COND=condition '.'
+				| MOST='gewonnen hat der spieler mit den meisten ' VAR=var '.'
+				| LEAST='gewonnen hat der spieler mit den wenigsten ' VAR=var '.'
 				;
 
 action			: AS=assignment 
@@ -41,7 +43,7 @@ action			: AS=assignment
 				| ENDLOOP='spiel ist zu ende'
 				;
 		
-dicesaction		: THROW='würfelt mit ' DOs=diceobjects 
+dicesaction		: THROW='würfelt mit ' DOs=diceobjects
 				| SORT='sortiert alle würfel'
 				| SORT='sortiert alle würfel'' aufsteigend'
 				| SORT='sortiert alle würfel'REVERSE=' absteigend'
@@ -70,7 +72,7 @@ diceobject		: 'würfel ' NAME=ID
 diceobjects		: ALL='allen würfeln'
 				| ALL='alle würfel'
 				| ALL='aller würfel'
-				| ALL='würfel'
+//				| ALL='würfel'
 				| (DO=diceobject', ')* LAST=diceobject
 				;
 

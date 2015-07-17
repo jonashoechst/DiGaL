@@ -23,7 +23,7 @@ public class VisitorImpl extends DiceGameBaseVisitor<String> {
 		
 		StringBuilder playerClass = new StringBuilder();
 		playerClass.append("class Player:\n");
-		playerClass.append(indent("def __str__(self): return ', '.join(map(str, reversed(self.__dict__.values())))\n"));
+		playerClass.append(indent("def __str__(self): return self.name + ', ' + ', '.join(map(str, [value for key, value in self.__dict__.items() if key not in ['name']]))\n"));
 		
 		StringBuilder playerInit = new StringBuilder();
 		playerInit.append("def __init__(self, name): ");
@@ -59,7 +59,7 @@ public class VisitorImpl extends DiceGameBaseVisitor<String> {
 		StringBuilder gameClass = new StringBuilder();
 		gameClass.append("class Game:\n");
 		gameClass.append(indent("# Static methods"));
-		gameClass.append(indent("def status(self): return 'Status['+', '.join(reversed(self.players[0].__dict__.keys())).lower()+']: '+' - '.join(map(str, self.players))"));
+		gameClass.append(indent("def status(self): return 'Status[name, ' + ', '.join([key for key, value in self.players[0].__dict__.items() if key not in ['name']]).lower()+']: '+' - '.join(map(str, self.players))"));
 		gameClass.append(indent("def rightPlayer(self): return self.players[ (self.players.index(self.activePlayer) - 1) % self.playerCount]"));
 		gameClass.append(indent("def leftPlayer(self):  return self.players[ (self.players.index(self.activePlayer) + 1) % self.playerCount]"));
 		gameClass.append(indent("def playerNum (self, num): return self.players[num]"));
@@ -187,11 +187,6 @@ public class VisitorImpl extends DiceGameBaseVisitor<String> {
 		
 		return result.toString();
 	}
-
-//	@Override
-//	public String visitFace(@NotNull DiceGameParser.FaceContext ctx) {
-//		return ctx.getText();
-//	}
 	
 	@Override
 	public String visitLaw(@NotNull DiceGameParser.LawContext ctx) {
@@ -230,7 +225,7 @@ public class VisitorImpl extends DiceGameBaseVisitor<String> {
 	@Override
 	public String visitDiceobject(@NotNull DiceGameParser.DiceobjectContext ctx) {
 		if (ctx.NAME != null) {
-			return "[dice if dice.name == '"+ctx.NAME.getText()+"' for dice in self.dices][0]";
+			return "[dice for dice in self.dices if dice.name == '"+ctx.NAME.getText()+"'][0]";
 		} else if (ctx.POS != null) {
 			return "self.dices[" + ctx.POS.getText() + "]";
 		}
@@ -348,6 +343,14 @@ public class VisitorImpl extends DiceGameBaseVisitor<String> {
 			return "print([self.name for self in game.players if "+ctx.COND.accept(this)+"][0]+' hat gewonnen!')";
 		}
 		
+		if (ctx.MOST != null){
+			return "print(str([player.name for player in game.players if player." + ctx.VAR.getText() + " == (max([self." + ctx.VAR.getText() + " for self in game.players]))][0]) +' hat gewonnen!')";
+		}
+		
+		if (ctx.LEAST != null){
+			return "print(str([player.name for player in game.players if player." + ctx.VAR.getText() + " == (min([self." + ctx.VAR.getText() + " for self in game.players]))][0]) +' hat gewonnen!')";
+		}
+		
 		
 		return "visitGameend";
 	}
@@ -417,10 +420,10 @@ public class VisitorImpl extends DiceGameBaseVisitor<String> {
 			String ret = "[";
 			for(ParseTree val : ctx.children){
 				if(val.getClass() == DiceGameParser.DiceobjectContext.class){
-					ret += (val.getText()+", ");
+					ret += val.accept(this)+", ";
 				}
 			}
-			ret += ctx.LAST.getText()+"]";
+			ret += "]";
 			return ret;
 		}
 		return "visitDiceobjects";
