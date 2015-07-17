@@ -53,7 +53,7 @@ Grundpfeiler unserer Sprache ist, maximal einfache Beschreibungen der Domänspez
 
 Zur Problemlösung wäre auch eine Library denkbar, die Paradigmen aus Würfelspielen aufgreift und dem Nutzer zur einfacheren Implementierung anbietet. Durch die sehr auf die Domäne ausgerichtete Sprache, folgen die meisten oben diskutierten Entscheidungen direkt. Einzelne Paradigmen lassen sich jedoch diskutieren und in Frage stellen.
 
-\subsubsection{Erweiterung bestehender Spiele}
+\subsection{Erweiterung bestehender Spiele}
 \label{subsub:erweiterung_bestehender_spiele}
 	Eine weitere Möglichkeit der Modularisierung ist bestehende Spiele, also in unserem Fall bestehenden Code zu erweitern. Die aktuell \dg Version bietet dieses Konstrukt nicht an. Denkbar wäre aber eine Art Vererbung, in dem ein Spiel auf einem anderen Basiert und jeder Block um weitere Anweisungen ergänzt werden kann (hinzufügen von Würfeln, zusätzliche Aktionen bei bestimmten Ergebnissen, ...). Diese Vererbung sollte ein Spiel jedoch nur erweitern, nicht aber bestehende Regeln außer Kraft setzen können, da dies zum einen wieder zu Lasten der Verständlichkeit geschehen würde. Zum andern würde eine Änderung des zugrundeliegenden Spieles faktisch einer Neuentwicklung gleich kommen und sollte aus diesem Grund auch so behandelt werden.
 % subsection modularitat (end)
@@ -63,8 +63,15 @@ Zur Problemlösung wäre auch eine Library denkbar, die Paradigmen aus Würfelsp
 
 % subsubsection machtigkeit (end)
 
-\subsubsection{Objektmodellierung} % (fold)
+\subsection{Objektmodellierung} % (fold)
 \label{ssub:objektmodellierung}
+Einige Spiele bestehen nicht nur aus den von uns unterstützten Datenstrukturen \emph{Spieler} und \emph{Würfel}. So hat beispielsweise das Spiel Kniffel neben genannten Objekten auch noch Spielzettel mit Ergebniswerten und Becher. Diese können zwar in \dg mit Spielervariablen nachgebildet werden, eine Modellierung als Objekt wäre jedoch auch denkbar und unter Umständen wünschenswert.
+
+Außerdem gibt es in manchen Spielen Spieler, die eine Sonderrolle haben und von uns auch nicht direkt unterstützt werden. Auch hier würde eine Möglichkeit der Modellierung sinnvoll sein.
+
+Schließlich existieren Spiele, die Objekte aus anderen Domänen übernehmen, Zum Bespiel Spielkarten oder Spielfelder und Spielfiguren, die sich auf den Spielfeldern bewegen.\\
+
+Um diese Dinge zu unterstützen könnte das Konzept der Objektorientiertheit eingeführt werden und damit einhergehen auch Möglichkeiten um eigenen Objekte zu erstellen und zu modellieren.
 
 % subsubsection objektmodellierung (end)
 
