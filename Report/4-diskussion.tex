@@ -44,18 +44,18 @@ Zur Generierung des Python Codes haben wir uns für das Visitorpattern entschied
 \label{sec:compilerimplementierungen}
 	Da die Implementierung recht umfangreich ist kann sie hier nicht vollständig angegeben werden. Daher beschränken wir uns hier auf einige Beispiele.
 	
-dg wurde so konzipiert, dass alle Domänenspezifischen Konzepte, wie sie oben beschrieben sind, direkt abgebildet werden können. Auch in der Pythonumsetzung haben wir versucht dies beizubehalten, und die Konzepte von \dg soweit wie möglich direkt in Python umzusetzen. Grundoperationen wie \texttt{+, -, *, größer, kleiner, gleich, ...} haben direkt in ihren entsprechenden Pythonoperatoren umgesetzt. Gleiches gilt für die Zuweisung. Diese kann in \dg zwar syntaktisch unterschiedlich sein, in Python wird daraus aber immer eine einfache Zuweisung.
+\dg wurde so konzipiert, dass alle Domänenspezifischen Konzepte, wie sie oben beschrieben sind, direkt abgebildet werden können. Auch in der Pythonumsetzung haben wir versucht dies beizubehalten, und die Konzepte von \dg soweit wie möglich direkt in Python umzusetzen. Grundoperationen wie \texttt{+, -, *, größer, kleiner, gleich, ...} haben direkt in ihren entsprechenden Pythonoperatoren umgesetzt, woraus eine lazy evaluation arithmetischer Operationen folgt. Gleiches gilt für die Zuweisung. Diese kann in \dg zwar syntaktisch unterschiedlich ausgedrückt werden (\texttt{<Variable> ist <Ausdruck>} oder \texttt{setze <Variable> auf <Ausdruck>}), in Python wird daraus aber immer eine einfache Zuweisung.
 	
 		Des weiteren haben wir einige Abstraktionen vorgenommen, um die Paradigmen aus der Domäne umzusetzen. Als Beispiel sei folgender Code gegeben:
 \begin{lstlisting}
 wenn würfel A gleich 2 ...
 \end{lstlisting}
-		In konventionellen Programmiersprachen wäre diese Operation nicht ohne weiteres möglich, da ein Vergleich zwischen einem selbst definierten Objekt und einer Zahl zunächst nicht definiert ist. Im Bezug auf die Domäne ist dieser Ausdruck jedoch sinnvoll, da damit implizit gemeint ist, dass der gewürfelte Wert, also eine Zahl mit einer anderen verglichen werden soll. Diesen Umstand haben wir so gelöst, dass ein logischer Vergleich oder eine arithmetische Operation mit Würfeln immer als Operation auf dem entsprechenden gewürfelten Wert zu verstehen ist. Im Code sieht das wie folgt aus:
+		In konventionellen Programmiersprachen wäre diese Operation nicht ohne weiteres möglich, da ein Vergleich zwischen einem selbst definierten Objekt und einer Zahl zunächst nicht definiert ist. Im Bezug auf die Domäne ist dieser Ausdruck jedoch sinnvoll, da damit implizit gemeint ist, dass der gewürfelte Wert, also eine Zahl mit einer anderen verglichen werden soll. Diesen Umstand nutzen wir, sodass ein logischer Vergleich oder eine arithmetische Operation mit Würfeln immer als Operation auf dem entsprechenden gewürfelten Wert zu verstehen ist. Im Code sieht das wie folgt aus:
 
 \begin{lstlisting}
 if [dice for dice in self.dices if dice.name == 'A'].value == 2 ...
 \end{lstlisting}
-Diese Idee haben wir versucht so weit wie möglich umzusetzen. Sie findet sich beispielsweise in der referenzierung des nächsten Spielers wieder. Hier genügt es in \dg zum Beispiel das Schlüsselwort \texttt{linker spieler} zu verwenden. Diese Abstraktion haben wir in Python so umgesetzt, dass der Index der Liste, in dem Spieler gespeichert sind, um ein dekrementiert wird.
+Diese Idee haben wir versucht so weit wie möglich umzusetzen. Sie findet sich beispielsweise in der Referenzierung des nächsten Spielers wieder. Hier genügt es in \dg zum Beispiel das Schlüsselwort \texttt{linker spieler} zu verwenden. Diese Abstraktion haben wir in Python so umgesetzt, dass der Index der Liste, in dem Spieler gespeichert sind, um ein dekrementiert wird.
 
 Weiterhin soll hier auf die Implementierung der Methode \texttt{isRunning()} eingegangen werden. Diese repräsentiert die Bedingung, die der Entwickler festlegen kann. Sie bestimmt, ob ein Spiel noch läuft oder nicht. Beispielsweise kann ein Spiel nach $n$ Runden zu Ende sein.
 
@@ -76,7 +76,9 @@ Diese Methode hat eine weitere Besonderheit. Wird keine Bedingung festgelegt, we
 
 \section{Erfüllung der geforderten Sprachqualitäten} % (fold)
 \label{sec:erfullung_der_geforderten_sprachqualitaten}
+Zentrale Qualität der Sprache ist die Einfachheit und die daraus folgende Robustheit durch Einschränkung der Mächtigkeit. Ein Beispiel für die Erfüllung dieses Kriteriums liegt in der automatischen Interpretation von Würfelreferenzen. Wird ein Würfel in einer arithmetischen Operation verwendet, so wird stets der aktuell angezeigte Wert referenziert. Dem Spieleentwickler ist es damit nicht möglich einen Würfel mit einer Zahl zu addieren, er adressiert in diesem Fall automatisch das Ergebnis.
 
+Ein Beispiel, dem die geforderte Robustheit noch fehlt ist die Verwendung von \texttt{für}-Schleifen. Der Nutzer muss hier einen Bezeichner definieren, auf den er im Schleifenrumpf zugreifen kann. Denkbar wäre eine vereinfachte Version, in Variablen des iterierten Objektes und die des globalen Scopes zusammenliegen und direkt verwendet werden können. Diese Variante würde die Syntax vereinfachen, wir haben uns in dieser Version unserer Sprache zu gunsten einer einfacheren Implementierung für eine konventionelle For-Schleife entschieden.
 % section erfullung_der_geforderten_sprachqualitaten (end)
 
 \section{Mögliche Erweiterungen} % (fold)
