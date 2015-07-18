@@ -81,6 +81,13 @@ Diese Methode hat eine weitere Besonderheit. Wird keine Bedingung festgelegt, we
 
 \section{Mögliche Erweiterungen} % (fold)
 \label{sec:mogliche_erweiterungen}
+	Im laufe der Entwicklung von \dg haben wir Konzepte entwickelt und diskutiert, die es nicht in die Implementierung geschafft haben oder sich im Nachhinein als falsch oder unzulänglich erwiesen haben.
+	
+	Zunächst wäre da die Implementierung des Frameworks zu nennen. Hier gibt es in der aktuellen Version konkrete Klassen, die dynamisch mit den von Nutzer spezifizierten Elementen gefüllt werden. Da wir mit Python jedoch eine Objektorientierte Sprache verwenden, wäre es sinnvoller abstrakte Basisklassen von Spieler, Würfeln und dem Spiel zur Verfügung zu stellen, von denen eine Instanz angelegt wird, die von der entsprechenden Klasse erbt. Somit hätte man auch die Objektorientiertheit, die in \dg teilweise inhärent gegeben ist auch auf die Implementierung angewandt. Auch eine Möglichkeit der Modularität wäre somit gegeben, die uns in der aktuellen Version jedoch verloren geht.
+	
+	Außerdem hat \dg einige syntaktische Konstrukte, die von unserer Entscheidung, die Sprache so intuitiv und einfach wie möglich zu gestalten abweichen. Hier fallen vor Allem zwei Punkte auf. Der erste ist die Adressierung und Referenzierung mit Würfeln. Im aktuellen Zustand haben Würfel Namen, die der Entwickler vergeben muss. Will man nun den Wert dieses Würfels haben, kann das auf zwei Arten geschehen. Entweder über den Namen oder über einen Index. Dieser Index ergibt sich aber nur, wenn die Würfel vorher sortiert wurden. Und die Adressierung über den Namen scheint nicht aus der Domäne hervorzugehen, da man Würfeln normalerweise keine Namen gibt. Um das zu erleichtern oder intuitiver zu gestalten, könnten beispielsweise neue syntatkische Konstrukte wie \emph{Pasch} oder \emph{Straße} eingeführt werden, die die Überprüfung dieser Ereignisse vereinfacht.
+	
+	Schließlich waren zu Beginn Konstrukte geplant, die es dem Entwickler ermöglichen eigene Nutzerinteraktion zu definieren, beispielsweise Ausgaben auf der Kommandozeile oder die Möglichkeit auf Ereignisse dynamisch zu reagieren und nicht nur nach fest definierten Regeln vorzugehen. Unser Fokus lag jedoch zunächst auf den Konzepten, die von der Domäne gegeben sind und die Sprache möglichst einfach zu gestalten. Daher wurde dieser Punkt mit einer niedrigen Priorität hinten angestellt und ist daher in der aktuellen Referenzimplementierung nicht enthalten.
 
 % section mogliche_erweiterungen (end)
 
