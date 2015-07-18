@@ -1,4 +1,42 @@
 %!TEX root = report.tex
 
-\chapter{Diskussion}
-\label{cha:diskussion}
+\chapter{Prototyp Implementierung}
+\label{cha:implementierung}
+
+In der Referenzimplementierung von \dg verwenden wir die ANTLR Syntax zur formalen Definition unserer Sprache. Darauf aufbauen verwenden wir den von ANTLR bereitgestellten Parser und Lexer zum das in \dg geschriebene Spiel zu erfassen. 
+
+Um sicherzustellen, dass die mit \dg geschriebenen Spiele portabel sind, haben wir uns zum Ziel gesetzt möglichst wenige Abhängigkeiten vorauszusetzen. 
+Ein Kriterium war dabei, dass die Ausführung des Codes nur mit der Standardbibliothek einer Zielsprache funktioniert. Wir haben uns deswegen für eine Kompilation der Sprache entschieden, und verzichten für den Endanwender auf die Installation von ANTLR. Als Zielsprache wählten wir Python, das Syntaktisch kompakt zu programmieren ist und inhärente Konzepte unserer Sprache unterstützt (Objektorientiertheit, Funktionale Programmierung). 
+
+Zur Generierung des Python Codes haben wir uns für das Visitorpattern entschieden. Die Entscheidung gründet auf die Simplizität einer Implementierung dieses Patterns, das uns als lernende ANTLR Spielentwickler nur noch abverlangt die vorgegebenen Methoden zu implementieren und uns so auf das wesentlich zu konzentrieren. 
+
+\section{Python Framework} % (fold)
+\label{sec:python_framework}
+    
+    Zusammen mit der Definition der Grammatik haben wir generische Methoden ausgearbeitet. Die vorhanden Methoden lassen sich in zwei Klassen differenzieren: Generische Methoden, die in vielen Würfelspielen verwendet werden; Methoden die zur Interaktion mit den Mitspielern und zur Repräsentation von Daten gegenüber diesen nötig sind. Die zweite Gruppe ergibt sich nicht aus der Domäne selbst, sondern folgt aus der nötigen Mensch-Maschine Kommunikation (Ausgaben auf der Kommandozeile).
+    
+    Die Domänenspezifischen Methoden können direkt aus der Sprache verwendet werden und entsprechen den verwendbaren Anweisungen (\texttt{würfelt mit <würfeln>}).
+    
+\section{Interne Datenrepräsentation} % (fold)
+\label{sec:interne_datenreprasentation}
+    Wie in den oben Abschnitten erwähnt, verwenden wir für die Implementierung Konstrukte unserer Zielsprache. Der objektorientierte Ansatz von \dg zeigt sich hier in der Umsetzung in Klassen für Spieler, Würfel und das Spiel selbst. Bei der Übersetzung eines Spiels werden Teile der gegebenen Klassen durch die vom Spielentwickler spezifizierten Eigenschaften des Spiels ergänzt. Beispiel dafür sind die Spieler, denen durch den Spielentwickler neuen Felder hinzugefügt werden können.Die Würfelklasse hingegen ist nicht erweiterbar, sondern wird nur durch die Implementierung der Spielklassen verschieden initialisiert.
+    
+    Die Spielklasse enthält die Initialisierung und den Ablauf des Spiels und ist die zentrale Klasse. Die Klasse enthält einige generische Methoden, die nicht individualisierbar sind und in der Sprache zur Verfügung stehen (\texttt{leftPlayer()}, \texttt{rightPlayer()}, \texttt{sortDices()}, ...). In Kontrast dazu bildet die \texttt{loop()}-Methode den Spielablauf ab und wird vom Entwickler frei definiert.
+% section interne_datenreprasentation (end)
+    
+% section python_framework (end)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

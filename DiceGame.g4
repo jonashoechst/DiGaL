@@ -66,6 +66,8 @@ playerobject	: CUR='der aktuelle spieler'
 				| CUR='der spieler'
 				| CUR='aktueller spieler'
 				| CUR='aktuellem spieler'
+				| CUR='aktiver spieler'
+				| CUR='aktivem spieler'
 				| 'spieler ' POS=INT
 				| LEFT='linker spieler'
 				| LEFT='der linke spieler'
@@ -78,7 +80,6 @@ playerobjects	: ALL='alle spieler'
 				| ALL='allen spielern'
 				| ALL='aller spieler'
 				| ACTIVE='aktive spieler'
-				| ACTIVE='aktiver spieler'
 				| (PO=playerobject', ')* LAST=playerobject
 				;
 			
@@ -134,6 +135,7 @@ assignment		: 'setze ' V=variable ' auf ' E=expr
 				;
 
 law				: 'wenn ' COND=condition ', dann ' THEN=action
-				| 'wenn ' COND=condition ', dann ' THEN=action ', sonst ' ELSE=action;
+				| 'wenn ' COND=condition ', dann ' THEN=action ', sonst ' ELSE=action
+				;
 
 				
