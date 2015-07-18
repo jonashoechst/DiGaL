@@ -1,0 +1,10 @@
+DiGaL Eclipse Project.zip
+- Eclipse Projekt unserer Referenzimplementierung
+
+digalc.jar
+- Kompiliertes Paket der Referenzimplementierung
+- java -jar digalc.jar PATH_TO_DIGAL_FILE
+- java -jar digalc.jar Examples/Own.dg
+
+Report.pdf
+- Assay über die Domänenbeschreibung, Sprachspezifikation und Diskussion zur Sprache
