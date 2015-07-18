@@ -26,7 +26,38 @@ Zur Generierung des Python Codes haben wir uns für das Visitorpattern entschied
     
 % section python_framework (end)
 
+\section{Compilerimplementierungen}
+\label{sec:compilerimplementierungen}
+	Da die Implementierung recht umfangreich ist kann sie hier nicht vollständig angegeben werden. Daher beschränken wir uns hier auf einige Beispiele.
+	
+dg wurde so konzipiert, dass alle Domänenspezifischen Konzepte, wie sie oben beschrieben sind, direkt abgebildet werden können. Auch in der Pythonumsetzung haben wir versucht dies beizubehalten, und die Konzepte von \dg soweit wie möglich direkt in Python umzusetzen. Grundoperationen wie \texttt{+, -, *, größer, kleiner, gleich, ...} haben direkt in ihren entsprechenden Pythonoperatoren umgesetzt. Gleiches gilt für die Zuweisung. Diese kann in \dg zwar syntaktisch unterschiedlich sein, in Python wird daraus aber immer eine einfache Zuweisung.
+	
+		Des weiteren haben wir einige Abstraktionen vorgenommen, um die Paradigmen aus der Domäne umzusetzen. Als Beispiel sei folgender Code gegeben:
+\begin{lstlisting}
+wenn würfel A gleich 2 ...
+\end{lstlisting}
+		In konventionellen Programmiersprachen wäre diese Operation nicht ohne weiteres möglich, da ein Vergleich zwischen einem selbst definierten Objekt und einer Zahl zunächst nicht definiert ist. Im Bezug auf die Domäne ist dieser Ausdruck jedoch sinnvoll, da damit implizit gemeint ist, dass der gewürfelte Wert, also eine Zahl mit einer anderen verglichen werden soll. Diesen Umstand haben wir so gelöst, dass ein logischer Vergleich oder eine arithmetische Operation mit Würfeln immer als Operation auf dem entsprechenden gewürfelten Wert zu verstehen ist. Im Code sieht das wie folgt aus:
 
+\begin{lstlisting}
+if [dice for dice in self.dices if dice.name == 'A'].value == 2 ...
+\end{lstlisting}
+Diese Idee haben wir versucht so weit wie möglich umzusetzen. Sie findet sich beispielsweise in der referenzierung des nächsten Spielers wieder. Hier genügt es in \dg zum Beispiel das Schlüsselwort \texttt{linker spieler} zu verwenden. Diese Abstraktion haben wir in Python so umgesetzt, dass der Index der Liste, in dem Spieler gespeichert sind, um ein dekrementiert wird.
+
+Weiterhin soll hier auf die Implementierung der Methode \texttt{isRunning()} eingegangen werden. Diese repräsentiert die Bedingung, die der Entwickler festlegen kann. Sie bestimmt, ob ein Spiel noch läuft oder nicht. Beispielsweise kann ein Spiel nach $n$ Runden zu Ende sein.
+
+\begin{lstlisting}[label={lst:ODD}]
+ODD wird so gespielt:
+
+das spiel hat den wert RUNDEN ist 5.
+...
+das spiel läuft solange RUNDEN größer 0.
+...
+\end{lstlisting}
+	Im oberen Listing wird beispielsweise die globale Variable \texttt{RUNDEN} definiert und als Bedingung festgelegt, dass ein Spiel solange läuft, solange \texttt{RUNDEN größer 5} gilt. Das heißt das Spiel läuft fünf Runden. Im kompilierten Pythoncode sieht das wie folgt aus:
+\begin{lstlisting}[language=Python]
+def isRunning(self): return (self.RUNDEN > 0)
+\end{lstlisting}
+Diese Methode hat eine weitere Besonderheit. Wird keine Bedingung festgelegt, weil ein Spiel beispielsweise kein deterministisches Ende hat, sondern von Fall zu Fall unterschiedlich ist, hat die Funktion einen Standardfall, bei dem immer \texttt{true} zurückgegeben wird. In diesem Fall muss sich der Entwickler aber selbst darum kümmern, das Spiel mit den Schlüsselwort \texttt{das spiel ist zu ende.} zu beenden. Methoden dieser Art, also die gegeben sein müssen, aber vom Nutzer gefüllt werden können, gibt es noch weitere, beispielsweise die Funktion \texttt{isActive()}, die nach einer von Entwickler definierten Bedingung entscheidet, ob ein Spieler aktiv ist oder nicht.
 
 
 
