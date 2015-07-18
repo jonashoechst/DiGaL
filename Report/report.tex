@@ -4,6 +4,7 @@
 \usepackage{german}
 \usepackage[T1]{fontenc}
 \usepackage{a4wide}
+\usepackage[left=2cm, right=2cm, top=2cm, bottom=2cm]{geometry}
 \usepackage{listings}
 \lstset{
   	literate={ö}{{\"o}}1
@@ -23,6 +24,7 @@
 \newcommand{\dg}{DiGaL }
 
 \usepackage{graphicx}
+\usepackage[export]{adjustbox}
 
 \usepackage[pdfpagelabels]{hyperref}
 \hypersetup{
@@ -35,9 +37,14 @@
 
 \begin{document}
 	\begin{titlepage}
-		\title{DiGaL}
-		\author{Artur Sterz, Jonas Höchst, Andreas Morgen}
-		\maketitle
+        \raggedright
+        \includegraphics[width=.5\textwidth,right]{siegel.pdf}
+        \begin{center}
+            ~\\[2cm]
+            \includegraphics[width=\textwidth]{Logo.pdf}
+		    \Large{Artur Sterz, Jonas Höchst, Andreas Morgen}
+
+        \end{center}
 	\end{titlepage}
 	\tableofcontents
 	\newpage
