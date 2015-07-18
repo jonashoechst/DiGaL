@@ -66,7 +66,7 @@ playerobject	: CUR='der aktuelle spieler'
 				| CUR='der spieler'
 				| CUR='aktueller spieler'
 				| CUR='aktuellem spieler'
-				| CUR='aktiver spieler'
+//				| CUR='aktiver spieler' // removed, because of ambiguity wih playerobjects
 				| CUR='aktivem spieler'
 				| 'spieler ' POS=INT
 				| LEFT='linker spieler'
@@ -80,6 +80,7 @@ playerobjects	: ALL='alle spieler'
 				| ALL='allen spielern'
 				| ALL='aller spieler'
 				| ACTIVE='aktive spieler'
+				| ACTIVE='aktiver spieler'
 				| (PO=playerobject', ')* LAST=playerobject
 				;
 			

@@ -6,6 +6,7 @@
 \usepackage{a4wide}
 \usepackage[left=2cm, right=2cm, top=2cm, bottom=2cm]{geometry}
 \usepackage{listings}
+\usepackage{color}
 \lstset{
   	literate={ö}{{\"o}}1
            {ä}{{\"a}}1
@@ -18,6 +19,36 @@
     breakatwhitespace=true,
     basicstyle=\ttfamily,
 }
+
+\definecolor{pblue}{rgb}{0.13,0.13,1}
+\definecolor{pgreen}{rgb}{0,0.5,0}
+\definecolor{pgrey}{rgb}{0.46,0.45,0.48}
+
+\makeatletter
+\renewcommand\chapter{\thispagestyle{plain}%
+\global\@topnum\z@
+\@afterindentfalse
+\secdef\@chapter\@schapter}
+\makeatother 
+
+\usepackage{listings}
+\lstset{language=Python,
+    numbers=left,
+    frame=single
+    showspaces=false,
+    showtabs=false,
+    breaklines=true,
+    showstringspaces=false,
+    breakatwhitespace=true,
+    commentstyle=\color{pgrey},
+    keywordstyle=\color{pblue},
+    stringstyle=\color{pgreen},
+    basicstyle=\ttfamily,
+    moredelim=[il][\textcolor{pgrey}]{$ $},
+    moredelim=[is][\textcolor{pgrey}]{\%\%}{\%\%}
+}
+    
+\renewcommand*{\familydefault}{\sfdefault}
 
 \newcommand{\todo}[1]{
 {\color{red}\bf TODO: #1}}
@@ -40,9 +71,18 @@
         \raggedright
         \includegraphics[width=.5\textwidth,right]{siegel.pdf}
         \begin{center}
-            ~\\[2cm]
+            ~\\[2.5cm]
+		    \Huge{Concepts of Advaced Programming Languages}
+            ~\\[0.2cm]
+            \large{Dr.-Ing. Christoph Bockisch}
+            \large{}
+            ~\\[3cm]
             \includegraphics[width=\textwidth]{Logo.pdf}
-		    \Large{Artur Sterz, Jonas Höchst, Andreas Morgen}
+		    \Large{\{Dice Game Language\}}\\
+		    \large{Domänenbeschreibung, Sprachspezifikation und Diskussion}\\
+            ~\\[1cm]
+		    \large{Artur Sterz, Jonas Höchst, Andreas Morgen}\\
+		    \large{\today}
 
         \end{center}
 	\end{titlepage}
@@ -55,6 +95,7 @@
 \input{3-design.tex}
 \input{4-diskussion.tex}
 \input{5-lessons.tex}
+\input{6-asg.tex}
 
 
 

@@ -4,9 +4,9 @@ import random
 
 class Player:
     def __str__(self): return self.name + ', ' + ', '.join(map(str, [value for key, value in self.__dict__.items() if key not in ['name']]))
-    def __init__(self, name): self.name = name; self.PUNKTE = 0; 
+    def __init__(self, name): self.name = name; self.PUNKTE = 3; 
 
-    
+    def isActive(self): return self.PUNKTE >= 0; 
 
 class Dice:
     def __init__(self, name, faces): self.name = name; self.faces = faces; self.roll()
@@ -29,13 +29,13 @@ class Game:
         self.activePlayer = self.players[0]
         print('Game initialized '+self.status())
         
-    def isRunning(self): return (self.RUNDEN > 0)
+    def isRunning(self): return (len([player for player in self.players if player.isActive()]) > 1)
     def __init__(self):
         self.players = []
         # Dynamic inits
-        self.name = 'OWN'
+        self.name = 'MÄXCHEN'
         
-        self.RUNDEN = 5
+        self.LETZTES = 0
         self.min = 2
         self.max = 10
         self.dices = [Dice('A',[1, 2, 3, 4, 5, 6, ]), Dice('B',[1, 2, 3, 4, 5, 6, ]), ]
@@ -45,17 +45,32 @@ class Game:
             print(self.status())
             print('\n'+self.activePlayer.name+' ist dran.'),
             
+            if self.activePlayer.PUNKTE < 0:
+                self.activePlayer = self.leftPlayer(); continue
             raw_input('Enter drücken zum Würfeln...'); map(Dice.roll, self.dices); print('Du hast '+', '.join(map(str, [dice.value for dice in self.dices]))+' gewürfelt!')
             self.sortDices(desc=True)
-            raw_input('Enter drücken zum Würfeln...'); map(Dice.roll, [self.dices[1], ]); print('Du hast '+', '.join(map(str, [dice.value for dice in self.dices]))+' gewürfelt!')
-            self.activePlayer.PUNKTE = self.activePlayer.PUNKTE + sum([dice.value for dice in self.dices])
-            self.RUNDEN = self.RUNDEN - 1
-            self.activePlayer = self.rightPlayer(); continue
+            self.ERGEBNIS = self.dices[0].value * 10 + self.dices[1].value
+            if self.dices[0].value == self.dices[1].value:
+                self.ERGEBNIS = self.ERGEBNIS * 10
+            if self.ERGEBNIS == 21:
+                for self.S in self.players:
+                    self.S.PUNKTE = (self.S.PUNKTE - 1)
+                
+                self.activePlayer.PUNKTE = (self.activePlayer.PUNKTE + 1)
+                self.LETZTES = 0
+                self.activePlayer = self.activePlayer; continue
+            if self.ERGEBNIS < self.LETZTES:
+                self.activePlayer.PUNKTE = self.activePlayer.PUNKTE - 1
+                self.LETZTES = 0
+                self.activePlayer = self.leftPlayer(); continue
+            if self.ERGEBNIS >= self.LETZTES:
+                self.LETZTES = self.ERGEBNIS
+                self.activePlayer = self.leftPlayer(); continue
 
 if __name__ == '__main__':
     game = Game()
     game.setup()
     game.loop()
     print('\nSpiel beendet: '+game.status())
-    print(str([player.name for player in game.players if player.PUNKTE == (min([self.PUNKTE for self in game.players]))][0]) +' hat gewonnen!')
+    print([self.name for self in game.players if self.PUNKTE >= 0][0]+' hat gewonnen!')
 

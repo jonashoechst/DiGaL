@@ -4,7 +4,7 @@ import random
 
 class Player:
     def __str__(self): return self.name + ', ' + ', '.join(map(str, [value for key, value in self.__dict__.items() if key not in ['name']]))
-    def __init__(self, name): self.name = name; self.PUNKTE = 0; 
+    def __init__(self, name): self.name = name; self.PUNKTE = 0; self.GEWONNEN = 0; 
 
     
 
@@ -29,16 +29,15 @@ class Game:
         self.activePlayer = self.players[0]
         print('Game initialized '+self.status())
         
-    def isRunning(self): return (self.RUNDEN > 0)
+    def isRunning(self): return True
     def __init__(self):
         self.players = []
         # Dynamic inits
-        self.name = 'OWN'
+        self.name = 'EINS'
         
-        self.RUNDEN = 5
         self.min = 2
         self.max = 10
-        self.dices = [Dice('A',[1, 2, 3, 4, 5, 6, ]), Dice('B',[1, 2, 3, 4, 5, 6, ]), ]
+        self.dices = [Dice('A',[1, 2, 3, 4, 5, 6, ]), Dice('B',[1, 2, 3, 4, 5, 6, ]), Dice('C',[1, 2, 3, 4, 5, 6, ]), Dice('D',[1, 2, 3, 4, 5, 6, ]), ]
     def loop(self):
         while self.isRunning():
             
@@ -46,10 +45,12 @@ class Game:
             print('\n'+self.activePlayer.name+' ist dran.'),
             
             raw_input('Enter drücken zum Würfeln...'); map(Dice.roll, self.dices); print('Du hast '+', '.join(map(str, [dice.value for dice in self.dices]))+' gewürfelt!')
-            self.sortDices(desc=True)
-            raw_input('Enter drücken zum Würfeln...'); map(Dice.roll, [self.dices[1], ]); print('Du hast '+', '.join(map(str, [dice.value for dice in self.dices]))+' gewürfelt!')
+            if self.dices[0].value == 1 or self.dices[1].value == 1 or self.dices[2].value == 1 or self.dices[3].value == 1:
+                self.activePlayer = self.rightPlayer(); continue
             self.activePlayer.PUNKTE = self.activePlayer.PUNKTE + sum([dice.value for dice in self.dices])
-            self.RUNDEN = self.RUNDEN - 1
+            if self.activePlayer.PUNKTE >= 100:
+                self.activePlayer.GEWONNEN = 1
+                break
             self.activePlayer = self.rightPlayer(); continue
 
 if __name__ == '__main__':
@@ -57,5 +58,5 @@ if __name__ == '__main__':
     game.setup()
     game.loop()
     print('\nSpiel beendet: '+game.status())
-    print(str([player.name for player in game.players if player.PUNKTE == (min([self.PUNKTE for self in game.players]))][0]) +' hat gewonnen!')
+    print([self.name for self in game.players if self.GEWONNEN == 1][0]+' hat gewonnen!')
 

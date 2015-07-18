@@ -1,16 +1,13 @@
-KILLER wird so gespielt:
+MÄXCHEN wird so gespielt:
 
+das spiel hat den wert LETZTES ist 0.
 das spiel ist für 2 bis 10 spieler geeignet.
 das spiel läuft solange anzahl aktiver spieler größer als 1.
 das spiel hat folgende würfel:
 würfel A hat diese seiten: 1 2 3 4 5 6
-würfel B hat diese seiten: 1 2 3 4 5 6
-würfel C hat diese seiten: 1 2 3 4 5 6
-würfel D hat diese seiten: 1 2 3 4 5 6
-würfel E hat diese seiten: 1 2 3 4 5 6
-würfel F hat diese seiten: 1 2 3 4 5 6.
+würfel B hat diese seiten: 1 2 3 4 5 6.
 
-spieler haben die werte PUNKTE ist 666.
+spieler haben die werte PUNKTE ist 3.
 spieler sind aktiv, solange PUNKTE größergleich 0 gilt.
 
 ist ein spieler am zug macht er folgendes:

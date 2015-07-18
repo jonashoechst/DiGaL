@@ -11,7 +11,8 @@ spieler haben die werte PUNKTE ist 0.
 
 ist ein spieler am zug macht er folgendes:
 würfelt mit allen würfeln.
-würfelt mit würfel B.
+sortiert alle würfel absteigend.
+würfelt mit würfel 1.
 aktueller spieler PUNKTE ist aktueller spieler PUNKTE + die summe von allen würfeln.
 RUNDEN ist RUNDEN - 1 und rechter spieler ist dran.
 
