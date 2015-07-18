@@ -3,7 +3,14 @@
 \chapter{Prototyp Implementierung}
 \label{cha:implementierung}
 
-In der Referenzimplementierung von \dg verwenden wir die ANTLR Syntax zur formalen Definition unserer Sprache. Darauf aufbauen verwenden wir den von ANTLR bereitgestellten Parser und Lexer zum das in \dg geschriebene Spiel zu erfassen. 
+In der Referenzimplementierung von \dg verwenden wir die ANTLR Syntax zur formalen Definition unserer Sprache. Darauf aufbauen verwenden wir den von ANTLR bereitgestellten Parser und Lexer zum das in \dg geschriebene Spiel zu erfassen. \\
+
+    \begin{figure}[ht]
+    	\centering
+        \includegraphics[width=\textwidth]{Flow.pdf}
+    	\caption{Ablauf der Kompilation eines DiGaL Programmes}
+    	\label{flow}
+    \end{figure}
 
 Um sicherzustellen, dass die mit \dg geschriebenen Spiele portabel sind, haben wir uns zum Ziel gesetzt möglichst wenige Abhängigkeiten vorauszusetzen. 
 Ein Kriterium war dabei, dass die Ausführung des Codes nur mit der Standardbibliothek einer Zielsprache funktioniert. Wir haben uns deswegen für eine Kompilation der Sprache entschieden, und verzichten für den Endanwender auf die Installation von ANTLR. Als Zielsprache wählten wir Python, das Syntaktisch kompakt zu programmieren ist und inhärente Konzepte unserer Sprache unterstützt (Objektorientiertheit, Funktionale Programmierung). 
@@ -14,6 +21,13 @@ Zur Generierung des Python Codes haben wir uns für das Visitorpattern entschied
 \label{sec:python_framework}
     
     Zusammen mit der Definition der Grammatik haben wir generische Methoden ausgearbeitet. Die vorhanden Methoden lassen sich in zwei Klassen differenzieren: Generische Methoden, die in vielen Würfelspielen verwendet werden; Methoden die zur Interaktion mit den Mitspielern und zur Repräsentation von Daten gegenüber diesen nötig sind. Die zweite Gruppe ergibt sich nicht aus der Domäne selbst, sondern folgt aus der nötigen Mensch-Maschine Kommunikation (Ausgaben auf der Kommandozeile).
+    
+    \begin{figure}[ht]
+    	\centering
+        \includegraphics[width=0.8\textwidth]{Python-UML.pdf}
+    	\caption{Klassendesign des Python Frameworks}
+    	\label{python-uml}
+    \end{figure}
     
     Die Domänenspezifischen Methoden können direkt aus der Sprache verwendet werden und entsprechen den verwendbaren Anweisungen (\texttt{würfelt mit <würfeln>}).
     
@@ -59,6 +73,16 @@ def isRunning(self): return (self.RUNDEN > 0)
 \end{lstlisting}
 Diese Methode hat eine weitere Besonderheit. Wird keine Bedingung festgelegt, weil ein Spiel beispielsweise kein deterministisches Ende hat, sondern von Fall zu Fall unterschiedlich ist, hat die Funktion einen Standardfall, bei dem immer \texttt{true} zurückgegeben wird. In diesem Fall muss sich der Entwickler aber selbst darum kümmern, das Spiel mit den Schlüsselwort \texttt{das spiel ist zu ende.} zu beenden. Methoden dieser Art, also die gegeben sein müssen, aber vom Nutzer gefüllt werden können, gibt es noch weitere, beispielsweise die Funktion \texttt{isActive()}, die nach einer von Entwickler definierten Bedingung entscheidet, ob ein Spieler aktiv ist oder nicht.
 
+
+\section{Erfüllung der geforderten Sprachqualitäten} % (fold)
+\label{sec:erfullung_der_geforderten_sprachqualitaten}
+
+% section erfullung_der_geforderten_sprachqualitaten (end)
+
+\section{Mögliche Erweiterungen} % (fold)
+\label{sec:mogliche_erweiterungen}
+
+% section mogliche_erweiterungen (end)
 
 
 
