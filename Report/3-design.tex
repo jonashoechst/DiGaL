@@ -3,126 +3,99 @@
 \chapter{Designentscheidungen}
 \label{cha:designentscheidungen}
 
-\section{Qualitäten der Sprache} % (fold)
+\section{Qualitäten der Sprache}
 \label{sec:qualitaten_der_sprache}
 
+	\subsection{Modularität}
+	\label{sub:modularitat}
 
-\subsection{Modularität} % (fold)
-\label{sub:modularitat}
-\subsubsection{Funktionsdefinitionen}
-\label{subsub:funktionsdefinitionen}
-	\dg bietet keine Konzepte, um Modular Spiele entwickeln zu können. Diese Entscheidung ist bewusst so gewählt worden. Auch hier stand wieder der Fokus im Vordergrund, die Sprache so einfach wie möglich zu gestalten. Ein Programm in Module aufzuteilen heißt zum Beispiel eine Möglichkeit zu bieten Funktionen oder Methoden zu definieren, in denen Aktionen gekapselt sind, die wiederholt ausgeführt werden können. Dies würde aber bedeuten, dass man ein Konzept benötigt, dass einem einen solchen Mechanismus erlaubt. Und dieses neue Konzept müsste von Anwendern unserer Sprache erlernt werden, wenn sie keine Programmierer sind. Daher haben wir uns dazu entschieden, keine Möglichkeit anzubieten Funktionen zu definieren. Es schien uns einfacher dem Nutzer die Möglichkeit zu geben, Aktionen wiederholt zu definieren.
+		\subsubsection{Funktionsdefinitionen}
+		\label{subsub:funktionsdefinitionen}
+			\dg bietet keine Konzepte, um Modular Spiele entwickeln zu können. Diese Entscheidung ist bewusst so gewählt worden. Auch hier stand wieder im Vordergrund, die Sprache so einfach wie möglich zu gestalten. Ein Programm in Module aufzuteilen, heißt zum Beispiel eine Möglichkeit zu bieten Funktionen oder Methoden zu definieren, in denen Aktionen gekapselt sind, die wiederholt ausgeführt werden können. Dies würde aber bedeuten, dass man ein Konzept benötigt, dass dem Entwickler einen solchen Mechanismus erlaubt. Und dieses neue Konzept müsste von Anwendern unserer Sprache erlernt werden, wenn sie keine Programmierer sind. Daher wurde entschieden, keine Möglichkeit anzubieten Funktionen zu definieren. Es schien einfacher dem Nutzer die Möglichkeit zu überlassen, Aktionen wiederholt zu definieren.
 
-	Desweiteren besteht ein Würfelspiel in \dg aus vier Blöcken, wie sie in Abschnitt \ref{sec:blocke_und_absatze} vorgestellt werden. Die Möglichkeit Funktionen zu definieren würde daher bedeuten, dass dieses strikte Konzept gebrochen werden müsste, was wiederum ein Mehr an Komplexität bedeuten würde.
-\subsubsection{Auslagern in andere Dateien}
-\label{subsub:auslagern_in_andere_dateien}
-	Da Spiele, die in \dg geschrieben sind, nur aus vier Blöcken bestehen, schien es uns nicht sinnvoll, eine Art der Auslagerung von Code in andere Dateien einzuführen. Auch hier müsste mit dem Konzept der strikten Blockbildung gebrochen werden und eine Möglichkeit geschaffen werden diese Dateien einzubinden oder zu importieren. Das könnte unerfahrene Nutzer jedoch zusätzlich verwirren, da es aus unserer Sicht nicht mit unserem Konzept vereinbar ist, \dg eine kontrollierte Sprache zu Grunde zu legen, da es kein sprachliches Konzept gibt, dass paradigmatisch das gleiche aussagt.
+			Desweiteren besteht ein Würfelspiel in \dg aus vier Blöcken, wie sie in Abschnitt \ref{sec:blocke_und_absatze} vorgestellt werden. Die Möglichkeit Funktionen zu definieren würde daher bedeuten, dass dieses strikte Konzept gebrochen werden müsste, was wiederum ein Mehr an Komplexität bedeuten würde.
 
-\subsection{Robustheit} % (fold)
-\label{sub:robustheit}
-Alle \dg Programme haben einen festen Rahmen, dessen freie Flächen durch Variablendefinitionen, Arithmetische Operationen und Kontrollflussanweisungen gefüllt werden. Im Gegensatz zu klassischen Programmiersprachen ist der Programmierer dadurch in seiner Mächtigkeit sehr eingeschränkt. Durch diese Einschränkung ist es ihm wiederum auch weniger leicht möglich, Fehler zu produzieren. Treten Programmierfehler im \dg Programm auf, sind diese schon durch die Syntax invalidiert und können nicht in ein Programm übersetzt werden. Als Beispiel sei hier die Iteration über eine Variable genannt, die in unserer Sprache nur als Iteration über eine Gruppe von Spielern oder Würfeln vorgesehen ist. 
+		\subsubsection{Auslagern in andere Dateien}
+		\label{subsub:auslagern_in_andere_dateien}
+			Da Spiele, die in \dg geschrieben sind, nur aus vier Blöcken bestehen, schien es uns nicht sinnvoll, eine Art der Auslagerung von Code in andere Dateien einzuführen. Auch hier müsste mit dem Konzept der strikten Blockbildung gebrochen werden und eine Möglichkeit geschaffen werden diese Dateien einzubinden oder zu importieren. Das könnte unerfahrene Nutzer jedoch zusätzlich verwirren, da es aus unserer Sicht nicht mit unserem Konzept vereinbar ist, \dg eine kontrollierte Sprache zu Grunde zu legen, da es kein sprachliches Konzept gibt, dass paradigmatisch das Gleiche aussagt.
 
-Funktions- oder Klassendefinitionen sind in \dg nicht vorgesehen, der rein Iterative Ansatz reicht aus unserer Sicht aus, den Kontrollfluss und die Komplexität von Würfelspielen zu beschreiben.
+	\subsection{Robustheit}
+	\label{sub:robustheit}
+		Alle \dg Programme haben einen festen Rahmen, dessen freie Flächen durch Variablendefinitionen, Arithmetische Operationen und Kontrollflussanweisungen gefüllt werden. Im Gegensatz zu klassischen Programmiersprachen ist der Programmierer dadurch in seiner Mächtigkeit sehr eingeschränkt. Durch diese Einschränkung ist es ihm wiederum auch weniger leicht möglich, Fehler zu produzieren. Treten Programmierfehler im \dg Programm auf, sind diese schon durch die Syntax invalidiert und können nicht in ein Programm übersetzt werden. Als Beispiel sei hier die Iteration über eine Variable genannt, die in unserer Sprache nur als Iteration über eine Gruppe von Spielern oder Würfeln vorgesehen ist. 
 
-Würfelspiele sind in ihren möglichen Ausgängen begrenzt und dadurch gut testbar. Eine kleine Zahl an Würfeln mit seiner geringen Zahl an Würfelflächen, die in einer festen Kontrollstruktur verwendet werden, macht es möglich alle Fälle des Programmes dazu generieren und die Spielausgänge zu testen.
-% subsection robustheit (end)
+		Funktions- oder Klassendefinitionen sind in \dg nicht vorgesehen. Der rein iterative Ansatz reicht aus, den Kontrollfluss und die Komplexität von Würfelspielen zu beschreiben.
 
-\subsection{Datenmodellierung} % (fold)
-\label{sub:datenmodellierung}
-\dg bietet keine Möglichkeit um Datenobjekte oder -strukturen anzulegen. Wie unterstützen allerdings einen Aspekt der Objektorientiertheit, in dem wir die Möglichkeit bieten, einem Spieler Variablen zuzuordnen. Die einzigen erweiterterbaren Objekte sind also die Spieler. Alle vom Nutzer definierten Variablen, die nicht zu Spielern gehören lassen sich nur global als Variable des Spiels anlegen.
+		Würfelspiele sind in ihren möglichen Ausgängen begrenzt und dadurch gut testbar. Eine kleine Zahl an Würfeln mit seiner geringen Zahl an Würfelflächen, die in einer festen Kontrollstruktur verwendet werden, macht es möglich alle Fälle des Programmes dazu generieren und die Spielausgänge zu testen.
 
-Als weiteres (nicht modifizierbares) Objekt sind Würfel zu nennen, deren Namen und Seiten zwar vom Programmierer definiert, nicht aber neue Felder hinzugefügt werden können.
-% subsection datenmodellierung (end)
+	\subsection{Datenmodellierung}
+	\label{sub:datenmodellierung}
+		\dg bietet keine Möglichkeit um Datenobjekte oder -strukturen anzulegen. Es wird allerdings ein Aspekt der Objektorientiertheit unterstützt, in dem die Möglichkeit angeboten wird, einem Spieler Variablen zuzuordnen. Die einzigen erweiterterbaren Objekte sind also die Spieler. Alle vom Nutzer definierten Variablen, die nicht zu Spielern gehören lassen sich nur global als Variable des Spiels anlegen.
 
-\subsection{Abstraktionsniveau} % (fold)
-\label{sub:abstraktionsniveau}
-	Das Abstraktionsniveau in \dg ist bewusst sehr hoch gewählt. Auch hier stand wieder die Einfachheit der Sprache im Vordergrund. Daher haben wir keinerlei Möglichkeiten geschaffen beispielsweise auf Adressen im Arbeitsspeicher zuzugreifen oder Operationen auf Bits oder Bytes auszuführen. Auch typische Probleme in anderen Programmiersprachen wie Initialisierung oder Speicherverwaltung werden vom Compiler übernommen, sodass sich vor Allem unerfahrene Nutzer nicht um derlei Probleme kümmern müssen. 
-% subsection abstraktionsniveau (end)
+		Als weiteres (nicht modifizierbares) Objekt sind Würfel zu nennen, deren Namen und Seiten zwar vom Programmierer definiert, nicht aber neue Felder hinzugefügt werden können.
 
-\subsection{Verständlichkeit} % (fold)
-\label{sub:verstandlichkeit}
-	Die Verständlichkeit von \dg ist gegeben durch die Verwendung der kontrollierten Sprache. Dadurch ergeben sich keine syntaktisch kryptischen Konstruktionen, die bei späterem Betrachten aufwendig rekonstruiert werden müssen. Auch die Unterstützung von alternativen Formulierungen (siehe Anhang, Abschnitt \ref{sec:abstrakte_syntax}) vereinfacht die Verständlichkeit. Falls sich doch komplexe Ausdrücke ergeben sollten, die nicht auf Anhieb verständlich sind, haben wir die Möglichkeit geschaffen den Code durch Kommentare zu erklären.
+	\subsection{Abstraktionsniveau}
+	\label{sub:abstraktionsniveau}
+		Das Abstraktionsniveau in \dg ist bewusst sehr hoch gewählt. Auch hier stand wieder die Einfachheit der Sprache im Vordergrund. Daher werden keinerlei Möglichkeiten angeboten beispielsweise auf Adressen im Arbeitsspeicher zuzugreifen oder Operationen auf Bits oder Bytes auszuführen. Auch typische Probleme in anderen Programmiersprachen wie Initialisierung oder Speicherverwaltung werden vom Compiler übernommen, sodass sich vor Allem unerfahrene Nutzer nicht um derlei Probleme kümmern müssen.
 
-% subsection verstandlichkeit (end)
-% section qualitaten_der_sprache (end)
+	\subsection{Verständlichkeit}
+	\label{sub:verstandlichkeit}
+		Die Verständlichkeit von \dg ist gegeben durch die Verwendung der kontrollierten Sprache. Dadurch ergeben sich keine syntaktisch kryptischen Konstruktionen, die bei späterem Betrachten aufwendig rekonstruiert werden müssen. Auch die Unterstützung von alternativen Formulierungen (siehe Anhang, Abschnitt \ref{sec:abstrakte_syntax}) vereinfacht die Verständlichkeit. Falls sich doch komplexe Ausdrücke ergeben sollten, die nicht auf Anhieb verständlich sind, wurde die Möglichkeit geschaffen den Code durch Kommentare zu erklären.
 
-\section{Alternativen im Sprachdesign} % (fold)
+\section{Alternativen im Sprachdesign}
 \label{sec:alternativen_im_sprachdesign} 
+	Grundpfeiler unserer Sprache ist, maximal einfache Beschreibungen der domänspezifischen Anwendungen auszudrücken, in Anlehnung an die natürliche Sprache. Würden auf diese Eigenschaft verzichtet, wäre die Begründung für die Einschränkungen nicht mehr gegeben und alle oben genannten Punkte müssten neu diskutiert werden, da die Begründung sich weitestgehend auf das erste Argument stützt. 
 
-Grundpfeiler unserer Sprache ist, maximal einfache Beschreibungen der Domänspezifischen Anwendungen auszudrücken, in Anlehnung an die natürliche Sprache. Würden wir auf diese Eigenschaft verzichten, wäre die Begründung für die Einschränkungen nicht mehr gegeben und alle oben genannten Punkte müssten neu diskutiert werden, da die Begründung sich weitestgehend auf das erste Argument stützt. 
+	Zur Problemlösung wäre auch eine Library denkbar, die Paradigmen aus Würfelspielen aufgreift und dem Nutzer zur einfacheren Implementierung anbietet. Durch die sehr auf die Domäne ausgerichtete Sprache, folgen die meisten oben diskutierten Entscheidungen direkt. Einzelne Paradigmen lassen sich jedoch diskutieren und in Frage stellen.
 
-Zur Problemlösung wäre auch eine Library denkbar, die Paradigmen aus Würfelspielen aufgreift und dem Nutzer zur einfacheren Implementierung anbietet. Durch die sehr auf die Domäne ausgerichtete Sprache, folgen die meisten oben diskutierten Entscheidungen direkt. Einzelne Paradigmen lassen sich jedoch diskutieren und in Frage stellen.
+	\subsection{Erweiterung bestehender Spiele}
+	\label{sub:erweiterung_bestehender_spiele}
+		Eine weitere Möglichkeit der Modularisierung ist, bestehende Spiele, also in unserem Fall bestehenden Code zu erweitern. Die aktuelle Version von \dg bietet dieses Konstrukt nicht an. Denkbar wäre aber eine Art Vererbung, in dem ein Spiel auf einem anderen basiert und jeder Block um weitere Anweisungen ergänzt werden kann (Hinzufügen von Würfeln, zusätzliche Aktionen bei bestimmten Ergebnissen, ...). Diese Vererbung sollte ein Spiel jedoch nur erweitern, nicht aber bestehende Regeln außer Kraft setzen können, da dies zum einen wieder zu Lasten der Verständlichkeit geschehen würde. Zum andern würde eine Änderung des zugrundeliegenden Spieles faktisch einer Neuentwicklung gleich kommen und sollte aus diesem Grund auch so behandelt werden.
 
-\subsection{Erweiterung bestehender Spiele}
-\label{sub:erweiterung_bestehender_spiele}
-	Eine weitere Möglichkeit der Modularisierung ist bestehende Spiele, also in unserem Fall bestehenden Code zu erweitern. Die aktuell \dg Version bietet dieses Konstrukt nicht an. Denkbar wäre aber eine Art Vererbung, in dem ein Spiel auf einem anderen Basiert und jeder Block um weitere Anweisungen ergänzt werden kann (hinzufügen von Würfeln, zusätzliche Aktionen bei bestimmten Ergebnissen, ...). Diese Vererbung sollte ein Spiel jedoch nur erweitern, nicht aber bestehende Regeln außer Kraft setzen können, da dies zum einen wieder zu Lasten der Verständlichkeit geschehen würde. Zum andern würde eine Änderung des zugrundeliegenden Spieles faktisch einer Neuentwicklung gleich kommen und sollte aus diesem Grund auch so behandelt werden.
-% section modularitat (end)
+	\subsection{Mächtigkeit}
+	\label{sub:machtigkeit}
+		Um die Ausdrucksmächtigkeit von \dg zu erhöhen ist eine wesentliche Änderung Funktionen einzuführen. Der Programmierer könnte Konstrukte definieren, die im Moment von der Sprache zur Verfügung gestellt werden und damit den Code besser strukturieren. 
 
-\subsection{Mächtigkeit} % (fold)
-\label{sub:machtigkeit}
-Um die Ausdrucksmächtigkeit von \dg zu erhöhen ist eine wesentliche Änderung Funktionen einzuführen. Der Programmierer könnte Konstrukte definieren, die im Moment von der Sprache zur Verfügung gestellt werden und damit den Code besser strukturieren. 
+		Eine weitere Möglichkeit um die Ausdrucksmächtigkeit zu erhöhen, liegt darin, frei zu definierende \texttt{while} Schleifen einzuführen. Im Moment werden in der Sprache lediglich \texttt{foreach} und \texttt{for} Schleifen angeboten. Die bereits eingeführten Konstrukte zur Iteration könnten verallgemeinert werden, so dass auch Variablen definiert werden können, über die iteriert werden kann. Dies würde allerdings zu Lasten der Robustheit gehen, da der Programmierer dadurch leichter Fehler machen kann, die erst zur Laufzeit auftreten.
 
-Eine weitere Möglichkeit um die Ausdrucksmächtigkeit zu erhöhen liegt darin, frei zu definierende \texttt{while} Schleifen einzuführen. Im Moment werden in der Sprache lediglich \texttt{foreach} und \texttt{for} Schleifen angeboten. Die bereits eingeführten Konstrukte zur Iteration könnten verallgemeinert werden, so dass auch Variablen definiert werden können, über die iteriert werden kann. Dies würde allerdings zu Lasten der Robustheit gehen, da der Programmierer dadurch leichter Fehler machen kann, die erst zur Laufzeit auftreten.
-% subsection machtigkeit (end)
+	\subsection{Objektmodellierung}
+	\label{sub:objektmodellierung}
+		Einige Spiele bestehen nicht nur aus den von uns unterstützten Datenstrukturen \texttt{Spieler} und \texttt{Würfel}. So hat beispielsweise das Spiel Kniffel neben genannten Objekten auch noch Spielzettel mit Ergebniswerten und Becher. Diese können zwar in \dg mit Spielervariablen nachgebildet werden, eine Modellierung als Objekt wäre jedoch auch denkbar und unter Umständen wünschenswert.
 
-\subsection{Objektmodellierung} % (fold)
-\label{sub:objektmodellierung}
-Einige Spiele bestehen nicht nur aus den von uns unterstützten Datenstrukturen \texttt{Spieler} und \texttt{Würfel}. So hat beispielsweise das Spiel Kniffel neben genannten Objekten auch noch Spielzettel mit Ergebniswerten und Becher. Diese können zwar in \dg mit Spielervariablen nachgebildet werden, eine Modellierung als Objekt wäre jedoch auch denkbar und unter Umständen wünschenswert.
+		Außerdem gibt es in manchen Spielen Spieler, die eine Sonderrolle haben und von uns auch nicht direkt unterstützt werden. Auch hier würde eine Möglichkeit der Modellierung sinnvoll sein.
 
-Außerdem gibt es in manchen Spielen Spieler, die eine Sonderrolle haben und von uns auch nicht direkt unterstützt werden. Auch hier würde eine Möglichkeit der Modellierung sinnvoll sein.
+		Schließlich existieren Spiele, die Objekte aus anderen Domänen übernehmen, zum Bespiel Spielkarten oder Spielfelder und Spielfiguren, die sich auf den Spielfeldern bewegen.
 
-Schließlich existieren Spiele, die Objekte aus anderen Domänen übernehmen, Zum Bespiel Spielkarten oder Spielfelder und Spielfiguren, die sich auf den Spielfeldern bewegen.\\
+		Um diese Dinge zu unterstützen könnte das Konzept der Objektorientiertheit eingeführt werden und damit einhergehend auch Möglichkeiten um eigenen Objekte zu erstellen und zu modellieren.
 
-Um diese Dinge zu unterstützen könnte das Konzept der Objektorientiertheit eingeführt werden und damit einhergehen auch Möglichkeiten um eigenen Objekte zu erstellen und zu modellieren.
-
-% subsection objektmodellierung (end)
-% section alternativen_im_sprachdesign (end)
-
-\section{Designspace} % (fold)
+\section{Designspace}
 \label{sec:designspace}
 
-\subsection{Werte \& Typen} % (fold)
-\label{sub:werte_typen}
-Unsere Domäne erfordert keine ausgefallenen Datentypen. Würfelseiten und daraus resultierend auch die Aktionen im Spiel basieren auf Ganzzahl-Werten \texttt{(Integer)}. Variablen in unserer Sprache werden mit Strings adressiert, die aus Großbuchstaben bestehen. Der Datentyp String besteht in der Sprache selbst nicht und wird bei der Kompilation im Endprodukt hinzugefügt. Denkbar wäre es allerdings, Strings einzuführen, zum Beispiel um eigene textuelle Ausgaben zu definieren, die vom gegebenen Framework abweichen.
+	\subsection{Werte \& Typen}
+	\label{sub:werte_typen}
+		Unsere Domäne erfordert keine ausgefallenen Datentypen. Würfelseiten und daraus resultierend auch die Aktionen im Spiel basieren auf Ganzzahl-Werten \texttt{(Integer)}. Variablen in unserer Sprache werden mit Strings adressiert, die aus Großbuchstaben bestehen. Der Datentyp String besteht in der Sprache selbst nicht und wird bei der Kompilation im Endprodukt hinzugefügt. Denkbar wäre es allerdings, Strings einzuführen, zum Beispiel um eigene textuelle Ausgaben zu definieren, die vom gegebenen Framework abweichen.
 
-Darüber hinaus werden die domänenspezifischen Objekte direkt adressiert. Für Spieler gibt es Ausdrücke, die den jeweils linken oder rechten Spieler des aktuellen oder einen Spieler auf einem bestimmten Platz adressieren. Ebenso ist es möglich Würfel über deren Nummer oder Bezeichnung zu adressieren. Mengen von Würfeln oder Spieler können über deren verschiedene Eigenschaften ausgewählt werden: \texttt{alle <würfel/spieler>}; \texttt{aktive <spieler>}; \texttt{würfel 1, würfel 2}.
-% subsection werte_typen (end)
+		Darüber hinaus werden die domänenspezifischen Objekte direkt adressiert. Für Spieler gibt es Ausdrücke, die den jeweils linken oder rechten Spieler ausgehend vom aktuellen Spieler oder einen Spieler auf einem bestimmten Platz adressieren. Ebenso ist es möglich Würfel über deren Nummer oder Bezeichnung zu adressieren. Mengen von Würfeln oder Spielern können über deren verschiedenen Eigenschaften ausgewählt werden: \texttt{alle <würfel/spieler>}; \texttt{aktive <spieler>}; \texttt{würfel 1, würfel 2}.
 
-\subsection{Dispatching} % (fold)
-\label{sub:dispatching}
-	Man spricht von Dispatching, wenn ein Methodenaufruf zur Laufzeit anhand des tatsächlichen Typs eines Objektes aufgelöst wird. Da \dg weder Methoden noch Polymorphie unterstützt, mussten wir uns keine Gedanken zu Dispatching machen.
+	\subsection{Dispatching}
+	\label{sub:dispatching}
+		Man spricht von Dispatching, wenn ein Methodenaufruf zur Laufzeit anhand des tatsächlichen Typs eines Objektes aufgelöst wird. Da \dg weder Methoden noch Polymorphie unterstützt, mussten keine Gedanken zu Dispatching gemacht werden.
 
-% subsection dispatching (end)
+	\subsection{Ausdrücke}
+	\label{sub:ausdrucke}
+		\dg unterstützt alle gängigen arithmetischen Ausdrücke außer die Division, da bei Würfelspielen in den meisten Fällen nur mit Ganzzahlen gerechnet wird. Außerdem würde die Division einen neuen Datentypen für Fließkommazahlen voraussetzen, der aber der Einfachheit halber nicht unterstützt wird.
 
-\subsection{Ausdrücke} % (fold)
-\label{sub:ausdrucke}
-	\dg unterstützt alle gängigen arithmetischen Ausdrücke außer die Division, da bei Würfelspielen in den meisten Fällen nur mit ganzzahlen gerechnet wird. Außerdem würde die Division einen neuen Datentypen für Fließkommazahlen voraussetzen, den wir aber der Einfachheit halber nicht unterstützen.
-	
-	Außerdem sind Vergleichsoperationen wie \texttt{größer}, \texttt{kleiner}, \texttt{gleich} möglich. Auch logische Ausdrücke wie \texttt{und} und \texttt{oder} sind möglich.
-	
-	Weiterhin gibt es domänenspezifische Ausdrücke. Hier sei die Operatione \texttt{die summe von <würfeln>} genannt, die die summe aller gewürfelten Augenzahlen ermittelt und die Operation \texttt{anzahl <spieler/würfel>}, die die Anzahl von zum Beispiel aktiven Spielern zurück gibt.
+		Außerdem sind Vergleichsoperationen wie \texttt{größer}, \texttt{kleiner}, \texttt{gleich} möglich. Auch logische Ausdrücke wie \texttt{und} und \texttt{oder} sind möglich.
 
-% subsection ausdrucke (end)
+		Weiterhin gibt es domänenspezifische Ausdrücke. Hier sei die Operatione \texttt{die summe von <würfeln>} genannt, die die Summe aller gewürfelten Augenzahlen ermittelt und die Operation \texttt{anzahl <spieler/würfel>}, die die Anzahl von zum Beispiel aktiven Spielern zurück gibt.
 
-\subsection{Scope} % (fold)
-\label{sub:scope}
-	Bei einem Würfelspiel sind zu Beginn alle Variablen global bekannt. Wenn gewürfelt wird, sehen alle Spieler die gewürfelte Augenzahl und auch alle Spieler wissen, wie viele Spieler und Würfel am Spiel beteiligt sind. Daher gibt es im Spiel lediglich einen globalen Scope. In diesem können auch alle Spieler alle Werte lesen und verändern.
-	
-	Die Spieler hingegen haben eigene lokale Variablen, da diese nicht zum globalen Spiel gehören, sondern jeder Spieler für beispielsweise seine eigenen Punkte verantwortlich ist. Es gibt jedoch die Möglichkeit Werte von anderen Spielern zu ändern. Dies ist bewusst so entschieden worden, da beispielsweise bei dem Spiel Mäxchen bei der Augenzahl 21 allen anderen Spielern ein Punkt abgezogen wird.
+	\subsection{Scope}
+	\label{sub:scope}
+		Bei einem Würfelspiel sind zu Beginn alle Variablen global bekannt. Wenn gewürfelt wird, sehen alle Spieler die gewürfelte Augenzahl und auch alle Spieler wissen, wie viele Spieler und Würfel am Spiel beteiligt sind. Daher gibt es im Spiel lediglich einen globalen Scope. In diesem können auch alle Spieler alle Werte lesen und verändern.
 
-% subsection scope (end)
+		Die Spieler hingegen haben eigene lokale Variablen, da diese nicht zum globalen Spiel gehören, sondern jeder Spieler für beispielsweise seine eigenen Punkte verantwortlich ist. Es gibt jedoch die Möglichkeit Werte von anderen Spielern zu ändern. Dies ist bewusst so entschieden worden, da beispielsweise bei dem Spiel Mäxchen bei der Augenzahl 21 allen anderen Spielern ein Punkt abgezogen wird.
 
-\subsection{Anweisungen} % (fold)
-\label{sub:anweisungen}
-DiGaL bietet dem Nutzer eine eingeschränkte, aber sehr domänenspezifische Sammlung an Anweisungen. Elementare Anweisungen sind Zuweisungen (von ausgewerteten Ausdrücken), Schleifen und bedingte Anweisungen, die so auch in klassischen Programmiersprachen auftreten.
+	\subsection{Anweisungen}
+	\label{sub:anweisungen}
+		DiGaL bietet dem Nutzer eine eingeschränkte, aber sehr domänenspezifische Sammlung an Anweisungen. Elementare Anweisungen sind Zuweisungen (von ausgewerteten Ausdrücken), Schleifen und bedingte Anweisungen, die so auch in klassischen Programmiersprachen auftreten.
 
-Darüber hinaus sind die Elementaren Ausdrücke unserer Domäne als feste Anweisungen vorgesehen: \texttt{würfeln mit <würfeln>}, \texttt{sortieren <würfel>}, \texttt{nächster <spieler> ist dran}, ... Diese festen Anweisungen können als eine Art Framework für Würfelspiele aufgefasst werden.
-
-
-% subsection anweisungen (end)
-
-% section designspace (end)
-
-
-
-
+		Darüber hinaus sind die elementaren Ausdrücke der zugrundeliegenden Domäne als feste Anweisungen vorgesehen: \texttt{würfeln mit <würfeln>}, \texttt{sortieren <würfel>}, \texttt{nächster <spieler> ist dran}, ... Diese festen Anweisungen können als eine Art Framework für Würfelspiele aufgefasst werden.

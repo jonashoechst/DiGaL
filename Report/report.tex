@@ -3,10 +3,14 @@
 \usepackage[utf8]{inputenc}
 \usepackage{german}
 \usepackage[T1]{fontenc}
-\usepackage{a4wide}
 \usepackage[left=2cm, right=2cm, top=2cm, bottom=2cm]{geometry}
-\usepackage{listings}
+
 \usepackage{color}
+\definecolor{pblue}{rgb}{0.13,0.13,1}
+\definecolor{pgreen}{rgb}{0,0.5,0}
+\definecolor{pgrey}{rgb}{0.46,0.45,0.48}
+
+\usepackage{listings}
 \lstset{
   	literate={ö}{{\"o}}1
            {ä}{{\"a}}1
@@ -20,18 +24,6 @@
     basicstyle=\ttfamily,
 }
 
-\definecolor{pblue}{rgb}{0.13,0.13,1}
-\definecolor{pgreen}{rgb}{0,0.5,0}
-\definecolor{pgrey}{rgb}{0.46,0.45,0.48}
-
-\makeatletter
-\renewcommand\chapter{\thispagestyle{plain}%
-\global\@topnum\z@
-\@afterindentfalse
-\secdef\@chapter\@schapter}
-\makeatother 
-
-\usepackage{listings}
 \lstset{language=Python,
     numbers=left,
     frame=single
@@ -47,12 +39,6 @@
     moredelim=[il][\textcolor{pgrey}]{$ $},
     moredelim=[is][\textcolor{pgrey}]{\%\%}{\%\%}
 }
-    
-\renewcommand*{\familydefault}{\sfdefault}
-
-\newcommand{\todo}[1]{
-{\color{red}\bf TODO: #1}}
-\newcommand{\dg}{DiGaL }
 
 \usepackage{graphicx}
 \usepackage[export]{adjustbox}
@@ -65,6 +51,19 @@
     linkcolor=black,
     urlcolor=black
 }
+
+\makeatletter
+\renewcommand\chapter{\thispagestyle{plain}%
+\global\@topnum\z@
+\@afterindentfalse
+\secdef\@chapter\@schapter}
+\makeatother 
+
+\renewcommand*{\familydefault}{\sfdefault}
+
+\newcommand{\todo}[1]{
+{\color{red}\bf TODO: #1}}
+\newcommand{\dg}{DiGaL }
 
 \begin{document}
 	\begin{titlepage}
@@ -83,22 +82,15 @@
             ~\\[1cm]
 		    \large{Artur Sterz, Jonas Höchst, Andreas Morgen}\\
 		    \large{\today}
-
         \end{center}
 	\end{titlepage}
 	\tableofcontents
 	\newpage
 
-
-\input{1-domain.tex}
-\input{2-syntax.tex}
-\input{3-design.tex}
-\input{4-diskussion.tex}
-\input{5-lessons.tex}
-\input{6-asg.tex}
-
-
-
-	
-
+	\input{1-domain.tex}
+	\input{2-syntax.tex}
+	\input{3-design.tex}
+	\input{4-diskussion.tex}
+	\input{5-lessons.tex}
+	\input{6-asg.tex}
 \end{document}

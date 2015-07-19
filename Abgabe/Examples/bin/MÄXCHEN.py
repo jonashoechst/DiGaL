@@ -1,16 +1,3 @@
-%!TEX root = report.tex
-
-\chapter{Anhang}
-\label{cha:anhang}
-
-\section{Codebeispiel}
-\label{sec:codebeispiel}
-	\includegraphics[width=0.9\textwidth]{example-code-crop.pdf}
-	\newpage
-
-\section{Generierter Code}
-\label{sec:generierter_code}
-\begin{lstlisting}[language=Python]
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 import random
@@ -18,6 +5,7 @@ import random
 class Player:
     def __str__(self): return self.name + ', ' + ', '.join(map(str, [value for key, value in self.__dict__.items() if key not in ['name']]))
     def __init__(self, name): self.name = name; self.PUNKTE = 3; 
+
     def isActive(self): return self.PUNKTE >= 0; 
 
 class Dice:
@@ -41,18 +29,19 @@ class Game:
         self.activePlayer = self.players[0]
         print('Game initialized '+self.status())
         
-    def isRunning(self): return (len([aktiver spieler, aktiver spieler]) > 1)
+    def isRunning(self): return (len([player for player in self.players if player.isActive()]) > 1)
     def __init__(self):
         self.players = []
         # Dynamic inits
-        self.name = 'MAXCHEN'
+        self.name = 'MÄXCHEN'
         
         self.LETZTES = 0
         self.min = 2
         self.max = 10
         self.dices = [Dice('A',[1, 2, 3, 4, 5, 6, ]), Dice('B',[1, 2, 3, 4, 5, 6, ]), ]
     def loop(self):
-        while self.isRunning():   
+        while self.isRunning():
+            
             print(self.status())
             print('\n'+self.activePlayer.name+' ist dran.'),
             
@@ -84,12 +73,4 @@ if __name__ == '__main__':
     game.loop()
     print('\nSpiel beendet: '+game.status())
     print([self.name for self in game.players if self.PUNKTE >= 0][0]+' hat gewonnen!')
-\end{lstlisting}
 
-\section{Abstrakte Syntax}
-\label{sec:abstrakte_syntax}
-	\begin{center}
-    	\makebox[\textwidth][c]{\includegraphics[width=1.1\textwidth]{ASG1-crop.pdf}}~\newpage
-    	\makebox[\textwidth][c]{\includegraphics[width=1.1\textwidth]{ASG2-crop.pdf}}~\newpage
-    	\makebox[\textwidth][c]{\includegraphics[width=1.1\textwidth]{ASG3-crop.pdf}}
-	\end{center}

@@ -1,10 +1,18 @@
-DiGaL Eclipse Project.zip
-- Eclipse Projekt unserer Referenzimplementierung
+DiGaL Eclipse Project.zip:
+Diese ZIP-Datei enthält das Eclipse Projekt unserer Referenzimplementierung. Im Optimalfall reicht es, wenn Sie dieses importieren. Den Sourceode können sie aber auch ohne Eclipse sehen.
 
 digalc.jar
-- Kompiliertes Paket der Referenzimplementierung
-- java -jar digalc.jar PATH_TO_DIGAL_FILE
-- java -jar digalc.jar Examples/Own.dg
+Falls es mit dem Eclipse Import nicht ohne Weiteres klappt, haben wir ein kompiliertes Paket der Referenzimplementierung. Das können Sie ausführen, um ein Würfelspiel (.dg Datei) zu kompilieren. Dazu geben sie folgendes im Terminal ein:
+java -jar digalc.jar PATH_TO_DIGAL_FILE
+
+Im Ordner Examples liegen einige Beispiele. Wenn Sie beispielsweise das Spiel "Own.dg" kompilieren wollen, sieht der Aufruf wie folgt aus:
+java -jar digalc.jar Examples/Own.dg
+
+Um ein kompiliertes Spiel auszuführen führen Sie folgendes aus:
+python PATH_TO_PYTHON_FILE
+
+Also wieder im Beispiel oben würde das folgender maßen aussehen:
+python Examples/bin/OWN.py
 
 Report.pdf
-- Assay über die Domänenbeschreibung, Sprachspezifikation und Diskussion zur Sprache
+Das ist das Assay über die Domänenbeschreibung, Sprachspezifikation und Diskussion zur Sprache.
