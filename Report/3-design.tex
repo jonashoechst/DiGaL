@@ -11,7 +11,7 @@
 
 		\subsubsection{Funktionsdefinitionen}
 		\label{subsub:funktionsdefinitionen}
-			\dg bietet keine Konzepte, um Modular Spiele entwickeln zu können. Diese Entscheidung ist bewusst so gewählt worden. Auch hier stand wieder im Vordergrund, die Sprache so einfach wie möglich zu gestalten. Ein Programm in Module aufzuteilen, heißt zum Beispiel eine Möglichkeit zu bieten Funktionen oder Methoden zu definieren, in denen Aktionen gekapselt sind, die wiederholt ausgeführt werden können. Dies würde aber bedeuten, dass man ein Konzept benötigt, dass dem Entwickler einen solchen Mechanismus erlaubt. Und dieses neue Konzept müsste von Anwendern unserer Sprache erlernt werden, wenn sie keine Programmierer sind. Daher wurde entschieden, keine Möglichkeit anzubieten Funktionen zu definieren. Es schien einfacher dem Nutzer die Möglichkeit zu überlassen, Aktionen wiederholt zu definieren.
+			\dg bietet keine Konzepte, um Spiele modular entwickeln zu können. Diese Entscheidung ist bewusst so gewählt worden. Auch hier stand wieder im Vordergrund, die Sprache so einfach wie möglich zu gestalten. Ein Programm in Module aufzuteilen, heißt zum Beispiel eine Möglichkeit zu bieten Funktionen oder Methoden zu definieren, in denen Aktionen gekapselt sind, die wiederholt ausgeführt werden können. Dies würde aber bedeuten, dass man ein Konzept benötigt, dass dem Entwickler einen solchen Mechanismus erlaubt. Und dieses neue Konzept müsste von Anwendern unserer Sprache erlernt werden, wenn sie keine Programmierer sind. Daher wurde entschieden, keine Möglichkeit anzubieten Funktionen zu definieren und den rein iterativen Ansatz zu wählen. Es schien einfacher dem Nutzer die Möglichkeit zu überlassen, Aktionen wiederholt zu definieren.
 
 			Desweiteren besteht ein Würfelspiel in \dg aus vier Blöcken, wie sie in Abschnitt \ref{sec:blocke_und_absatze} vorgestellt werden. Die Möglichkeit Funktionen zu definieren würde daher bedeuten, dass dieses strikte Konzept gebrochen werden müsste, was wiederum ein Mehr an Komplexität bedeuten würde.
 
@@ -29,7 +29,7 @@
 
 	\subsection{Datenmodellierung}
 	\label{sub:datenmodellierung}
-		\dg bietet keine Möglichkeit um Datenobjekte oder -strukturen anzulegen. Es wird allerdings ein Aspekt der Objektorientiertheit unterstützt, in dem die Möglichkeit angeboten wird, einem Spieler Variablen zuzuordnen. Die einzigen erweiterterbaren Objekte sind also die Spieler. Alle vom Nutzer definierten Variablen, die nicht zu Spielern gehören lassen sich nur global als Variable des Spiels anlegen.
+		\dg bietet keine Möglichkeit um Datenobjekte oder -strukturen anzulegen. Es wird allerdings ein Aspekt der Objektorientiertheit unterstützt, in dem die Möglichkeit angeboten wird, Variablen nicht nur global, sondern auch einem Spieler zugeordnet zu definieren. Die einzigen erweiterterbaren Objekte sind also die Spieler. Alle vom Nutzer definierten Variablen, die nicht zu Spielern gehören lassen sich nur global als Variable des Spiels anlegen.
 
 		Als weiteres (nicht modifizierbares) Objekt sind Würfel zu nennen, deren Namen und Seiten zwar vom Programmierer definiert, nicht aber neue Felder hinzugefügt werden können.
 
@@ -45,7 +45,7 @@
 \label{sec:alternativen_im_sprachdesign} 
 	Grundpfeiler unserer Sprache ist, maximal einfache Beschreibungen der domänspezifischen Anwendungen auszudrücken, in Anlehnung an die natürliche Sprache. Würden auf diese Eigenschaft verzichtet, wäre die Begründung für die Einschränkungen nicht mehr gegeben und alle oben genannten Punkte müssten neu diskutiert werden, da die Begründung sich weitestgehend auf das erste Argument stützt. 
 
-	Zur Problemlösung wäre auch eine Library denkbar, die Paradigmen aus Würfelspielen aufgreift und dem Nutzer zur einfacheren Implementierung anbietet. Durch die sehr auf die Domäne ausgerichtete Sprache, folgen die meisten oben diskutierten Entscheidungen direkt. Einzelne Paradigmen lassen sich jedoch diskutieren und in Frage stellen.
+	Zur Problemlösung wäre auch eine Library denkbar, die Paradigmen aus Würfelspielen aufgreift und dem Nutzer zur einfacheren Implementierung anbietet. Durch die sehr auf die Domäne ausgerichtete Sprache, folgen die meisten oben diskutierten Entscheidungen direkt. Einzelne Paradigmen lassen sich jedoch diskutieren und in Frage stellen:
 
 	\subsection{Erweiterung bestehender Spiele}
 	\label{sub:erweiterung_bestehender_spiele}
@@ -78,7 +78,7 @@
 
 	\subsection{Dispatching}
 	\label{sub:dispatching}
-		Man spricht von Dispatching, wenn ein Methodenaufruf zur Laufzeit anhand des tatsächlichen Typs eines Objektes aufgelöst wird. Da \dg weder Methoden noch Polymorphie unterstützt, mussten keine Gedanken zu Dispatching gemacht werden.
+		Man spricht von Dispatching, wenn ein Methodenaufruf zur Laufzeit zum Beispiel anhand des tatsächlichen Typs eines Objektes aufgelöst wird. Da \dg weder Methoden noch Polymorphie unterstützt, mussten keine Gedanken zu Dispatching gemacht werden.
 
 	\subsection{Ausdrücke}
 	\label{sub:ausdrucke}

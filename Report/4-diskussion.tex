@@ -11,7 +11,7 @@ In der Referenzimplementierung von \dg wird die ANTLR Syntax zur formalen Defini
 	\label{flow}
 \end{figure}
 
-Um sicherzustellen, dass die mit \dg geschriebenen Spiele portabel sind, wurde zum Ziel gesetzt möglichst wenige Abhängigkeiten vorauszusetzen. Ein Kriterium war dabei, dass die Ausführung des Codes nur mit der Standardbibliothek einer Zielsprache funktioniert. Daher wurde sich für eine Kompilation der Sprache entschieden, und darauf versichtet für den Endanwender auf die Installation von ANTLR vorauszusetzen. Als Zielsprache dient Python, das Syntaktisch kompakt zu programmieren ist und inhärente Konzepte unserer Sprache unterstützt (Objektorientiertheit, Funktionale Programmierung).
+Um sicherzustellen, dass die mit \dg geschriebenen Spiele portabel sind, wurde zum Ziel gesetzt möglichst wenige Abhängigkeiten vorauszusetzen. Ein Kriterium war dabei, dass die Ausführung des Codes nur mit der Standardbibliothek einer Zielsprache funktioniert. Daher wurde sich für eine Kompilation der Sprache entschieden, und darauf verzichtet für den Endanwender auf die Installation von ANTLR vorauszusetzen. Als Zielsprache dient Python, das Syntaktisch kompakt zu programmieren ist und inhärente Konzepte unserer Sprache unterstützt (Objektorientiertheit, Funktionale Programmierung).
 
 Zur Generierung des Python Codes wird das Visitorpattern entschieden verwendet. Die Entscheidung gründet auf die Simplizität einer Implementierung dieses Patterns, das uns als lernende ANTLR Spielentwickler nur noch abverlangt die vorgegebenen Methoden zu implementieren und uns so auf das wesentliche zu konzentrieren. 
 
@@ -22,7 +22,7 @@ Zur Generierung des Python Codes wird das Visitorpattern entschieden verwendet. 
     \begin{figure}[ht]
     	\centering
         \includegraphics[width=0.8\textwidth]{Python-UML.pdf}
-    	\caption{Klassendesign des Python Frameworks}
+    	\caption{Klassen- und Methodendesign des Python Frameworks}
     	\label{python-uml}
     \end{figure}
 
@@ -30,7 +30,7 @@ Zur Generierung des Python Codes wird das Visitorpattern entschieden verwendet. 
 
 \section{Interne Datenrepräsentation}
 \label{sec:interne_datenreprasentation}
-    Wie in den obigen Abschnitten erwähnt, werden für die Implementierung Konstrukte unserer Zielsprache verwendet. Der objektorientierte Ansatz von \dg zeigt sich hier in der Umsetzung in Klassen für Spieler, Würfel und das Spiel selbst. Bei der Übersetzung eines Spiels werden Teile der gegebenen Klassen durch die vom Spielentwickler spezifizierten Eigenschaften des Spiels ergänzt. Beispiel dafür sind die Spieler, denen durch den Spielentwickler neuen Felder hinzugefügt werden können.Die Würfelklasse hingegen ist nicht erweiterbar, sondern wird nur durch die Implementierung der Spielklassen verschieden initialisiert.
+    Wie in den obigen Abschnitten erwähnt, werden für die Implementierung Konstrukte unserer Zielsprache verwendet. Der objektorientierte Ansatz von \dg zeigt sich hier in der Umsetzung in Klassen für Spieler, Würfel und das Spiel selbst. Bei der Übersetzung eines Spiels werden Teile der gegebenen Klassen durch die vom Spielentwickler spezifizierten Eigenschaften des Spiels ergänzt. Beispiel dafür sind die Spieler, denen durch den Spielentwickler neuen Felder hinzugefügt werden können. Die Würfelklasse hingegen ist nicht erweiterbar, sondern wird nur durch die Implementierung der Spielklassen verschieden instanziiert.
 
     Die Spielklasse enthält die Initialisierung und den Ablauf des Spiels und ist die zentrale Klasse. Die Klasse enthält einige generische Methoden, die nicht individualisierbar sind und in der Sprache zur Verfügung stehen (\texttt{leftPlayer()}, \texttt{rightPlayer()}, \texttt{sortDices()}, ...). In Kontrast dazu bildet die \texttt{loop()}-Methode den Spielablauf ab und wird vom Entwickler frei definiert.
 
@@ -38,13 +38,13 @@ Zur Generierung des Python Codes wird das Visitorpattern entschieden verwendet. 
 \label{sec:compilerimplementierungen}
 	Da die Implementierung recht umfangreich ist kann sie hier nicht vollständig sondern lediglich beispielhaft angegeben werden.
 
-	\dg wurde so konzipiert, dass alle domänenspezifischen Konzepte, wie sie oben beschrieben sind, direkt abgebildet werden können. Auch in der Pythonumsetzung wurde versucht dies beizubehalten und die Konzepte von \dg soweit wie möglich direkt in Python umzusetzen. Grundoperationen wie \texttt{+, -, *, größer, kleiner, gleich, ...} wurden direkt in ihren entsprechenden Pythonoperatoren umgesetzt, woraus eine lazy evaluation arithmetischer Operationen folgt. Gleiches gilt für die Zuweisung. Diese kann in \dg zwar syntaktisch unterschiedlich ausgedrückt werden (\texttt{<Variable> ist <Ausdruck>} oder \texttt{setze <Variable> auf <Ausdruck>}), in Python wird daraus aber immer eine einfache Zuweisung.
+	\dg wurde so konzipiert, dass alle domänenspezifischen Konzepte, wie sie oben beschrieben sind, direkt abgebildet werden können. Auch in der Pythonumsetzung wurde versucht dies beizubehalten und die Konzepte von \dg soweit wie möglich direkt in Python umzusetzen. Grundoperationen wie \texttt{+, -, *, größer, kleiner, gleich, ...} wurden direkt in ihren entsprechenden Pythonoperatoren umgesetzt, woraus eine lazy evaluation arithmetischer und logischer Operationen folgt. Gleiches gilt für die Zuweisung. Diese kann in \dg zwar syntaktisch unterschiedlich ausgedrückt werden (\texttt{<Variable> ist <Ausdruck>} oder \texttt{setze <Variable> auf <Ausdruck>}), in Python wird daraus aber immer eine einfache Zuweisung.
 
-	Desweiteren wurden einige Abstraktionen vorgenommen, um die Paradigmen aus der Domäne umzusetzen. Als Beispiel sei folgender Code gegeben:
+	Es wurden einige Abstraktionen vorgenommen, um die Paradigmen aus der Domäne umzusetzen. Als Beispiel sei folgender Code gegeben:
 \begin{lstlisting}
 wenn würfel A gleich 2 ...
 \end{lstlisting}
-	In konventionellen Programmiersprachen wäre diese Operation nicht ohne Weiteres möglich, da ein Vergleich zwischen einem selbst definierten Objekt und einer Zahl zunächst nicht definiert ist. Im Bezug auf die Domäne ist dieser Ausdruck jedoch sinnvoll, da damit implizit gemeint ist, dass der gewürfelte Wert, also eine Zahl mit einer anderen verglichen werden soll. Diesen Umstand nutzen wir, sodass ein logischer Vergleich oder eine arithmetische Operation mit Würfeln immer als Operation auf dem entsprechenden gewürfelten Wert zu verstehen ist. Im Code sieht das wie folgt aus:
+	In konventionellen Programmiersprachen wäre diese Operation nicht ohne weiteres möglich, da ein Vergleich zwischen einem selbst definierten Objekt und einer Zahl zunächst nicht definiert ist. Im Bezug auf die Domäne ist dieser Ausdruck jedoch sinnvoll, da damit implizit gemeint ist, dass der gewürfelte Wert, also eine Zahl mit einer anderen verglichen werden soll. Diesen Umstand nutzen wir, sodass ein logischer Vergleich oder eine arithmetische Operation mit Würfeln immer als Operation auf dem entsprechenden gewürfelten Wert zu verstehen ist. Im Code sieht das wie folgt aus:
 \begin{lstlisting}
 if [dice for dice in self.dices if dice.name == 'A'].value == 2 ...
 \end{lstlisting}
@@ -63,7 +63,7 @@ das spiel läuft solange RUNDEN größer 0.
 \begin{lstlisting}[language=Python]
 def isRunning(self): return (self.RUNDEN > 0)
 \end{lstlisting}
-	Diese Methode hat eine weitere Besonderheit. Wird keine Bedingung festgelegt, weil ein Spiel beispielsweise kein deterministisches Ende hat, sondern von Fall zu Fall unterschiedlich ist, hat die Funktion einen Standardfall, bei dem immer \texttt{true} zurückgegeben wird. In diesem Fall muss sich der Entwickler aber selbst darum kümmern, das Spiel mit dem Schlüsselwort \texttt{das spiel ist zu ende.} zu beenden. Methoden dieser Art, also die gegeben sein müssen, aber vom Nutzer gefüllt werden können, gibt es noch weitere, beispielsweise die Funktion \texttt{isActive()}, die nach einer von Entwickler definierten Bedingung entscheidet, ob ein Spieler aktiv ist oder nicht.
+	Diese Methode hat eine weitere Besonderheit. Wird keine Bedingung festgelegt, weil ein Spiel beispielsweise kein deterministisches Ende hat, sondern von Fall zu Fall unterschiedlich ist, wird die Funktion im Standardfall immer zu \texttt{true} ausgewertet. In diesem Fall muss sich der Entwickler aber selbst darum kümmern, das Spiel mit dem Schlüsselwort \texttt{das spiel ist zu ende.} zu beenden. Methoden dieser Art, also die gegeben sein müssen, aber vom Nutzer gefüllt werden können, gibt es noch weitere, beispielsweise die Funktion \texttt{isActive()}, die nach einer von Entwickler definierten Bedingung entscheidet, ob ein Spieler aktiv ist oder nicht.
 
 \section{Erfüllung der geforderten Sprachqualitäten}
 \label{sec:erfullung_der_geforderten_sprachqualitaten}

@@ -11,7 +11,7 @@
 		\item Voraussetzungen für das Spiel,
 		\item Aktionen der Spieler,
 		\item Spielziel und Bedingungen für das Spielende und
-		\item Bewertungsgrundlagen
+		\item Bewertungsgrundlagen.
 	\end{itemize}
 	Unser Ziel war es nun \dg so zu gestalten, dass es als Regelwerk eines Spiels erkannt und auch von allen so gelesen werden kann. Damit dies deutlich wird, soll ein Beispiel gegeben werden:
 
@@ -32,7 +32,7 @@ spieler haben die werte GEWONNEN ist 0.
 ist ein spieler am zug macht er folgendes:
 würfelt mit allen würfeln.
 rechter spieler ist dran, wenn würfel 0 gleich 1 oder würfel 1 gleich 1.
-aktueller spieler PUNKTE ist aktueller spieler PUNKTE + die summe von allen würfeln.
+setzte aktueller spieler PUNKTE auf aktueller spieler PUNKTE + die summe von allen würfeln.
 wenn aktueller spieler PUNKTE größergleich 100, dann setze aktueller spieler GEWONNEN auf 1 und spiel ist zu ende.
 rechter spieler ist dran.
 
@@ -45,12 +45,12 @@ gewonnen hat der spieler, bei dem GEWONNEN gleich 1.
 
 	Das Deklinieren und Konjugieren von Worten ist für das intuitive Verstehen einer Sprache aus unserer Sicht von großer Bedeutung und trägt maßgeblich zum Lesefluss bei. Im obigen Beispiel sei dazu auf auf die Verwendung von \texttt{alle würfel} verwiesen, der im Beispiel schon in seiner deklinierten Variante \texttt{allen würfeln} verwendet wird.
 
-	Auch die Satzstellung ist für das Verständnis einer natürlichen Sprache wichtig. Sätze einer kontrollierten Sprache können schnell sperrig wirken. Unsere Sprache bietet daher verschiedene Optionen, um semantisch das Gleiche auszudrücken. Hier sei als Beispiel das \texttt{wenn} Konstrukt von oben angegeben, dass in folgenden beiden Varianten valide ist:
+	Auch die Satzstellung ist für das Verständnis einer natürlichen Sprache wichtig. Sätze einer kontrollierten Sprache können schnell sperrig wirken. Unsere Sprache bietet verschiedene Optionen, um semantisch das Gleiche auszudrücken. Hier sei als Beispiel das \texttt{wenn} Konstrukt von oben angegeben, dass in folgenden beiden Varianten valide ist:
 \begin{lstlisting}
 rechter spieler ist dran, wenn würfel 0 gleich 1 oder würfel 1 gleich 1.
 wenn würfel 0 gleich 1 oder würfel 1 gleich 1, dann rechter spieler ist dran.
 \end{lstlisting}
-	Designziel der Syntax unserer Sprache ist es zunächst, möglichst viele Varianten eines gegebenen Konstruktes anzubieten. In der Implementierung zeigten sich jedoch Schwierigkeiten, auf die in Kapitel \ref{cha:designentscheidungen} und \ref{cha:implementierung} näher eingegangen wird.
+	Designziel der Syntax unserer Sprache ist es zunächst, möglichst viele Varianten eines gegebenen Konstruktes anzubieten. In der Implementierung zeigten sich jedoch Schwierigkeiten durch Mehrdeutigkeit verschiedener Begriffe, auf die in Kapitel \ref{cha:designentscheidungen} und \ref{cha:implementierung} näher eingegangen wird.
 
 \section{Satzzeichen}
 \label{sec:satzzeichen}

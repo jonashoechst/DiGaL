@@ -15,19 +15,19 @@
 	\label{sub:spieler}
 		Das erste wichtige Konzept ist der \emph{Spieler}. Den Spieler zeichnet aus, dass er die ausführende Kraft bei einem Spiel ist. Er würfelt mit den Würfeln, bei Entscheidungen muss er diese treffen und auch die Punkteverwaltung hat er inne.
 
-		Weiterhin benötigt der Spieler Variablen, in denen aktuelle Werte gespeichert werden. Dies ist zwar sehr technisch ausgedrückt, beschreibt aber das, was ``Spieler haben Punkte'' bedeutet.
+        Weiterhin sind Spielern häufig verschiedene Werte zugeordnet, die zum Beispiel die Punktzahl des Spielers beschreibt. Technisch ausgedrückt lässt sich von Variablen sprechen.
 
-		Und schließlich können Spieler aktiv oder inaktiv sein. Beispielsweise kann ein Spieler auf Grund seiner auf 0 reduzierten Punkte aus dem Spiel ausscheiden, er kann aber auch, wie bei dem Spiel \emph{UNO Wüfel} bei einer bestimmten Augenzahl eine Runde aussetzen.
+		Und schließlich können Spieler in den meisten Würfelspielen an einem bestimmten Punkt ausscheiden, also vom aktiven in einen inaktiven Zustand übergehen. Beispielsweise kann ein Spieler auf Grund seiner auf 0 reduzierten Punkte aus dem Spiel ausscheiden, er kann aber auch, wie bei dem Spiel \emph{UNO Wüfel} bei einer bestimmten Augenzahl eine Runde aussetzen.
 
 	\subsection{Würfel}
 	\label{sub:wurfel}
-		Ein weiterer Kernbestandteil sind die Würfel. Dabei kann ein Spiel mehrere Würfel haben, jedoch mindestens einen. Desweiteren hat ein Würfel sogenannte \emph{Augen}. Das bedeutet, dass einer bestimmten Seite ein numerischer Wert zugeordnet wird. Dabei hat ein klassischer Würfel sechs Seiten, ist also von 1 bis 6 durchnummeriert. Es gibt jedoch Würfel mit einer beliebigen Anzahl an Seiten, mindestens jedoch zwei.
+		Ein weiterer Kernbestandteil sind die Würfel. Dabei kann ein Spiel mehrere Würfel haben, jedoch mindestens einen. Des weiteren hat ein Würfel sogenannte \emph{Augen}. Das bedeutet, dass einer bestimmten Seite ein numerischer Wert zugeordnet wird. Dabei hat ein klassischer Würfel sechs Seiten, ist also von 1 bis 6 durchnummeriert. Es gibt Würfel mit einer ausgefallenen Anzahl an Seiten, aus physikalischen Gründen sind es in der Praxis aber mindestens  zwei Seiten.
 
-		Außerdem muss erwähnt werden, dass es Spiele gibt, bei denen die Würfel keine numerischen Werte besitzen, sondern mit Piktogrammen bedruckt sind. Diese finden in \dg jedoch keine Anwendung, da diese Bilder auch mit einem numerischen Wert kodiert werden können.
+		Außerdem sollte noch erwähnt werden, dass es Spiele gibt, bei denen die Würfel keine numerischen Werte besitzen, sondern mit Piktogrammen bedruckt sind. Diese finden in \dg noch keine Anwendung, da sie meistens zu komplexeren Brettspielen gehören und für einfache Spiele eine Repräsentation des Piktogramm durch eine Augenzahl ausreichen sollte.
 
 	\subsection{Spielverlauf}
 	\label{sub:spielverlauf}
-		Das letzte domänenspezifische Konzept, das in der hier diskutierten enthalten sein muss, ist der Spielverlauf. Hauptsächlich sind damit die Regeln gemeint, die beschreiben, was ein Spieler zu tun hat, wenn er an der Reihe ist.
+		Das letzte domänenspezifische Konzept, hier enthalten sein muss, ist der Spielverlauf. Hauptsächlich sind damit die Regeln gemeint, die beschreiben, was ein Spieler zu tun hat, wenn er an der Reihe ist.
 
 		Dabei werden zum einen Aktionen definiert, wie zum Beispiel das Werfen der Würfel. Zum anderen werden aber auch Konditionen geprüft, die erfüllt sein müssen, damit eine Aktion ausgeführt werden kann. So muss beispielsweise bei dem Spiel \emph{Mäxchen} die Augenzahl 21 gewürfelt werden, damit allen anderen Spielern ein Punkt abgezogen werden kann.
 
